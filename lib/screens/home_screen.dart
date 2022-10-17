@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import '../models/ppid_model.dart';
+import '../widgets/bottom_nav_bar.dart';
+import 'screen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -13,10 +15,11 @@ class HomeScreen extends StatelessWidget {
       initialIndex: 0,
       length: tabs.length,
       child: Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.transparent,
-          elevation: 0,
-        ),
+        // appBar: AppBar(
+        //   backgroundColor: Colors.transparent,
+        //   elevation: 0,
+        // ),
+        bottomNavigationBar: const BottomNavBar(index: 0),
         body: ListView(
           padding: const EdgeInsets.all(20.0),
           children: [const SearchDocument(), TabCategory(tabs: tabs)],
@@ -47,13 +50,16 @@ class TabCategory extends StatelessWidget {
                 (tab) => Tab(
                   icon: Text(
                     tab,
-                    style: Theme.of(context).textTheme.headline5!.copyWith(
+                    style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                           fontWeight: FontWeight.bold,
                         ),
                   ),
                 ),
               )
               .toList(),
+        ),
+        const SizedBox(
+          height: 20,
         ),
         SizedBox(
           height: MediaQuery.of(context).size.height,
@@ -64,36 +70,68 @@ class TabCategory extends StatelessWidget {
                       itemCount: ppid.length,
                       itemBuilder: ((context, index) {
                         return InkWell(
-                          // onTap : () {
-                          //   Navigator.pushNamed(
-                          //     context,
-                          //     DocumentScreen.routeName,
-                          //     arguments: ppid[index],
-                          //     );
-                          // },
+                          onTap: () {
+                            Navigator.pushNamed(
+                              context,
+                              DocumentScreen.routeName,
+                              arguments: ppid[index],
+                            );
+                          },
                           child: Row(
                             children: [
                               Expanded(
-                                  child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    ppid[index].title,
-                                    maxLines: 1,
-                                    overflow: TextOverflow.clip,
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .bodyLarge!
-                                        .copyWith(
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                  ),
-                                  const SizedBox(
-                                    height: 10,
-                                  ),
-                                ],
-                              ))
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    const SizedBox(
+                                      height: 10,
+                                    ),
+                                    Text(
+                                      ppid[index].title,
+                                      maxLines: 1,
+                                      overflow: TextOverflow.clip,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyLarge!
+                                          .copyWith(
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                    ),
+                                    const SizedBox(
+                                      height: 3,
+                                    ),
+                                    Text(
+                                      ppid[index].dinas,
+                                      maxLines: 3,
+                                      overflow: TextOverflow.clip,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodySmall!
+                                          .copyWith(
+                                            fontWeight: FontWeight.normal,
+                                          ),
+                                    ),
+                                    const SizedBox(
+                                      height: 3,
+                                    ),
+                                    Text(
+                                      ppid[index].type,
+                                      maxLines: 1,
+                                      overflow: TextOverflow.clip,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodySmall!
+                                          .copyWith(
+                                            fontWeight: FontWeight.normal,
+                                          ),
+                                    ),
+                                    const SizedBox(
+                                      height: 10,
+                                    ),
+                                  ],
+                                ),
+                              ),
                             ],
                           ),
                         );
@@ -124,11 +162,11 @@ class SearchDocument extends StatelessWidget {
             'PPID Kabupaten Lombok Barat',
             style: Theme.of(context)
                 .textTheme
-                .headline4!
+                .headline5!
                 .copyWith(color: Colors.black, fontWeight: FontWeight.w900),
           ),
           const SizedBox(
-            height: 5,
+            height: 7,
           ),
           Text(
             'Cari Dokumen',

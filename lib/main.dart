@@ -18,7 +18,11 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         HomeScreen.routeName: (context) => const HomeScreen(),
-        // DocumentScreen.routeName:(context) => const DocumentScreen(),
+        DocumentScreen.routeName: (context) => const DocumentScreen(),
+        PermohonanInformasiScreen.routeName: (context) =>
+            const PermohonanInformasiScreen(),
+        LaporanLayananScreen.routeName: (context) =>
+            const LaporanLayananScreen(),
       },
     );
   }
