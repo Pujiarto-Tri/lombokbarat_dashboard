@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
 import '../widgets/bottom_nav_bar.dart';
 
+const List<String> kategori = <String>[
+  'Kategori 1',
+  'Kategori 2',
+  'Kategori 3'
+];
+
 class PermohonanInformasiScreen extends StatelessWidget {
   const PermohonanInformasiScreen({Key? key}) : super(key: key);
 
@@ -18,7 +24,7 @@ class PermohonanInformasiScreen extends StatelessWidget {
       bottomNavigationBar: const BottomNavBar(index: 1),
       extendBodyBehindAppBar: true,
       body: ListView(
-        children: const [_PermohonanInformasiTitle()],
+        children: const [_PermohonanInformasiTitle(), DropdownButtonExample()],
       ),
     );
   }
@@ -96,6 +102,54 @@ class _PermohonanInformasiTitle extends StatelessWidget {
           ),
           const SizedBox(
             height: 10,
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class DropdownButtonExample extends StatefulWidget {
+  const DropdownButtonExample({super.key});
+
+  @override
+  State<DropdownButtonExample> createState() => _DropdownButtonExampleState();
+}
+
+class _DropdownButtonExampleState extends State<DropdownButtonExample> {
+  String dropdownValue = kategori.first;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(20.0),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          DropdownButton<String>(
+            borderRadius: BorderRadius.circular(10.0),
+            hint: const Text("Kategori"),
+            value: dropdownValue,
+            icon: const Icon(Icons.arrow_downward),
+            elevation: 10,
+            style: const TextStyle(color: Colors.deepPurple),
+            underline: Container(
+              height: 2,
+              color: Colors.deepPurpleAccent,
+            ),
+            onChanged: (String? value) {
+              // This is called when the user selects an item.
+              setState(() {
+                dropdownValue = value!;
+              });
+            },
+            items: kategori.map<DropdownMenuItem<String>>((String value) {
+              return DropdownMenuItem<String>(
+                value: value,
+                child: Text(value),
+              );
+            }).toList(),
           ),
         ],
       ),
