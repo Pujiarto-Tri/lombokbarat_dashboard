@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../models/ppid_model.dart';
+import '../models/ppid_api_model.dart';
 import '../widgets/bottom_nav_bar.dart';
 import 'screen.dart';
 
@@ -39,7 +39,7 @@ class TabCategory extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final ppid = Ppid.ppids;
+    final ppid = Results();
     return Column(
       children: [
         TabBar(
@@ -67,7 +67,7 @@ class TabCategory extends StatelessWidget {
             children: tabs
                 .map((tab) => ListView.builder(
                       shrinkWrap: true,
-                      itemCount: ppid.length,
+                      itemCount: 10,
                       itemBuilder: ((context, index) {
                         return Card(
                           elevation: 0,
@@ -83,7 +83,7 @@ class TabCategory extends StatelessWidget {
                                 Navigator.pushNamed(
                                   context,
                                   DocumentScreen.routeName,
-                                  arguments: ppid[index],
+                                  arguments: Results(),
                                 );
                               },
                               child: Row(
@@ -99,7 +99,8 @@ class TabCategory extends StatelessWidget {
                                           height: 10,
                                         ),
                                         Text(
-                                          ppid[index].title,
+                                          ppid.title ??
+                                              "Failed to load data Title",
                                           maxLines: 1,
                                           overflow: TextOverflow.clip,
                                           style: Theme.of(context)
@@ -113,7 +114,8 @@ class TabCategory extends StatelessWidget {
                                           height: 3,
                                         ),
                                         Text(
-                                          ppid[index].dinas,
+                                          ppid.dinas ??
+                                              "Failed to load data Dinas",
                                           maxLines: 3,
                                           overflow: TextOverflow.clip,
                                           style: Theme.of(context)
@@ -127,7 +129,8 @@ class TabCategory extends StatelessWidget {
                                           height: 3,
                                         ),
                                         Text(
-                                          ppid[index].type,
+                                          ppid.type ??
+                                              "Failed to load data Type",
                                           maxLines: 1,
                                           overflow: TextOverflow.clip,
                                           style: Theme.of(context)
