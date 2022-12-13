@@ -131,7 +131,7 @@ class _DropdownButtonExampleState extends State<DropdownButtonExample> {
             borderRadius: BorderRadius.circular(10.0),
             hint: const Text("Kategori"),
             value: dropdownValue,
-            icon: const Icon(Icons.arrow_downward),
+            icon: const Icon(Icons.arrow_drop_down),
             elevation: 10,
             style: const TextStyle(color: Colors.deepPurple),
             underline: Container(

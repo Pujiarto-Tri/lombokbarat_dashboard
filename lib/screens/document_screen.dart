@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:ppid_flutter/models/ppid_model.dart';
+import 'package:ppid_flutter/models/ppid_api_model.dart';
 
 class DocumentScreen extends StatelessWidget {
   const DocumentScreen({Key? key}) : super(key: key);
@@ -46,14 +46,14 @@ class _DocumentName extends StatelessWidget {
           SizedBox(
             height: MediaQuery.of(context).size.height * 0.02,
           ),
-          Text(
-            ppid.title,
-            style: Theme.of(context).textTheme.headlineSmall!.copyWith(
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black,
-                  height: 1.25,
-                ),
-          )
+          // Text(
+          //   ppid.title,
+          //   style: Theme.of(context).textTheme.headlineSmall!.copyWith(
+          //         fontWeight: FontWeight.bold,
+          //         color: Colors.black,
+          //         height: 1.25,
+          //       ),
+          // )
         ],
       ),
     );
@@ -86,13 +86,13 @@ class _DocumentDetail extends StatelessWidget {
               const SizedBox(
                 width: 10,
               ),
-              Text(
-                ppid.code,
-                style: Theme.of(context)
-                    .textTheme
-                    .bodyMedium!
-                    .copyWith(color: Colors.black),
-              ),
+              // Text(
+              //   ppid.code,
+              //   style: Theme.of(context)
+              //       .textTheme
+              //       .bodyMedium!
+              //       .copyWith(color: Colors.black),
+              // ),
             ],
           ),
           Column(
@@ -107,13 +107,13 @@ class _DocumentDetail extends StatelessWidget {
               const SizedBox(
                 width: 10,
               ),
-              Text(
-                ppid.dinas,
-                style: Theme.of(context)
-                    .textTheme
-                    .bodyMedium!
-                    .copyWith(color: Colors.black),
-              ),
+              // Text(
+              //   ppid.dinas,
+              //   style: Theme.of(context)
+              //       .textTheme
+              //       .bodyMedium!
+              //       .copyWith(color: Colors.black),
+              // ),
             ],
           ),
           Column(
@@ -128,13 +128,13 @@ class _DocumentDetail extends StatelessWidget {
               const SizedBox(
                 width: 10,
               ),
-              Text(
-                ppid.type,
-                style: Theme.of(context)
-                    .textTheme
-                    .bodyMedium!
-                    .copyWith(color: Colors.black),
-              ),
+              // Text(
+              //   ppid.type,
+              //   style: Theme.of(context)
+              //       .textTheme
+              //       .bodyMedium!
+              //       .copyWith(color: Colors.black),
+              // ),
             ],
           ),
           Column(
@@ -149,13 +149,13 @@ class _DocumentDetail extends StatelessWidget {
               const SizedBox(
                 width: 10,
               ),
-              Text(
-                ppid.size,
-                style: Theme.of(context)
-                    .textTheme
-                    .bodyMedium!
-                    .copyWith(color: Colors.black),
-              ),
+              // Text(
+              //   ppid.size,
+              //   style: Theme.of(context)
+              //       .textTheme
+              //       .bodyMedium!
+              //       .copyWith(color: Colors.black),
+              // ),
             ],
           ),
         ],

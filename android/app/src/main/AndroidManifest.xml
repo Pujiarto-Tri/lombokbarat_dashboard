@@ -1,9 +1,12 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.ppid_flutter">
+    <!-- Required to fetch data from the internet. -->
+    <uses-permission android:name="android.permission.INTERNET" />
    <application
         android:label="ppid_flutter"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
+        
         <activity
             android:name=".MainActivity"
             android:exported="true"
