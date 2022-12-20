@@ -90,7 +90,22 @@ class TabCategory extends StatelessWidget {
                                       Navigator.pushNamed(
                                         context,
                                         DocumentScreen.routeName,
-                                        arguments: Results(),
+                                        arguments: ResultData(
+                                          snapshot.data!.results?[index]
+                                                  .title ??
+                                              "Failed to fetch",
+                                          snapshot.data!.results?[index].code ??
+                                              "Failed to fetch",
+                                          snapshot.data!.results?[index]
+                                                  .dinas ??
+                                              "Failed to fetch",
+                                          snapshot.data!.results?[index]
+                                                  .title ??
+                                              "Failed to fetch",
+                                          snapshot.data!.results?[index]
+                                                  .title ??
+                                              "Failed to fetch",
+                                        ),
                                       );
                                     },
                                     child: Row(
@@ -231,4 +246,14 @@ class SearchDocument extends StatelessWidget {
       ),
     );
   }
+}
+
+class ResultData {
+  final String title;
+  final String code;
+  final String dinas;
+  final String type;
+  final String size;
+
+  ResultData(this.title, this.code, this.dinas, this.type, this.size);
 }

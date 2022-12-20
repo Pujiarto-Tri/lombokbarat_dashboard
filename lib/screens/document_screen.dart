@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:ppid_flutter/models/ppid_api_model.dart';
+import 'home_screen.dart';
 
 class DocumentScreen extends StatelessWidget {
   const DocumentScreen({Key? key}) : super(key: key);
@@ -8,7 +8,8 @@ class DocumentScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final document = ModalRoute.of(context)!.settings.arguments as Results;
+    final ResultData resultData =
+        ModalRoute.of(context)?.settings.arguments as ResultData;
     return Scaffold(
       backgroundColor: Colors.transparent,
       appBar: AppBar(
@@ -19,8 +20,8 @@ class DocumentScreen extends StatelessWidget {
       extendBodyBehindAppBar: true,
       body: ListView(
         children: [
-          _DocumentName(results: document),
-          _DocumentDetail(results: document),
+          _DocumentName(resultData: resultData),
+          _DocumentDetail(resultData: resultData),
         ],
       ),
     );
@@ -30,10 +31,10 @@ class DocumentScreen extends StatelessWidget {
 class _DocumentName extends StatelessWidget {
   const _DocumentName({
     Key? key,
-    required this.results,
+    required this.resultData,
   }) : super(key: key);
 
-  final Results results;
+  final ResultData resultData;
 
   @override
   Widget build(BuildContext context) {
@@ -47,14 +48,13 @@ class _DocumentName extends StatelessWidget {
             height: MediaQuery.of(context).size.height * 0.02,
           ),
           Text(
-            results.title ?? "Failed to fetch data",
-            // "test",
+            resultData.title,
             style: Theme.of(context).textTheme.headlineSmall!.copyWith(
                   fontWeight: FontWeight.bold,
                   color: Colors.black,
                   height: 1.25,
                 ),
-          )
+          ),
         ],
       ),
     );
@@ -64,10 +64,10 @@ class _DocumentName extends StatelessWidget {
 class _DocumentDetail extends StatelessWidget {
   const _DocumentDetail({
     Key? key,
-    required this.results,
+    required this.resultData,
   }) : super(key: key);
 
-  final Results results;
+  final ResultData resultData;
 
   @override
   Widget build(BuildContext context) {
@@ -87,13 +87,13 @@ class _DocumentDetail extends StatelessWidget {
               const SizedBox(
                 width: 10,
               ),
-              // Text(
-              //   ppid.code,
-              //   style: Theme.of(context)
-              //       .textTheme
-              //       .bodyMedium!
-              //       .copyWith(color: Colors.black),
-              // ),
+              Text(
+                resultData.code,
+                style: Theme.of(context)
+                    .textTheme
+                    .bodyMedium!
+                    .copyWith(color: Colors.black),
+              ),
             ],
           ),
           Column(
@@ -108,13 +108,13 @@ class _DocumentDetail extends StatelessWidget {
               const SizedBox(
                 width: 10,
               ),
-              // Text(
-              //   ppid.dinas,
-              //   style: Theme.of(context)
-              //       .textTheme
-              //       .bodyMedium!
-              //       .copyWith(color: Colors.black),
-              // ),
+              Text(
+                resultData.dinas,
+                style: Theme.of(context)
+                    .textTheme
+                    .bodyMedium!
+                    .copyWith(color: Colors.black),
+              ),
             ],
           ),
           Column(
@@ -129,13 +129,13 @@ class _DocumentDetail extends StatelessWidget {
               const SizedBox(
                 width: 10,
               ),
-              // Text(
-              //   ppid.type,
-              //   style: Theme.of(context)
-              //       .textTheme
-              //       .bodyMedium!
-              //       .copyWith(color: Colors.black),
-              // ),
+              Text(
+                resultData.type,
+                style: Theme.of(context)
+                    .textTheme
+                    .bodyMedium!
+                    .copyWith(color: Colors.black),
+              ),
             ],
           ),
           Column(
@@ -150,13 +150,13 @@ class _DocumentDetail extends StatelessWidget {
               const SizedBox(
                 width: 10,
               ),
-              // Text(
-              //   ppid.size,
-              //   style: Theme.of(context)
-              //       .textTheme
-              //       .bodyMedium!
-              //       .copyWith(color: Colors.black),
-              // ),
+              Text(
+                resultData.size,
+                style: Theme.of(context)
+                    .textTheme
+                    .bodyMedium!
+                    .copyWith(color: Colors.black),
+              ),
             ],
           ),
         ],
