@@ -71,6 +71,17 @@ class _DocumentDetail extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    String sizeString;
+    String unitString;
+    if (int.parse(resultData.size) < 1000000) {
+      // Convert the size in bytes to kilobytes and round the result
+      sizeString = ((int.parse(resultData.size) / 1000).round()).toString();
+      unitString = "KB";
+    } else {
+      // Convert the size in bytes to megabytes and round the result
+      sizeString = ((int.parse(resultData.size) / 1000000).round()).toString();
+      unitString = "MB";
+    }
     return Container(
       padding: const EdgeInsets.all(20.0),
       child: Column(
@@ -151,7 +162,7 @@ class _DocumentDetail extends StatelessWidget {
                 width: 10,
               ),
               Text(
-                resultData.size,
+                '$sizeString $unitString',
                 style: Theme.of(context)
                     .textTheme
                     .bodyMedium!

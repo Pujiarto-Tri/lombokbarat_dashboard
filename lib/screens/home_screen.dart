@@ -99,11 +99,9 @@ class TabCategory extends StatelessWidget {
                                           snapshot.data!.results?[index]
                                                   .dinas ??
                                               "Failed to fetch",
-                                          snapshot.data!.results?[index]
-                                                  .title ??
+                                          snapshot.data!.results?[index].type ??
                                               "Failed to fetch",
-                                          snapshot.data!.results?[index]
-                                                  .title ??
+                                          snapshot.data!.results?[index].size ??
                                               "Failed to fetch",
                                         ),
                                       );
@@ -253,7 +251,7 @@ class ResultData {
   final String code;
   final String dinas;
   final String type;
-  final String size;
+  late final String size;
 
   ResultData(this.title, this.code, this.dinas, this.type, this.size);
 }

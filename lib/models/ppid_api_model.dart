@@ -15,12 +15,16 @@ Future<Ppid> fetchPpidModel() async {
 
 class Ppid {
   int? count;
+  String? next;
+  String? previous;
   List<Results>? results;
 
-  Ppid({this.count, this.results});
+  Ppid({this.count, this.next, this.previous, this.results});
 
   Ppid.fromJson(Map<String, dynamic> json) {
     count = json['count'];
+    next = json['next'];
+    previous = json['previous'];
     if (json['results'] != null) {
       results = <Results>[];
       json['results'].forEach((v) {
@@ -32,6 +36,8 @@ class Ppid {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['count'] = this.count;
+    data['next'] = this.next;
+    data['previous'] = this.previous;
     if (this.results != null) {
       data['results'] = this.results!.map((v) => v.toJson()).toList();
     }
