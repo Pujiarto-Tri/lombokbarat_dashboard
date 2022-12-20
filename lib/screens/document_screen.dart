@@ -8,7 +8,7 @@ class DocumentScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final document = ModalRoute.of(context)!.settings.arguments as Ppid;
+    final document = ModalRoute.of(context)!.settings.arguments as Results;
     return Scaffold(
       backgroundColor: Colors.transparent,
       appBar: AppBar(
@@ -19,8 +19,8 @@ class DocumentScreen extends StatelessWidget {
       extendBodyBehindAppBar: true,
       body: ListView(
         children: [
-          _DocumentName(ppid: document),
-          _DocumentDetail(ppid: document),
+          _DocumentName(results: document),
+          _DocumentDetail(results: document),
         ],
       ),
     );
@@ -30,10 +30,10 @@ class DocumentScreen extends StatelessWidget {
 class _DocumentName extends StatelessWidget {
   const _DocumentName({
     Key? key,
-    required this.ppid,
+    required this.results,
   }) : super(key: key);
 
-  final Ppid ppid;
+  final Results results;
 
   @override
   Widget build(BuildContext context) {
@@ -46,14 +46,15 @@ class _DocumentName extends StatelessWidget {
           SizedBox(
             height: MediaQuery.of(context).size.height * 0.02,
           ),
-          // Text(
-          //   ppid.title,
-          //   style: Theme.of(context).textTheme.headlineSmall!.copyWith(
-          //         fontWeight: FontWeight.bold,
-          //         color: Colors.black,
-          //         height: 1.25,
-          //       ),
-          // )
+          Text(
+            results.title ?? "Failed to fetch data",
+            // "test",
+            style: Theme.of(context).textTheme.headlineSmall!.copyWith(
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black,
+                  height: 1.25,
+                ),
+          )
         ],
       ),
     );
@@ -63,10 +64,10 @@ class _DocumentName extends StatelessWidget {
 class _DocumentDetail extends StatelessWidget {
   const _DocumentDetail({
     Key? key,
-    required this.ppid,
+    required this.results,
   }) : super(key: key);
 
-  final Ppid ppid;
+  final Results results;
 
   @override
   Widget build(BuildContext context) {
