@@ -78,12 +78,14 @@ class TabCategory extends StatelessWidget {
                               return Card(
                                 elevation: 0,
                                 shape: RoundedRectangleBorder(
-                                    side: BorderSide(
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .outline),
-                                    borderRadius: const BorderRadius.all(
-                                        Radius.circular(12))),
+                                  side: BorderSide(
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .outline),
+                                  borderRadius: const BorderRadius.all(
+                                    Radius.circular(12),
+                                  ),
+                                ),
                                 child: Padding(
                                   padding: const EdgeInsets.all(8.0),
                                   child: InkWell(
