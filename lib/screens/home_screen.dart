@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ppid_flutter/screens/search_result_screen.dart';
 import '../models/ppid_api_model.dart';
 import '../widgets/bottom_nav_bar.dart';
 import 'screen.dart';
@@ -23,7 +24,7 @@ class HomeScreen extends StatelessWidget {
         bottomNavigationBar: const BottomNavBar(index: 0),
         body: ListView(
           padding: const EdgeInsets.all(20.0),
-          children: [const SearchDocument(), TabCategory(tabs: tabs)],
+          children: [SearchDocument(), TabCategory(tabs: tabs)],
         ),
       ),
     );
@@ -196,10 +197,21 @@ class TabCategory extends StatelessWidget {
   }
 }
 
-class SearchDocument extends StatelessWidget {
-  const SearchDocument({
-    Key? key,
-  }) : super(key: key);
+class SearchDocument extends StatefulWidget {
+  const SearchDocument({super.key});
+
+  @override
+  _SearchDocumentState createState() => _SearchDocumentState();
+}
+
+class _SearchDocumentState extends State<SearchDocument> {
+  final _controller = TextEditingController();
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -227,6 +239,19 @@ class SearchDocument extends StatelessWidget {
             height: 20,
           ),
           TextFormField(
+            controller: _controller,
+            onFieldSubmitted: (value) {
+              fetchSearch(_controller.text).then(
+                (ppid) {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => SearchResultsScreen(ppid: ppid),
+                    ),
+                  );
+                },
+              );
+            },
             decoration: InputDecoration(
                 hintText: 'Search',
                 fillColor: Colors.grey.shade200,
