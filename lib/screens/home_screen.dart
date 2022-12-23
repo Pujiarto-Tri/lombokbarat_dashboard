@@ -188,7 +188,7 @@ class TabCategory extends StatelessWidget {
             } else if (snapshot.hasError) {
               return Text("Error: ${snapshot.error}");
             } else {
-              return Center(
+              return const Center(
                 child: CircularProgressIndicator(),
               );
             }

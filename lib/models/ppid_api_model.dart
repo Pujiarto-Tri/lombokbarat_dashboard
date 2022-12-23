@@ -54,6 +54,16 @@ class Ppid {
     }
     return data;
   }
+
+  Future<Ppid> nextPage() async {
+    final response = await http.get(Uri.parse(this.next!));
+
+    if (response.statusCode == 200) {
+      return Ppid.fromJson(jsonDecode(response.body));
+    } else {
+      throw Exception('Failed to load data');
+    }
+  }
 }
 
 class Results {
