@@ -33,30 +33,34 @@ class Ppid {
   Ppid({this.count, this.next, this.previous, this.results});
 
   Ppid.fromJson(Map<String, dynamic> json) {
+    // print("Ppid.fromJson(): $json");
     count = json['count'];
     next = json['next'];
     previous = json['previous'];
     if (json['results'] != null) {
       results = <Results>[];
       json['results'].forEach((v) {
-        results!.add(new Results.fromJson(v));
+        results!.add(Results.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['count'] = this.count;
-    data['next'] = this.next;
-    data['previous'] = this.previous;
-    if (this.results != null) {
-      data['results'] = this.results!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['count'] = count;
+    data['next'] = next;
+    data['previous'] = previous;
+    if (results != null) {
+      data['results'] = results!.map((v) => v.toJson()).toList();
     }
     return data;
   }
 
   Future<Ppid> nextPage() async {
-    final response = await http.get(Uri.parse(this.next!));
+    if (next == null) {
+      return Future.value(null);
+    }
+    final response = await http.get(Uri.parse(next!));
 
     if (response.statusCode == 200) {
       return Ppid.fromJson(jsonDecode(response.body));
@@ -66,7 +70,7 @@ class Ppid {
   }
 
   Future<Ppid> previousPage() async {
-    final response = await http.get(Uri.parse(this.previous!));
+    final response = await http.get(Uri.parse(previous!));
 
     if (response.statusCode == 200) {
       return Ppid.fromJson(jsonDecode(response.body));
@@ -111,16 +115,16 @@ class Results {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
     data['title'] = title;
-    data['code'] = this.code;
-    data['dinas'] = this.dinas;
-    data['type'] = this.type;
-    data['size'] = this.size;
-    data['view_count'] = this.viewCount;
-    data['download_count'] = this.downloadCount;
-    data['slug'] = this.slug;
+    data['code'] = code;
+    data['dinas'] = dinas;
+    data['type'] = type;
+    data['size'] = size;
+    data['view_count'] = viewCount;
+    data['download_count'] = downloadCount;
+    data['slug'] = slug;
     return data;
   }
 }
