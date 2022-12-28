@@ -105,9 +105,6 @@ class _TabCategoryState extends State<TabCategory> {
                           shrinkWrap: true,
                           itemCount: snapshot.data!.results!.length,
                           itemBuilder: ((context, index) {
-                            // if (index < ppid.results!.length) {
-                            //   return Container();
-                            // }
                             Results result = snapshot.data!.results![index];
                             return Card(
                               elevation: 0,
