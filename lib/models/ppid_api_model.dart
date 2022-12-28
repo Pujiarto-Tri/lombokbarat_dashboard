@@ -58,7 +58,7 @@ class Ppid {
 
   Future<Ppid> nextPage() async {
     if (next == null) {
-      return Future.value(null);
+      return Future.value(Ppid());
     }
     final response = await http.get(Uri.parse(next!));
 
