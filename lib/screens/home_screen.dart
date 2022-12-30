@@ -3,7 +3,6 @@ import 'package:ppid_flutter/screens/search_result_screen.dart';
 import '../models/ppid_api_model.dart';
 import '../widgets/bottom_nav_bar.dart';
 import 'screen.dart';
-import 'package:flutter/widgets.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -38,16 +37,15 @@ class LatestDocumentState extends State<LatestDocument> {
     });
 
     try {
-      Ppid nextPpid = await ppid.nextPage();
+      Ppid load = await ppid.previousPage();
       setState(() {
         // Add the new results to the existing list
-        ppid.results?.addAll(nextPpid.results ?? []);
+        ppid.results?.addAll(load.results ?? []);
         // Update the previous and next links
-        ppid.previous = nextPpid.previous;
-        ppid.next = nextPpid.next;
+        ppid.previous = load.previous;
+        ppid.next = load.next;
       });
     } catch (e) {
-      print(e);
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text("Error loading next page: $e"),

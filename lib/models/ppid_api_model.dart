@@ -3,8 +3,21 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 Future<Ppid> fetchPpidModel() async {
-  final response = await http
+  // Make a separate API call to get the count field from the response
+  final countResponse = await http
       .get(Uri.parse('http://ppidbaru.lombokbaratkab.go.id/api/data/'));
+  final countJson = jsonDecode(countResponse.body);
+  final count = countJson['count'];
+
+  // Calculate the last page number
+  const recordsPerPage =
+      10; // Set this as a constant or read it from the API documentation
+  final lastPage =
+      count ~/ recordsPerPage + (count % recordsPerPage == 0 ? 0 : 1);
+
+  // Make a request to the API with the page parameter set to the last page
+  final response = await http.get(Uri.parse(
+      'http://ppidbaru.lombokbaratkab.go.id/api/data/?page=$lastPage'));
 
   if (response.statusCode == 200) {
     return Ppid.fromJson(jsonDecode(response.body));
