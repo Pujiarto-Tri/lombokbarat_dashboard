@@ -24,10 +24,10 @@ class HomeScreen extends StatelessWidget {
 class LatestDocument extends StatefulWidget {
   const LatestDocument({super.key});
   @override
-  _LatestDocumentState createState() => _LatestDocumentState();
+  LatestDocumentState createState() => LatestDocumentState();
 }
 
-class _LatestDocumentState extends State<LatestDocument> {
+class LatestDocumentState extends State<LatestDocument> {
   Ppid ppid = Ppid();
   bool _isLoading = false;
 
