@@ -40,6 +40,25 @@ class _TabCategoryState extends State<TabCategory> {
   Ppid ppid = Ppid();
   bool _isLoading = false;
 
+  void _originalState() {
+    setState(() {
+      ppid.results!.sort((a, b) => b.id!.compareTo(a.id!));
+    });
+  }
+
+  void _sortByViewCount() {
+    setState(() {
+      ppid.results!.sort((a, b) => b.viewCount!.compareTo(a.viewCount!));
+    });
+  }
+
+  void _sortByDownloadCount() {
+    setState(() {
+      ppid.results!
+          .sort((a, b) => b.downloadCount!.compareTo(a.downloadCount!));
+    });
+  }
+
   Future<void> _loadNextPage() async {
     setState(() {
       _isLoading = true;
@@ -71,6 +90,17 @@ class _TabCategoryState extends State<TabCategory> {
         TabBar(
           isScrollable: false,
           indicatorColor: Colors.black,
+          onTap: (int index) {
+            if (tabs[index] == 'Most View') {
+              _sortByViewCount();
+            }
+            if (tabs[index] == 'Most Download') {
+              _sortByDownloadCount();
+            }
+            if (tabs[index] == 'Latest') {
+              _originalState();
+            }
+          },
           tabs: tabs
               .map(
                 (tab) => Tab(
