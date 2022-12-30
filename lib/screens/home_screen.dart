@@ -3,6 +3,7 @@ import 'package:ppid_flutter/screens/search_result_screen.dart';
 import '../models/ppid_api_model.dart';
 import '../widgets/bottom_nav_bar.dart';
 import 'screen.dart';
+import 'package:flutter/widgets.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -47,6 +48,12 @@ class LatestDocumentState extends State<LatestDocument> {
       });
     } catch (e) {
       print(e);
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text("Error loading next page: $e"),
+          duration: const Duration(seconds: 3),
+        ),
+      );
       // Display an error message to the user
     } finally {
       setState(() {
@@ -191,10 +198,10 @@ class SearchDocument extends StatefulWidget {
   const SearchDocument({super.key});
 
   @override
-  _SearchDocumentState createState() => _SearchDocumentState();
+  SearchDocumentState createState() => SearchDocumentState();
 }
 
-class _SearchDocumentState extends State<SearchDocument> {
+class SearchDocumentState extends State<SearchDocument> {
   final _controller = TextEditingController();
 
   @override
