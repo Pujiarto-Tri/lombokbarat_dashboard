@@ -26,9 +26,22 @@ Future<Ppid> fetchPpidModel() async {
   }
 }
 
-Future<Ppid> fetchSearch([String? search]) async {
-  final response = await http.get(Uri.parse(
+Future<Ppid> fetchSearch(String search) async {
+  // Make a separate API call to get the count field from the response
+  final countResponse = await http.get(Uri.parse(
       'http://ppidbaru.lombokbaratkab.go.id/api/data/?search=$search'));
+  final countJson = jsonDecode(countResponse.body);
+  final count = countJson['count'];
+
+  // Calculate the last page number
+  const recordsPerPage =
+      10; // Set this as a constant or read it from the API documentation
+  final lastPage =
+      count ~/ recordsPerPage + (count % recordsPerPage == 0 ? 0 : 1);
+
+  // Make a request to the API with the page parameter set to the last page and the search parameter set to the search term
+  final response = await http.get(Uri.parse(
+      'http://ppidbaru.lombokbaratkab.go.id/api/data/?page=$lastPage&search=$search'));
 
   if (response.statusCode == 200) {
     return Ppid.fromJson(jsonDecode(response.body));
@@ -55,6 +68,8 @@ class Ppid {
       json['results'].forEach((v) {
         results!.add(Results.fromJson(v));
       });
+      results!.sort((a, b) => b.date!.compareTo(a
+          .date!)); // Sort the list of results by the date field in descending order
     }
   }
 
@@ -103,6 +118,7 @@ class Results {
   int? viewCount;
   int? downloadCount;
   String? slug;
+  DateTime? date;
 
   Results(
       {this.id,
@@ -125,6 +141,7 @@ class Results {
     viewCount = json['view_count'];
     downloadCount = json['download_count'];
     slug = json['slug'];
+    date = DateTime.fromMillisecondsSinceEpoch(id! * 1000);
   }
 
   Map<String, dynamic> toJson() {
@@ -138,6 +155,7 @@ class Results {
     data['view_count'] = viewCount;
     data['download_count'] = downloadCount;
     data['slug'] = slug;
+    data['date'] = date;
     return data;
   }
 }
