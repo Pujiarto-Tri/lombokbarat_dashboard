@@ -10,19 +10,22 @@ class DocumentScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final ResultData resultData =
         ModalRoute.of(context)?.settings.arguments as ResultData;
-    return Scaffold(
-      backgroundColor: Colors.transparent,
-      appBar: AppBar(
-        iconTheme: const IconThemeData(color: Colors.black),
+    return Container(
+      color: Colors.white,
+      child: Scaffold(
         backgroundColor: Colors.transparent,
-        elevation: 0,
-      ),
-      extendBodyBehindAppBar: true,
-      body: ListView(
-        children: [
-          _DocumentName(resultData: resultData),
-          _DocumentDetail(resultData: resultData),
-        ],
+        appBar: AppBar(
+          iconTheme: const IconThemeData(color: Colors.black),
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+        ),
+        extendBodyBehindAppBar: true,
+        body: ListView(
+          children: [
+            _DocumentName(resultData: resultData),
+            _DocumentDetail(resultData: resultData),
+          ],
+        ),
       ),
     );
   }
@@ -44,15 +47,11 @@ class _DocumentName extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.end,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox(
-            height: MediaQuery.of(context).size.height * 0.02,
-          ),
           Text(
             resultData.title,
-            style: Theme.of(context).textTheme.headlineSmall!.copyWith(
+            style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                   fontWeight: FontWeight.bold,
                   color: Colors.black,
-                  height: 1.25,
                 ),
           ),
         ],
@@ -84,22 +83,52 @@ class _DocumentDetail extends StatelessWidget {
     }
     return Container(
       padding: const EdgeInsets.all(20.0),
-      child: Column(
-        children: [
-          Column(
+      child: Card(
+        elevation: 0,
+        shape: RoundedRectangleBorder(
+          side: BorderSide(color: Theme.of(context).colorScheme.outline),
+          borderRadius: const BorderRadius.all(
+            Radius.circular(12),
+          ),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                'Kode Dokumen : ',
+                'Kode Dokumen : ${resultData.code}',
                 style: Theme.of(context)
                     .textTheme
                     .bodyMedium!
                     .copyWith(color: Colors.black),
               ),
               const SizedBox(
-                width: 10,
+                height: 10,
               ),
               Text(
-                resultData.code,
+                'Penerbit : ${resultData.dinas}',
+                style: Theme.of(context)
+                    .textTheme
+                    .bodyMedium!
+                    .copyWith(color: Colors.black),
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              Text(
+                'Kategori Dokumen : ${resultData.type}',
+                style: Theme.of(context)
+                    .textTheme
+                    .bodyMedium!
+                    .copyWith(color: Colors.black),
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              Text(
+                'Ukuran : $sizeString $unitString',
                 style: Theme.of(context)
                     .textTheme
                     .bodyMedium!
@@ -107,70 +136,7 @@ class _DocumentDetail extends StatelessWidget {
               ),
             ],
           ),
-          Column(
-            children: [
-              Text(
-                'Penerbit : ',
-                style: Theme.of(context)
-                    .textTheme
-                    .bodyMedium!
-                    .copyWith(color: Colors.black),
-              ),
-              const SizedBox(
-                width: 10,
-              ),
-              Text(
-                resultData.dinas,
-                style: Theme.of(context)
-                    .textTheme
-                    .bodyMedium!
-                    .copyWith(color: Colors.black),
-              ),
-            ],
-          ),
-          Column(
-            children: [
-              Text(
-                'Kategori Dokumen : ',
-                style: Theme.of(context)
-                    .textTheme
-                    .bodyMedium!
-                    .copyWith(color: Colors.black),
-              ),
-              const SizedBox(
-                width: 10,
-              ),
-              Text(
-                resultData.type,
-                style: Theme.of(context)
-                    .textTheme
-                    .bodyMedium!
-                    .copyWith(color: Colors.black),
-              ),
-            ],
-          ),
-          Column(
-            children: [
-              Text(
-                'Ukuran : ',
-                style: Theme.of(context)
-                    .textTheme
-                    .bodyMedium!
-                    .copyWith(color: Colors.black),
-              ),
-              const SizedBox(
-                width: 10,
-              ),
-              Text(
-                '$sizeString $unitString',
-                style: Theme.of(context)
-                    .textTheme
-                    .bodyMedium!
-                    .copyWith(color: Colors.black),
-              ),
-            ],
-          ),
-        ],
+        ),
       ),
     );
   }

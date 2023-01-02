@@ -47,9 +47,9 @@ class LatestDocumentState extends State<LatestDocument> {
       });
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text("Error loading next page: $e"),
-          duration: const Duration(seconds: 3),
+        const SnackBar(
+          content: Text("Error loading next page: Ini adalah data terakhir"),
+          duration: Duration(seconds: 3),
         ),
       );
       // Display an error message to the user
