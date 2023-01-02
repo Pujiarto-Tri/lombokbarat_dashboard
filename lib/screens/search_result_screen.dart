@@ -62,6 +62,7 @@ class SearchResultsScreenState extends State<SearchResultsScreen> {
             children: [
               ListView.builder(
                 shrinkWrap: true,
+                physics: const ClampingScrollPhysics(),
                 itemCount: ppid.results!.length,
                 itemBuilder: (context, index) {
                   return Card(
@@ -74,7 +75,7 @@ class SearchResultsScreenState extends State<SearchResultsScreen> {
                       ),
                     ),
                     child: Padding(
-                      padding: EdgeInsets.all(8.0),
+                      padding: const EdgeInsets.all(8.0),
                       child: InkWell(
                         onTap: () {
                           Navigator.pushNamed(
