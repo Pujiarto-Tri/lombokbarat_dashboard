@@ -239,7 +239,14 @@ class SearchDocumentState extends State<SearchDocument> {
                     ),
                   );
                 },
-              );
+              ).catchError((error) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text("Data not found!"),
+                    duration: Duration(seconds: 3),
+                  ),
+                );
+              });
             },
             decoration: InputDecoration(
                 hintText: 'Search',

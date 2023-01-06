@@ -8,6 +8,7 @@ class SearchResultsScreen extends StatefulWidget {
   const SearchResultsScreen({super.key, required this.ppid});
   @override
   SearchResultsScreenState createState() =>
+      // ignore: no_logic_in_create_state
       SearchResultsScreenState(ppid: ppid);
 }
 
