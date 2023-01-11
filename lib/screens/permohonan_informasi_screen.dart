@@ -24,7 +24,7 @@ class PermohonanInformasiScreen extends StatelessWidget {
       bottomNavigationBar: const BottomNavBar(index: 1),
       extendBodyBehindAppBar: true,
       body: ListView(
-        children: const [_PermohonanInformasiTitle(), DropdownButtonExample()],
+        children: const [_PermohonanInformasiTitle()],
       ),
     );
   }
