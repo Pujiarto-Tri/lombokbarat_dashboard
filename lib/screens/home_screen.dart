@@ -13,9 +13,18 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       // bottomNavigationBar: const BottomNavBar(index: 0),
-      body: ListView(
-        padding: const EdgeInsets.all(20.0),
-        children: const [SearchDocument(), LatestDocument()],
+      body: Padding(
+        padding:
+            const EdgeInsets.only(top: 45, left: 20, right: 20, bottom: 20),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: const <Widget>[
+            SearchDocument(),
+            Expanded(
+              child: SingleChildScrollView(child: LatestDocument()),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -84,7 +93,7 @@ class LatestDocumentState extends State<LatestDocument> {
             if (snapshot.hasData) {
               ppid = snapshot.data!;
               return ListView.builder(
-                physics: const ClampingScrollPhysics(),
+                physics: const BouncingScrollPhysics(),
                 shrinkWrap: true,
                 itemCount: snapshot.data!.results!.length,
                 itemBuilder: ((context, index) {
@@ -92,7 +101,7 @@ class LatestDocumentState extends State<LatestDocument> {
                   return Card(
                     elevation: 1,
                     child: Padding(
-                      padding: const EdgeInsets.all(8.0),
+                      padding: const EdgeInsets.all(10.0),
                       child: InkWell(
                         onTap: () {
                           Navigator.pushNamed(
@@ -206,7 +215,7 @@ class SearchDocumentState extends State<SearchDocument> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: MediaQuery.of(context).size.height * 0.25,
+      height: MediaQuery.of(context).size.height * 0.2,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.center,
@@ -262,7 +271,11 @@ class SearchDocumentState extends State<SearchDocument> {
                 borderSide: BorderSide.none,
               ),
             ),
-          )
+          ),
+          const SizedBox(
+            height: 8,
+          ),
+          const Divider(),
         ],
       ),
     );
