@@ -111,7 +111,11 @@ class _DocumentDetail extends StatelessWidget {
           const SizedBox(
             height: 10,
           ),
-          ElevatedButton(onPressed: () {}, child: const Text("Download")),
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(
+                    foregroundColor: Colors.blue.shade100,
+                    backgroundColor: Colors.blue.shade900,
+                  ),onPressed: () {}, child: const Text("Download")),
         ],
       ),
     );

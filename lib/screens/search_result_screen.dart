@@ -60,6 +60,7 @@ class SearchResultsScreenState extends State<SearchResultsScreen> {
         padding: const EdgeInsets.all(20.0),
         children: [
           Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               ListView.builder(
                 shrinkWrap: true,
@@ -156,13 +157,24 @@ class SearchResultsScreenState extends State<SearchResultsScreen> {
                 },
               ),
               const SizedBox(
-                height: 8,
+                height: 10,
+              ),
+              const Divider(),
+              const SizedBox(
+                height: 10,
               ),
               _isLoading
-                  ? const CircularProgressIndicator()
-                  : ElevatedButton(
-                      onPressed: _loadNextPage,
-                      child: const Text("Load more data"),
+                  ? const LinearProgressIndicator()
+                  : SizedBox(
+                      height: 40,
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          foregroundColor: Colors.blue.shade100,
+                          backgroundColor: Colors.blue.shade900,
+                        ),
+                        onPressed: _loadNextPage,
+                        child: const Text("Load more data"),
+                      ),
                     ),
             ],
           ),

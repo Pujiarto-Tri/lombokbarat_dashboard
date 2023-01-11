@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ppid_flutter/screens/search_result_screen.dart';
 import '../models/ppid_api_model.dart';
-import '../widgets/bottom_nav_bar.dart';
+// import '../widgets/bottom_nav_bar.dart';
 import 'screen.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -12,7 +12,7 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: const BottomNavBar(index: 0),
+      // bottomNavigationBar: const BottomNavBar(index: 0),
       body: ListView(
         padding: const EdgeInsets.all(20.0),
         children: const [SearchDocument(), LatestDocument()],
