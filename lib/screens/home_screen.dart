@@ -62,13 +62,24 @@ class LatestDocumentState extends State<LatestDocument> {
 
   @override
   Widget build(BuildContext context) {
+    var theme = Theme.of(context);
+    var titleFont = theme.textTheme.bodyLarge!.copyWith(
+        color: theme.colorScheme.onPrimaryContainer,
+        fontWeight: FontWeight.bold);
+    var contentFont = theme.textTheme.bodySmall!.copyWith(
+        color: theme.colorScheme.onPrimaryContainer,
+        fontWeight: FontWeight.normal);
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         FutureBuilder<Ppid>(
           future: ppid.results == null ? fetchPpidModel() : Future.value(ppid),
           builder: (context, snapshot) {
             if (snapshot.hasError) {
-              return Text("Error: ${snapshot.error}");
+              return Text(
+                "Error: ${snapshot.error}",
+                style: contentFont,
+              );
             }
             if (snapshot.hasData) {
               ppid = snapshot.data!;
@@ -79,14 +90,7 @@ class LatestDocumentState extends State<LatestDocument> {
                 itemBuilder: ((context, index) {
                   Results result = snapshot.data!.results![index];
                   return Card(
-                    elevation: 0,
-                    shape: RoundedRectangleBorder(
-                      side: BorderSide(
-                          color: Theme.of(context).colorScheme.outline),
-                      borderRadius: const BorderRadius.all(
-                        Radius.circular(12),
-                      ),
-                    ),
+                    elevation: 1,
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: InkWell(
@@ -99,6 +103,7 @@ class LatestDocumentState extends State<LatestDocument> {
                               result.code ?? "Failed to fetch",
                               result.dinas ?? "Failed to fetch",
                               result.type ?? "Failed to fetch",
+                              result.slug ?? "Failed to fetch",
                               result.size ?? "Failed to fetch",
                             ),
                           );
@@ -117,12 +122,7 @@ class LatestDocumentState extends State<LatestDocument> {
                                     result.title ?? "Failed to fetch data",
                                     maxLines: 1,
                                     overflow: TextOverflow.clip,
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .bodyLarge!
-                                        .copyWith(
-                                          fontWeight: FontWeight.bold,
-                                        ),
+                                    style: titleFont,
                                   ),
                                   const SizedBox(
                                     height: 3,
@@ -131,12 +131,7 @@ class LatestDocumentState extends State<LatestDocument> {
                                     result.dinas ?? "Failed to fetch data",
                                     maxLines: 3,
                                     overflow: TextOverflow.clip,
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .bodySmall!
-                                        .copyWith(
-                                          fontWeight: FontWeight.normal,
-                                        ),
+                                    style: contentFont,
                                   ),
                                   const SizedBox(
                                     height: 3,
@@ -145,12 +140,7 @@ class LatestDocumentState extends State<LatestDocument> {
                                     result.type ?? "Failed to fetch data",
                                     maxLines: 1,
                                     overflow: TextOverflow.clip,
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .bodySmall!
-                                        .copyWith(
-                                          fontWeight: FontWeight.normal,
-                                        ),
+                                    style: contentFont,
                                   ),
                                   const SizedBox(
                                     height: 10,
@@ -173,13 +163,24 @@ class LatestDocumentState extends State<LatestDocument> {
           },
         ),
         const SizedBox(
-          height: 8,
+          height: 10,
+        ),
+        const Divider(),
+        const SizedBox(
+          height: 10,
         ),
         _isLoading
-            ? const CircularProgressIndicator()
-            : ElevatedButton(
-                onPressed: _loadNextPage,
-                child: const Text("Load more data"),
+            ? const LinearProgressIndicator()
+            : SizedBox(
+                height: 40,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    foregroundColor: Colors.blue.shade100,
+                    backgroundColor: Colors.blue.shade900,
+                  ),
+                  onPressed: _loadNextPage,
+                  child: const Text("Load more data"),
+                ),
               ),
       ],
     );
@@ -249,17 +250,18 @@ class SearchDocumentState extends State<SearchDocument> {
               });
             },
             decoration: InputDecoration(
-                hintText: 'Search',
-                fillColor: Colors.grey.shade200,
-                filled: true,
-                prefixIcon: const Icon(
-                  Icons.search,
-                  color: Colors.grey,
-                ),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(20.0),
-                  borderSide: BorderSide.none,
-                )),
+              hintText: 'Search',
+              fillColor: Theme.of(context).colorScheme.primaryContainer,
+              filled: true,
+              prefixIcon: const Icon(
+                Icons.search,
+                color: Colors.black,
+              ),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(20.0),
+                borderSide: BorderSide.none,
+              ),
+            ),
           )
         ],
       ),
@@ -272,7 +274,9 @@ class ResultData {
   final String code;
   final String dinas;
   final String type;
+  final String slug;
   late final String size;
 
-  ResultData(this.title, this.code, this.dinas, this.type, this.size);
+  ResultData(
+      this.title, this.code, this.dinas, this.type, this.slug, this.size);
 }

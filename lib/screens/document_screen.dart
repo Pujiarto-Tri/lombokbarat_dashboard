@@ -22,39 +22,9 @@ class DocumentScreen extends StatelessWidget {
         extendBodyBehindAppBar: true,
         body: ListView(
           children: [
-            _DocumentName(resultData: resultData),
             _DocumentDetail(resultData: resultData),
           ],
         ),
-      ),
-    );
-  }
-}
-
-class _DocumentName extends StatelessWidget {
-  const _DocumentName({
-    Key? key,
-    required this.resultData,
-  }) : super(key: key);
-
-  final ResultData resultData;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(20.0),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.end,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            resultData.title,
-            style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black,
-                ),
-          ),
-        ],
       ),
     );
   }
@@ -81,62 +51,68 @@ class _DocumentDetail extends StatelessWidget {
       sizeString = ((int.parse(resultData.size) / 1000000).round()).toString();
       unitString = "MB";
     }
+    var theme = Theme.of(context);
+    var titleFont = theme.textTheme.bodyLarge!.copyWith(
+        color: theme.colorScheme.onPrimaryContainer,
+        fontWeight: FontWeight.bold);
+    var contentFont = theme.textTheme.bodyMedium!
+        .copyWith(color: theme.colorScheme.onPrimaryContainer);
     return Container(
       padding: const EdgeInsets.all(20.0),
-      child: Card(
-        elevation: 0,
-        shape: RoundedRectangleBorder(
-          side: BorderSide(color: Theme.of(context).colorScheme.outline),
-          borderRadius: const BorderRadius.all(
-            Radius.circular(12),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisSize: MainAxisSize.max,
+        children: [
+          Card(
+            elevation: 1,
+            child: Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    resultData.title,
+                    style: titleFont,
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Text(
+                    'Kode Dokumen : ${resultData.code}',
+                    style: contentFont,
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Text(
+                    'Penerbit : ${resultData.dinas}',
+                    style: contentFont,
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Text(
+                    'Kategori Dokumen : ${resultData.type}',
+                    style: contentFont,
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Text(
+                    'Ukuran : $sizeString $unitString',
+                    style: contentFont,
+                  ),
+                ],
+              ),
+            ),
           ),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                'Kode Dokumen : ${resultData.code}',
-                style: Theme.of(context)
-                    .textTheme
-                    .bodyMedium!
-                    .copyWith(color: Colors.black),
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              Text(
-                'Penerbit : ${resultData.dinas}',
-                style: Theme.of(context)
-                    .textTheme
-                    .bodyMedium!
-                    .copyWith(color: Colors.black),
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              Text(
-                'Kategori Dokumen : ${resultData.type}',
-                style: Theme.of(context)
-                    .textTheme
-                    .bodyMedium!
-                    .copyWith(color: Colors.black),
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              Text(
-                'Ukuran : $sizeString $unitString',
-                style: Theme.of(context)
-                    .textTheme
-                    .bodyMedium!
-                    .copyWith(color: Colors.black),
-              ),
-            ],
+          const SizedBox(
+            height: 10,
           ),
-        ),
+          ElevatedButton(onPressed: () {}, child: const Text("Download")),
+        ],
       ),
     );
   }

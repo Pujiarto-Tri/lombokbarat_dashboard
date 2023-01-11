@@ -67,14 +67,7 @@ class SearchResultsScreenState extends State<SearchResultsScreen> {
                 itemCount: ppid.results!.length,
                 itemBuilder: (context, index) {
                   return Card(
-                    elevation: 0,
-                    shape: RoundedRectangleBorder(
-                      side: BorderSide(
-                          color: Theme.of(context).colorScheme.outline),
-                      borderRadius: const BorderRadius.all(
-                        Radius.circular(12),
-                      ),
-                    ),
+                    elevation: 1,
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: InkWell(
@@ -90,6 +83,8 @@ class SearchResultsScreenState extends State<SearchResultsScreen> {
                                 ppid.results![index].dinas ??
                                     "Failed to fetch data",
                                 ppid.results![index].type ??
+                                    "Failed to fetch data",
+                                ppid.results![index].slug ??
                                     "Failed to fetch data",
                                 ppid.results![index].size ??
                                     "Failed to fetch data"),
