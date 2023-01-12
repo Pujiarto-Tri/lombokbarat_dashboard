@@ -110,21 +110,53 @@ class MenuDashboard extends StatelessWidget {
       child: GridView.count(
         crossAxisCount: 4, // 3 columns
         children: List.generate(8, (index) {
-          return SizedBox(
-            height: 20,
-            width: 20,
-            child: Card(
-              elevation: 1,
-              child: InkWell(
-                onTap: () {
-                  Navigator.pushNamed(context, HomeScreen.routeName);
-                },
-                child: Column(
-                  children: const <Widget>[Text("LPSE"), Text("PPID")],
+          if (index == 0) {
+            return SizedBox(
+              height: 20,
+              width: 20,
+              child: Card(
+                elevation: 1,
+                child: InkWell(
+                  onTap: () {
+                    Navigator.pushNamed(context, HomeScreen.routeName);
+                  },
+                  child: Column(
+                    children: const <Widget>[Text("PPID")],
+                  ),
                 ),
               ),
-            ),
-          );
+            );
+          } else if (index == 1) {
+            return SizedBox(
+              height: 20,
+              width: 20,
+              child: Card(
+                elevation: 1,
+                child: InkWell(
+                  onTap: () {
+                    Navigator.pushNamed(context, WebViewScreen.routeName);
+                  },
+                  child: Column(
+                    children: const <Widget>[Text("webview")],
+                  ),
+                ),
+              ),
+            );
+          } else {
+            return SizedBox(
+              height: 20,
+              width: 20,
+              child: Card(
+                elevation: 1,
+                child: InkWell(
+                  onTap: () {},
+                  child: Column(
+                    children: const <Widget>[Text("PPID")],
+                  ),
+                ),
+              ),
+            );
+          }
         }),
       ),
     );

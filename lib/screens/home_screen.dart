@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:ppid_flutter/screens/search_result_screen.dart';
 import '../models/ppid_api_model.dart';
 // import '../widgets/bottom_nav_bar.dart';
 import 'screen.dart';
