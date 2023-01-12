@@ -7,15 +7,20 @@ import 'screen.dart';
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
 
-  static const routeName = '/';
+  static const routeName = '/ppid';
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        iconTheme: const IconThemeData(color: Colors.black),
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+      ),
       // bottomNavigationBar: const BottomNavBar(index: 0),
       body: Padding(
         padding:
-            const EdgeInsets.only(top: 45, left: 20, right: 20, bottom: 20),
+            const EdgeInsets.only(top: 10, left: 20, right: 20, bottom: 20),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: const <Widget>[
@@ -78,6 +83,7 @@ class LatestDocumentState extends State<LatestDocument> {
     var contentFont = theme.textTheme.bodySmall!.copyWith(
         color: theme.colorScheme.onPrimaryContainer,
         fontWeight: FontWeight.normal);
+    var failedToFetch = "Failed to fetch";
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
@@ -108,12 +114,12 @@ class LatestDocumentState extends State<LatestDocument> {
                             context,
                             DocumentScreen.routeName,
                             arguments: ResultData(
-                              result.title ?? "Failed to fetch",
-                              result.code ?? "Failed to fetch",
-                              result.dinas ?? "Failed to fetch",
-                              result.type ?? "Failed to fetch",
-                              result.slug ?? "Failed to fetch",
-                              result.size ?? "Failed to fetch",
+                              result.title ?? failedToFetch,
+                              result.code ?? failedToFetch,
+                              result.dinas ?? failedToFetch,
+                              result.type ?? failedToFetch,
+                              result.slug ?? failedToFetch,
+                              result.size ?? failedToFetch,
                             ),
                           );
                         },
@@ -128,7 +134,7 @@ class LatestDocumentState extends State<LatestDocument> {
                                     height: 10,
                                   ),
                                   Text(
-                                    result.title ?? "Failed to fetch data",
+                                    result.title ?? failedToFetch,
                                     maxLines: 1,
                                     overflow: TextOverflow.clip,
                                     style: titleFont,
@@ -137,7 +143,7 @@ class LatestDocumentState extends State<LatestDocument> {
                                     height: 3,
                                   ),
                                   Text(
-                                    result.dinas ?? "Failed to fetch data",
+                                    result.dinas ?? failedToFetch,
                                     maxLines: 3,
                                     overflow: TextOverflow.clip,
                                     style: contentFont,
@@ -146,7 +152,7 @@ class LatestDocumentState extends State<LatestDocument> {
                                     height: 3,
                                   ),
                                   Text(
-                                    result.type ?? "Failed to fetch data",
+                                    result.type ?? failedToFetch,
                                     maxLines: 1,
                                     overflow: TextOverflow.clip,
                                     style: contentFont,
@@ -215,7 +221,7 @@ class SearchDocumentState extends State<SearchDocument> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: MediaQuery.of(context).size.height * 0.2,
+      height: MediaQuery.of(context).size.height * 0.25,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.center,
