@@ -134,7 +134,10 @@ class MenuDashboard extends StatelessWidget {
                 elevation: 1,
                 child: InkWell(
                   onTap: () {
-                    Navigator.pushNamed(context, WebViewScreen.routeName);
+                    Navigator.pushNamed(context, WebViewScreen.routeName,
+                        arguments: {
+                          "link": "http://lpse.lombokbaratkab.go.id/eproc4/"
+                        });
                   },
                   child: Column(
                     children: const <Widget>[Text("webview")],

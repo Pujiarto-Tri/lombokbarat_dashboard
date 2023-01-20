@@ -156,6 +156,7 @@ class WebViewScreen extends StatefulWidget {
 
 class _WebViewScreenState extends State<WebViewScreen> {
   late final WebViewController _controller;
+  String link = "https://flutter.dev";
 
   @override
   void initState() {
@@ -217,7 +218,7 @@ Page resource error:
           );
         },
       )
-      ..loadRequest(Uri.parse('https://flutter.dev'));
+      ..loadRequest(Uri.parse(link));
 
     // #docregion platform_features
     if (controller.platform is AndroidWebViewController) {
@@ -232,6 +233,9 @@ Page resource error:
 
   @override
   Widget build(BuildContext context) {
+    final routeArgs =
+        ModalRoute.of(context)!.settings.arguments as Map<String, String>;
+    link = routeArgs['link']!;
     return Scaffold(
       backgroundColor: Colors.green,
       appBar: AppBar(
