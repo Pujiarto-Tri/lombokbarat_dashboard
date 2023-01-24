@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ppid_flutter/screens/screen.dart';
+import 'package:ppid_flutter/models/lobar_app_menu_dashboard.dart';
 
 class DashboardScreen extends StatelessWidget {
   const DashboardScreen({Key? key}) : super(key: key);
@@ -15,7 +16,11 @@ class DashboardScreen extends StatelessWidget {
             const EdgeInsets.only(top: 20, left: 20, right: 20, bottom: 20),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: const [TitleDashboard(), NewsDashboard(), MenuDashboard()],
+          children: [
+            const TitleDashboard(),
+            const NewsDashboard(),
+            MenuDashboard()
+          ],
         ),
       ),
     );
@@ -109,114 +114,24 @@ class MenuDashboard extends StatelessWidget {
     return Expanded(
       child: GridView.count(
         crossAxisCount: 4, // 3 columns
-        children: List.generate(8, (index) {
-          if (index == 0) {
-            return SizedBox(
-              height: 20,
-              width: 20,
-              child: Card(
-                elevation: 1,
-                child: InkWell(
-                  onTap: () {
-                    Navigator.pushNamed(context, HomeScreen.routeName);
-                  },
-                  child: Column(
-                    children: const <Widget>[Text("PPID")],
-                  ),
+        children: List.generate(appMenu.length, (index) {
+          final lobarAppMenu = appMenu[index];
+          return SizedBox(
+            height: 20,
+            width: 20,
+            child: Card(
+              elevation: 1,
+              child: InkWell(
+                onTap: () {
+                  Navigator.pushNamed(context, lobarAppMenu['routeName'],
+                      arguments: lobarAppMenu['arguments']);
+                },
+                child: Column(
+                  children: <Widget>[Text(lobarAppMenu['text'])],
                 ),
               ),
-            );
-          } else if (index == 1) {
-            return SizedBox(
-              height: 20,
-              width: 20,
-              child: Card(
-                elevation: 1,
-                child: InkWell(
-                  onTap: () {
-                    Navigator.pushNamed(context, WebViewScreen.routeName,
-                        arguments: {
-                          "link": "http://lpse.lombokbaratkab.go.id/eproc4/"
-                        });
-                  },
-                  child: Column(
-                    children: const <Widget>[Text("LPSE")],
-                  ),
-                ),
-              ),
-            );
-          } else if (index == 2) {
-            return SizedBox(
-              height: 20,
-              width: 20,
-              child: Card(
-                elevation: 1,
-                child: InkWell(
-                  onTap: () {
-                    Navigator.pushNamed(context, WebViewScreen.routeName,
-                        arguments: {
-                          "link": "https://lombokbaratkab.go.id/lhkpn/"
-                        });
-                  },
-                  child: Column(
-                    children: const <Widget>[Text("LHKPN")],
-                  ),
-                ),
-              ),
-            );
-          } else if (index == 3) {
-            return SizedBox(
-              height: 20,
-              width: 20,
-              child: Card(
-                elevation: 1,
-                child: InkWell(
-                  onTap: () {
-                    Navigator.pushNamed(context, WebViewScreen.routeName,
-                        arguments: {
-                          "link": "https://jdih.lombokbaratkab.go.id/"
-                        });
-                  },
-                  child: Column(
-                    children: const <Widget>[Text("JDIH")],
-                  ),
-                ),
-              ),
-            );
-          } else if (index == 4) {
-            return SizedBox(
-              height: 20,
-              width: 20,
-              child: Card(
-                elevation: 1,
-                child: InkWell(
-                  onTap: () {
-                    Navigator.pushNamed(
-                        context, WebViewScreen.routeName, arguments: {
-                      "link": "http://sakip.lombokbaratkab.go.id/portal/home"
-                    });
-                  },
-                  child: Column(
-                    children: const <Widget>[Text("SAKIP")],
-                  ),
-                ),
-              ),
-            );
-          } else {
-            return SizedBox(
-              height: 20,
-              width: 20,
-              child: Card(
-                elevation: 1,
-                child: InkWell(
-                  onTap: () {},
-                  child: Column(
-                    children: const <Widget>[Text("PPID")],
-                  ),
-                ),
-              ),
-            );
-          }
+            ),
+          );
         }),
       ),
     );
