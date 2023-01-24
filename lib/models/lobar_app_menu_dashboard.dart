@@ -1,3 +1,4 @@
+import 'package:ppid_flutter/screens/opd_screen/opd_list_screen.dart';
 import 'package:ppid_flutter/screens/screen.dart';
 
 final List<Map<String, dynamic>> appMenu = [
@@ -40,4 +41,5 @@ final List<Map<String, dynamic>> appMenu = [
     'routeName': WebViewScreen.routeName,
     'arguments': {'link': 'https://ekinerja-asn.lombokbaratkab.go.id/'}
   },
+  {'app_name': 'OPD', 'routeName': OpdListScreen.routeName},
 ];

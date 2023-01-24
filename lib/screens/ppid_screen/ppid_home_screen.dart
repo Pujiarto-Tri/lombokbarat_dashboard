@@ -25,7 +25,9 @@ class PpidScreen extends StatelessWidget {
           children: const <Widget>[
             SearchDocument(),
             Expanded(
-              child: SingleChildScrollView(child: LatestDocument()),
+              child: SingleChildScrollView(
+                child: LatestDocument(),
+              ),
             ),
           ],
         ),

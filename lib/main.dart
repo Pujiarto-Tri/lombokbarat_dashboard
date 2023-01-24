@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ppid_flutter/screens/opd_screen/opd_list_screen.dart';
 import 'screens/screen.dart';
 
 void main() {
@@ -11,7 +12,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Lombok Barat Dashboard',
       theme: ThemeData(
           useMaterial3: true,
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue.shade900)),
@@ -25,6 +26,7 @@ class MyApp extends StatelessWidget {
             const LaporanLayananScreen(),
         DashboardScreen.routeName: (context) => const DashboardScreen(),
         WebViewScreen.routeName: (context) => const WebViewScreen(),
+        OpdListScreen.routeName: (context) => const OpdListScreen(),
       },
     );
   }
