@@ -7,13 +7,10 @@ class MenuDashboard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child: GridView.count(
-        crossAxisCount: 4, // 3 columns
+      child: ListView(
         children: List.generate(opdLink.length, (index) {
           final lobarAppMenu = opdLink[index];
           return SizedBox(
-            height: 20,
-            width: 20,
             child: Card(
               elevation: 1,
               child: InkWell(
