@@ -140,7 +140,64 @@ class MenuDashboard extends StatelessWidget {
                         });
                   },
                   child: Column(
-                    children: const <Widget>[Text("webview")],
+                    children: const <Widget>[Text("LPSE")],
+                  ),
+                ),
+              ),
+            );
+          } else if (index == 2) {
+            return SizedBox(
+              height: 20,
+              width: 20,
+              child: Card(
+                elevation: 1,
+                child: InkWell(
+                  onTap: () {
+                    Navigator.pushNamed(context, WebViewScreen.routeName,
+                        arguments: {
+                          "link": "https://lombokbaratkab.go.id/lhkpn/"
+                        });
+                  },
+                  child: Column(
+                    children: const <Widget>[Text("LHKPN")],
+                  ),
+                ),
+              ),
+            );
+          } else if (index == 3) {
+            return SizedBox(
+              height: 20,
+              width: 20,
+              child: Card(
+                elevation: 1,
+                child: InkWell(
+                  onTap: () {
+                    Navigator.pushNamed(context, WebViewScreen.routeName,
+                        arguments: {
+                          "link": "https://jdih.lombokbaratkab.go.id/"
+                        });
+                  },
+                  child: Column(
+                    children: const <Widget>[Text("JDIH")],
+                  ),
+                ),
+              ),
+            );
+          } else if (index == 4) {
+            return SizedBox(
+              height: 20,
+              width: 20,
+              child: Card(
+                elevation: 1,
+                child: InkWell(
+                  onTap: () {
+                    Navigator.pushNamed(
+                        context, WebViewScreen.routeName, arguments: {
+                      "link": "http://sakip.lombokbaratkab.go.id/portal/home"
+                    });
+                  },
+                  child: Column(
+                    children: const <Widget>[Text("SAKIP")],
                   ),
                 ),
               ),

@@ -1,73 +1,3 @@
-// // ignore_for_file: depend_on_referenced_packages
-
-// import 'package:flutter/material.dart';
-// import 'package:webview_flutter/webview_flutter.dart';
-// import 'package:webview_flutter_android/webview_flutter_android.dart';
-// import 'package:webview_flutter_wkwebview/webview_flutter_wkwebview.dart';
-
-// class WebViewScreen extends StatefulWidget {
-//   const WebViewScreen({super.key});
-
-//   static const routeName = '/webview';
-
-//   @override
-//   State<WebViewScreen> createState() => _WebViewScreenState();
-// }
-
-// class _WebViewScreenState extends State<WebViewScreen> {
-//   WebViewController controller = WebViewController()
-//     ..setJavaScriptMode(JavaScriptMode.unrestricted)
-//     ..setBackgroundColor(const Color(0x00000000))
-//     ..setNavigationDelegate(
-//       NavigationDelegate(
-//         onProgress: (int progress) {
-//           // Update loading bar.
-//         },
-//         onPageStarted: (String url) {},
-//         onPageFinished: (String url) {},
-//         onWebResourceError: (WebResourceError error) {},
-//         onNavigationRequest: (NavigationRequest request) {
-//           if (request.url.startsWith('https://www.youtube.com/')) {
-//             return NavigationDecision.prevent;
-//           }
-//           return NavigationDecision.navigate;
-//         },
-//       ),
-//     )
-//     ..loadRequest(Uri.parse('https://flutter.dev'));
-
-//   @override
-//   Widget build(BuildContext context) {
-//     late final PlatformWebViewControllerCreationParams params;
-//     if (WebViewPlatform.instance is WebKitWebViewPlatform) {
-//       params = WebKitWebViewControllerCreationParams(
-//         allowsInlineMediaPlayback: true,
-//         mediaTypesRequiringUserAction: const <PlaybackMediaTypes>{},
-//       );
-//     } else {
-//       params = const PlatformWebViewControllerCreationParams();
-//     }
-
-//     final WebViewController controller =
-//         WebViewController.fromPlatformCreationParams(params);
-// // ···
-//     if (controller.platform is AndroidWebViewController) {
-//       AndroidWebViewController.enableDebugging(true);
-//       (controller.platform as AndroidWebViewController)
-//           .setMediaPlaybackRequiresUserGesture(false);
-//     }
-
-//     return Scaffold(
-//       appBar: AppBar(
-//         iconTheme: const IconThemeData(color: Colors.black),
-//         backgroundColor: Colors.transparent,
-//         elevation: 0,
-//       ),
-//       body: WebViewWidget(controller: controller),
-//     );
-//   }
-// }
-
 // Copyright 2013 The Flutter Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
@@ -159,9 +89,11 @@ class _WebViewScreenState extends State<WebViewScreen> {
   String link = "https://flutter.dev";
 
   @override
-  void initState() {
-    super.initState();
-
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    final args =
+        ModalRoute.of(context)!.settings.arguments as Map<String, String>;
+    link = args['link']!;
     // #docregion platform_features
     late final PlatformWebViewControllerCreationParams params;
     if (WebViewPlatform.instance is WebKitWebViewPlatform) {
@@ -233,13 +165,10 @@ Page resource error:
 
   @override
   Widget build(BuildContext context) {
-    final routeArgs =
-        ModalRoute.of(context)!.settings.arguments as Map<String, String>;
-    link = routeArgs['link']!;
     return Scaffold(
       backgroundColor: Colors.green,
       appBar: AppBar(
-        title: const Text('Flutter WebView example'),
+        title: const Text(''),
         // This drop down menu demonstrates that Flutter widgets can be shown over the web view.
         actions: <Widget>[
           NavigationControls(webViewController: _controller),
@@ -247,21 +176,21 @@ Page resource error:
         ],
       ),
       body: WebViewWidget(controller: _controller),
-      floatingActionButton: favoriteButton(),
+      // floatingActionButton: favoriteButton(),
     );
   }
 
-  Widget favoriteButton() {
-    return FloatingActionButton(
-      onPressed: () async {
-        final String? url = await _controller.currentUrl();
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Favorited $url')),
-        );
-      },
-      child: const Icon(Icons.favorite),
-    );
-  }
+  // Widget favoriteButton() {
+  //   return FloatingActionButton(
+  //     onPressed: () async {
+  //       final String? url = await _controller.currentUrl();
+  //       ScaffoldMessenger.of(context).showSnackBar(
+  //         SnackBar(content: Text('Favorited $url')),
+  //       );
+  //     },
+  //     child: const Icon(Icons.favorite),
+  //   );
+  // }
 }
 
 enum MenuOptions {
