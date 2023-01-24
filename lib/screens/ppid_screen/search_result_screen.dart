@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:ppid_flutter/screens/document_screen.dart';
-import '../models/ppid_api_model.dart';
-import 'home_screen.dart';
+import 'package:ppid_flutter/screens/screen.dart';
+import 'package:ppid_flutter/models/ppid_api_model.dart';
 
 class SearchResultsScreen extends StatefulWidget {
   final Ppid ppid;

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'home_screen.dart';
+import 'package:ppid_flutter/screens/screen.dart';
 
 class DocumentScreen extends StatelessWidget {
   const DocumentScreen({Key? key}) : super(key: key);
@@ -112,10 +112,12 @@ class _DocumentDetail extends StatelessWidget {
             height: 10,
           ),
           ElevatedButton(
-            style: ElevatedButton.styleFrom(
-                    foregroundColor: Colors.blue.shade100,
-                    backgroundColor: Colors.blue.shade900,
-                  ),onPressed: () {}, child: const Text("Download")),
+              style: ElevatedButton.styleFrom(
+                foregroundColor: Colors.blue.shade100,
+                backgroundColor: Colors.blue.shade900,
+              ),
+              onPressed: () {},
+              child: const Text("Download")),
         ],
       ),
     );

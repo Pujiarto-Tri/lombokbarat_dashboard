@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue.shade900)),
       initialRoute: '/',
       routes: {
-        HomeScreen.routeName: (context) => const HomeScreen(),
+        PpidScreen.routeName: (context) => const PpidScreen(),
         DocumentScreen.routeName: (context) => const DocumentScreen(),
         PermohonanInformasiScreen.routeName: (context) =>
             const PermohonanInformasiScreen(),

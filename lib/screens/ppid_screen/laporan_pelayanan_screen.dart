@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../widgets/bottom_nav_bar.dart';
+import 'package:ppid_flutter/widgets/bottom_nav_bar.dart';
 
 class LaporanLayananScreen extends StatelessWidget {
   const LaporanLayananScreen({Key? key}) : super(key: key);

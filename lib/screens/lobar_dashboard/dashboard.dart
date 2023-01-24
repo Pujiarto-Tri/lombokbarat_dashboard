@@ -16,11 +16,7 @@ class DashboardScreen extends StatelessWidget {
             const EdgeInsets.only(top: 20, left: 20, right: 20, bottom: 20),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            const TitleDashboard(),
-            const NewsDashboard(),
-            MenuDashboard()
-          ],
+          children: const [TitleDashboard(), NewsDashboard(), MenuDashboard()],
         ),
       ),
     );
@@ -127,7 +123,7 @@ class MenuDashboard extends StatelessWidget {
                       arguments: lobarAppMenu['arguments']);
                 },
                 child: Column(
-                  children: <Widget>[Text(lobarAppMenu['text'])],
+                  children: <Widget>[Text(lobarAppMenu['app_name'])],
                 ),
               ),
             ),

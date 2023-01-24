@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import '../models/ppid_api_model.dart';
+import 'package:ppid_flutter/models/ppid_api_model.dart';
 // import '../widgets/bottom_nav_bar.dart';
-import 'screen.dart';
+import 'package:ppid_flutter/screens/screen.dart';
 
-class HomeScreen extends StatelessWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+class PpidScreen extends StatelessWidget {
+  const PpidScreen({Key? key}) : super(key: key);
 
   static const routeName = '/ppid';
 
