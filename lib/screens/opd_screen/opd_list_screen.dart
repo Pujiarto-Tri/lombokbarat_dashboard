@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:ppid_flutter/models/opd_link_data.dart';
 
 class OpdListScreen extends StatelessWidget {
-  const OpdListScreen({Key? key}) : super(key: key);
+  const OpdListScreen({super.key});
 
   static const routeName = '/opd';
 
@@ -37,26 +37,52 @@ class OpdLinkList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: ListView(
-        children: List.generate(opdLink.length, (index) {
-          final link = opdLink[index];
-          return SizedBox(
-            child: Card(
-              elevation: 1,
-              child: InkWell(
-                onTap: () {
-                  Navigator.pushNamed(context, link['routeName'],
-                      arguments: link['arguments']);
-                },
-                child: Column(
-                  children: <Widget>[Text(link['web_name'])],
-                ),
+    var theme = Theme.of(context);
+    var titleFont = theme.textTheme.bodyLarge!.copyWith(
+        color: theme.colorScheme.onPrimaryContainer,
+        fontWeight: FontWeight.bold);
+    var contentFont = theme.textTheme.bodyMedium!
+        .copyWith(color: theme.colorScheme.onPrimaryContainer);
+    return Column(
+      children: List.generate(opdLink.length, (index) {
+        final link = opdLink[index];
+        return Card(
+          elevation: 1,
+          child: Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: InkWell(
+              onTap: () {
+                Navigator.pushNamed(context, link['routeName'],
+                    arguments: link['arguments']);
+              },
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Text(
+                          link['web_name'],
+                          style: titleFont,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                        const SizedBox(
+                          height: 4,
+                        ),
+                        Text(
+                          link['web_name_short'],
+                          style: contentFont,
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
               ),
             ),
-          );
-        }),
-      ),
+          ),
+        );
+      }),
     );
   }
 }
@@ -67,7 +93,7 @@ class OpdTitle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: MediaQuery.of(context).size.height * 0.25,
+      height: MediaQuery.of(context).size.height * 0.1,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.center,
