@@ -43,6 +43,8 @@ dependencies:
   json_annotation: ^4.7.0
   webview_flutter: ^4.0.1
   path_provider: ^2.0.11
+  web_scraper: ^0.1.4
+  html: ^0.15.1
   
 
 
