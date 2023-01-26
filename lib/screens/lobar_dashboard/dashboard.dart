@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:ppid_flutter/models/lobar_app_menu_dashboard.dart';
-import 'package:web_scraper/web_scraper.dart';
+import 'package:http/http.dart' as http;
+import 'package:html/dom.dart' as dom;
+import 'package:ppid_flutter/screens/screen.dart';
 
 class DashboardScreen extends StatelessWidget {
   const DashboardScreen({Key? key}) : super(key: key);
@@ -10,7 +12,6 @@ class DashboardScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // bottomNavigationBar: const BottomNavBar(index: 0),
       body: Padding(
         padding:
             const EdgeInsets.only(top: 20, left: 20, right: 20, bottom: 20),
@@ -62,23 +63,29 @@ class _NewsDashboardState extends State<NewsDashboard> {
   PageController _controller =
       PageController(initialPage: 0, viewportFraction: 0.8);
 
-  final webScraper = WebScraper('https://lombokbaratkab.go.id/');
-
-  List<Map<String, dynamic>>? newsTitle;
-  List<Map<String, dynamic>>? newsContent;
-  List<Map<String, dynamic>>? newsPicture;
+  List newsLinks = [];
+  List<String> newsTitles = [];
 
   void fetchNews() async {
-    // Loads web page and downloads into local state of library
-    if (await webScraper.loadWebPage('/category/berita-terbaru/')) {
-      setState(() {
-        // getElement takes the address of html tag/element and attributes you want to scrap from website
-        // it will return the attributes in the same order passed
-        newsTitle =
-            webScraper.getElement('header.article-header > h3 > a', ['href']);
-        newsContent = webScraper.getElement('div.article-body', ['class']);
-      });
-    }
+    final url =
+        Uri.parse('https://lombokbaratkab.go.id/category/berita-terbaru/amp/');
+    final response = await http.get(url);
+    dom.Document html = dom.Document.html(response.body);
+
+    final newsTitles = html
+        .querySelectorAll('h2.amp-wp-title > a')
+        .map((element) => element.innerHtml.trim())
+        .toList();
+
+    final newsLinks = html
+        .querySelectorAll('h2.amp-wp-title > a')
+        .map((element) => element.attributes['href'])
+        .toList();
+
+    setState(() {
+      this.newsTitles = newsTitles;
+      this.newsLinks = newsLinks;
+    });
   }
 
   @override
@@ -91,44 +98,38 @@ class _NewsDashboardState extends State<NewsDashboard> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: newsTitle == null
-          ? const Center(
-              child: Padding(
-                padding: EdgeInsets.all(20.0),
-                child: CircularProgressIndicator(),
-              ),
-            )
-          : Column(
-              children: [
-                SizedBox(
-                  height: 200,
-                  child: PageView.builder(
-                    controller: _controller,
-                    itemCount: 6, // number of cards
-                    scrollDirection: Axis.horizontal,
-                    physics: const PageScrollPhysics(),
-                    itemBuilder: (BuildContext context, int index) {
-                      Map<String, dynamic> attributes =
-                          newsTitle![index]['attributes'];
-                      return Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Card(
-                          elevation: 2,
-                          child: InkWell(
-                            onTap: () {
-                              // handle onTap event here
-                            },
-                            child: Column(
-                              children: <Widget>[Text(attributes['href'])],
-                            ),
-                          ),
-                        ),
-                      );
-                    },
+      child: Column(
+        children: [
+          SizedBox(
+            height: 200,
+            child: PageView.builder(
+              controller: _controller,
+              itemCount: 6, // number of cards
+              scrollDirection: Axis.horizontal,
+              physics: const PageScrollPhysics(),
+              itemBuilder: (context, index) {
+                final newsTitle = newsTitles[index];
+                final newsLink = newsLinks[index];
+                return Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Card(
+                    elevation: 2,
+                    child: InkWell(
+                      onTap: () {
+                        Navigator.pushNamed(context, WebViewScreen.routeName,
+                            arguments: {'link': newsLink});
+                      },
+                      child: Column(
+                        children: <Widget>[Text(newsTitle)],
+                      ),
+                    ),
                   ),
-                ),
-              ],
+                );
+              },
             ),
+          ),
+        ],
+      ),
     );
   }
 }
