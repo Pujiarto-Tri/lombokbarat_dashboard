@@ -1,8 +1,24 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
-import 'package:ppid_flutter/screens/opd_screen/opd_list_screen.dart';
 import 'screens/screen.dart';
 
+//================== W A R N I N G ===========================//
+//  THIS CLASS FOR TESTING PURPOSES ONLY //
+class MyHttpOverrides extends HttpOverrides {
+  @override
+  HttpClient createHttpClient(SecurityContext? context) {
+    return super.createHttpClient(context)
+      ..badCertificateCallback =
+          (X509Certificate cert, String host, int port) => true;
+  }
+}
+//============== END OF WARNING ==============================//
+
 void main() {
+  //================ W A R N I N G=============================//
+  HttpOverrides.global = MyHttpOverrides();
+  //==========================================================//
   runApp(const MyApp());
 }
 

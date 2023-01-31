@@ -97,7 +97,7 @@ class _NewsDashboardState extends State<NewsDashboard> {
           .map((element) => element.attributes['src'])
           .toList();
 
-      print('Count : ${titles.length}');
+      // print('Count : ${titles.length}');
 
       setState(() {
         isLoading = false;
@@ -115,6 +115,7 @@ class _NewsDashboardState extends State<NewsDashboard> {
         isLoading = false;
         isError = true;
       });
+      print(e);
       return [];
     }
   }
@@ -130,15 +131,19 @@ class _NewsDashboardState extends State<NewsDashboard> {
             ),
           if (isError)
             Center(
-              child: ElevatedButton(
-                child: const Text("Try Again"),
-                onPressed: () {
-                  setState(() {
-                    isLoading = true;
-                    isError = false;
-                  });
-                  fetchNews();
-                },
+              child: Column(
+                children: [
+                  ElevatedButton(
+                    child: const Text("Try Again"),
+                    onPressed: () {
+                      setState(() {
+                        isLoading = true;
+                        isError = false;
+                      });
+                      fetchNews();
+                    },
+                  ),
+                ],
               ),
             ),
           if (!isLoading && !isError)
