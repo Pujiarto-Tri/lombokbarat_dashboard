@@ -4,8 +4,6 @@ import 'package:ppid_flutter/models/news_model.dart';
 import 'package:ppid_flutter/screens/screen.dart';
 import 'package:html/dom.dart' as dom;
 import 'package:http/http.dart' as http;
-import 'dart:io';
-import 'package:flutter/services.dart';
 
 class DashboardScreen extends StatelessWidget {
   const DashboardScreen({Key? key}) : super(key: key);
@@ -67,6 +65,8 @@ class _NewsDashboardState extends State<NewsDashboard> {
       PageController(initialPage: 0, viewportFraction: 0.8);
 
   List<Articles> articles = [];
+  bool isLoading = true;
+  bool isError = false;
 
   @override
   void initState() {
@@ -76,36 +76,47 @@ class _NewsDashboardState extends State<NewsDashboard> {
   }
 
   Future fetchNews() async {
-    final url =
-        Uri.parse('https://lombokbaratkab.go.id/category/berita-terbaru/amp/');
-    final response = await http.get(url);
-    dom.Document html = dom.Document.html(response.body);
+    try {
+      final url = Uri.parse(
+          'https://lombokbaratkab.go.id/category/berita-terbaru/amp/');
+      final response = await http.get(url);
+      dom.Document html = dom.Document.html(response.body);
 
-    final titles = html
-        .querySelectorAll('div.amp-wp-post-content > h2 > a')
-        .map((e) => e.innerHtml.trim())
-        .toList();
+      final titles = html
+          .querySelectorAll('div.amp-wp-post-content > h2 > a')
+          .map((element) => element.innerHtml.trim())
+          .toList();
 
-    final urls = html
-        .querySelectorAll('div.amp-wp-post-content > h2 > a')
-        .map((e) => e.attributes['href'])
-        .toList();
+      final urls = html
+          .querySelectorAll('div.amp-wp-post-content > h2 > a')
+          .map((element) => element.attributes['href'])
+          .toList();
 
-    final urlImages = html
-        .querySelectorAll('div.home-post_image > a > amp-img')
-        .map((e) => e.attributes['src'])
-        .toList();
+      final urlImages = html
+          .querySelectorAll('div.home-post_image > a > amp-img')
+          .map((element) => element.attributes['src'])
+          .toList();
 
-    setState(() {
-      articles = List.generate(
-        titles.length,
-        (index) => Articles(
-          title: titles[index],
-          url: urls[index]!,
-          urlImage: urlImages[index]!,
-        ),
-      );
-    });
+      print('Count : ${titles.length}');
+
+      setState(() {
+        isLoading = false;
+        articles = List.generate(
+          titles.length,
+          (index) => Articles(
+            title: titles[index],
+            url: urls[index]!,
+            urlImage: urlImages[index]!,
+          ),
+        );
+      });
+    } catch (e) {
+      setState(() {
+        isLoading = false;
+        isError = true;
+      });
+      return [];
+    }
   }
 
   @override
@@ -113,40 +124,58 @@ class _NewsDashboardState extends State<NewsDashboard> {
     return SafeArea(
       child: Column(
         children: [
-          SizedBox(
-            height: 200,
-            child: PageView.builder(
-              controller: _controller,
-              itemCount: articles.length, // number of cards
-              scrollDirection: Axis.horizontal,
-              physics: const PageScrollPhysics(),
-              itemBuilder: (context, index) {
-                final article = articles[index];
-                return Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Card(
-                    elevation: 2,
-                    child: InkWell(
-                      onTap: () {
-                        Navigator.pushNamed(context, WebViewScreen.routeName,
-                            arguments: {'link': article.url});
-                      },
-                      child: Column(
-                        children: <Widget>[
-                          Image.network(
-                            article.urlImage,
-                            width: 50,
-                            fit: BoxFit.fitHeight,
-                          ),
-                          Text(article.title),
-                        ],
+          if (isLoading)
+            const Center(
+              child: CircularProgressIndicator(),
+            ),
+          if (isError)
+            Center(
+              child: ElevatedButton(
+                child: const Text("Try Again"),
+                onPressed: () {
+                  setState(() {
+                    isLoading = true;
+                    isError = false;
+                  });
+                  fetchNews();
+                },
+              ),
+            ),
+          if (!isLoading && !isError)
+            SizedBox(
+              height: 200,
+              child: PageView.builder(
+                controller: _controller,
+                itemCount: articles.length, // number of cards
+                scrollDirection: Axis.horizontal,
+                physics: const PageScrollPhysics(),
+                itemBuilder: (context, index) {
+                  final article = articles[index];
+                  return Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Card(
+                      elevation: 2,
+                      child: InkWell(
+                        onTap: () {
+                          Navigator.pushNamed(context, WebViewScreen.routeName,
+                              arguments: {'link': article.url});
+                        },
+                        child: Column(
+                          children: <Widget>[
+                            Image.network(
+                              article.urlImage,
+                              width: 50,
+                              fit: BoxFit.fitHeight,
+                            ),
+                            Text(article.title),
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                );
-              },
+                  );
+                },
+              ),
             ),
-          ),
         ],
       ),
     );
