@@ -148,7 +148,7 @@ class _NewsDashboardState extends State<NewsDashboard> {
             ),
           if (!isLoading && !isError)
             SizedBox(
-              height: 200,
+              height: 300,
               child: PageView.builder(
                 controller: _controller,
                 itemCount: articles.length, // number of cards
@@ -160,19 +160,55 @@ class _NewsDashboardState extends State<NewsDashboard> {
                     padding: const EdgeInsets.all(8.0),
                     child: Card(
                       elevation: 2,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                      ),
                       child: InkWell(
                         onTap: () {
                           Navigator.pushNamed(context, WebViewScreen.routeName,
                               arguments: {'link': article.url});
                         },
-                        child: Column(
-                          children: <Widget>[
-                            Image.network(
-                              article.urlImage,
-                              width: 50,
-                              fit: BoxFit.fitHeight,
+                        child: Stack(
+                          children: [
+                            Container(
+                              height: 300,
+                              width: double.infinity,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10.0),
+                                  image: DecorationImage(
+                                      fit: BoxFit.cover,
+                                      image: NetworkImage(article.urlImage))),
                             ),
-                            Text(article.title),
+                            Container(
+                              height: 300,
+                              width: double.infinity,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10.0),
+                                gradient: LinearGradient(
+                                  begin: Alignment.bottomCenter,
+                                  end: Alignment.topCenter,
+                                  colors: [
+                                    Colors.black.withOpacity(0.6),
+                                    Colors.transparent,
+                                  ],
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Align(
+                                alignment: Alignment.bottomLeft,
+                                child: Text(
+                                  article.title,
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: const TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ),
+                            ),
                           ],
                         ),
                       ),
