@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:ppid_flutter/models/lobar_app_menu_dashboard.dart';
-import 'package:http/http.dart' as http;
-import 'package:html/dom.dart' as dom;
+import 'package:ppid_flutter/models/news_model.dart';
 import 'package:ppid_flutter/screens/screen.dart';
+import 'package:html/dom.dart' as dom;
+import 'package:http/http.dart' as http;
 
 class DashboardScreen extends StatelessWidget {
   const DashboardScreen({Key? key}) : super(key: key);
@@ -63,36 +64,46 @@ class _NewsDashboardState extends State<NewsDashboard> {
   PageController _controller =
       PageController(initialPage: 0, viewportFraction: 0.8);
 
-  List newsLinks = [];
-  List<String> newsTitles = [];
-
-  void fetchNews() async {
-    final url =
-        Uri.parse('https://lombokbaratkab.go.id/category/berita-terbaru/amp/');
-    final response = await http.get(url);
-    dom.Document html = dom.Document.html(response.body);
-
-    final newsTitles = html
-        .querySelectorAll('h2.amp-wp-title > a')
-        .map((element) => element.innerHtml.trim())
-        .toList();
-
-    final newsLinks = html
-        .querySelectorAll('h2.amp-wp-title > a')
-        .map((element) => element.attributes['href'])
-        .toList();
-
-    setState(() {
-      this.newsTitles = newsTitles;
-      this.newsLinks = newsLinks;
-    });
-  }
+  List<Articles> articles = [];
 
   @override
   void initState() {
     super.initState();
     fetchNews();
     _controller = PageController(initialPage: 0, viewportFraction: 0.8);
+  }
+
+  Future fetchNews() async {
+    final url =
+        Uri.parse('https://lombokbaratkab.go.id/category/berita-terbaru/amp/');
+    final response = await http.get(url);
+    dom.Document html = dom.Document.html(response.body);
+
+    final titles = html
+        .querySelectorAll('div.amp-wp-post-content > h2 > a')
+        .map((e) => e.innerHtml.trim())
+        .toList();
+
+    final urls = html
+        .querySelectorAll('div.amp-wp-post-content > h2 > a')
+        .map((e) => e.attributes['href'])
+        .toList();
+
+    final urlImages = html
+        .querySelectorAll('div.home-post_image > a > amp-img')
+        .map((e) => e.attributes['src'])
+        .toList();
+
+    setState(() {
+      articles = List.generate(
+        titles.length,
+        (index) => Articles(
+          title: titles[index],
+          url: urls[index]!,
+          urlImage: urlImages[index]!,
+        ),
+      );
+    });
   }
 
   @override
@@ -104,12 +115,11 @@ class _NewsDashboardState extends State<NewsDashboard> {
             height: 200,
             child: PageView.builder(
               controller: _controller,
-              itemCount: 6, // number of cards
+              itemCount: articles.length, // number of cards
               scrollDirection: Axis.horizontal,
               physics: const PageScrollPhysics(),
               itemBuilder: (context, index) {
-                final newsTitle = newsTitles[index];
-                final newsLink = newsLinks[index];
+                final article = articles[index];
                 return Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Card(
@@ -117,10 +127,17 @@ class _NewsDashboardState extends State<NewsDashboard> {
                     child: InkWell(
                       onTap: () {
                         Navigator.pushNamed(context, WebViewScreen.routeName,
-                            arguments: {'link': newsLink});
+                            arguments: {'link': article.url});
                       },
                       child: Column(
-                        children: <Widget>[Text(newsTitle)],
+                        children: <Widget>[
+                          Image.network(
+                            article.urlImage,
+                            width: 50,
+                            fit: BoxFit.fitHeight,
+                          ),
+                          Text(article.title),
+                        ],
                       ),
                     ),
                   ),
