@@ -13,13 +13,40 @@ class DashboardScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Padding(
-        padding:
-            const EdgeInsets.only(top: 20, left: 20, right: 20, bottom: 20),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: const [TitleDashboard(), NewsDashboard(), MenuDashboard()],
-        ),
+      body: Stack(
+        children: [
+          Container(
+            height: MediaQuery.of(context).size.height * 0.3,
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage('assets/images/kantor_bupati.jpg'),
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+          Container(
+            height: MediaQuery.of(context).size.height * 0.3,
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.bottomCenter,
+                end: Alignment.topCenter,
+                colors: [Colors.white, Colors.white.withOpacity(0.0)],
+              ),
+            ),
+          ),
+          Padding(
+            padding:
+                const EdgeInsets.only(top: 20, left: 20, right: 20, bottom: 20),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: const [
+                TitleDashboard(),
+                NewsDashboard(),
+                MenuDashboard()
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -36,16 +63,15 @@ class TitleDashboard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text(
-            'Kabupaten Lombok Barat',
-            style: Theme.of(context)
-                .textTheme
-                .headline5!
-                .copyWith(color: Colors.black, fontWeight: FontWeight.w900),
-          ),
-          const SizedBox(
-            height: 7,
-          ),
+          Stack(
+            children: [
+              Text(
+                'Kabupaten Lombok Barat',
+                style: Theme.of(context).textTheme.headline6!.copyWith(
+                    color: Colors.blue.shade900, fontWeight: FontWeight.w900),
+              ),
+            ],
+          )
         ],
       ),
     );
@@ -234,8 +260,8 @@ class MenuDashboard extends StatelessWidget {
         children: List.generate(appMenu.length, (index) {
           final lobarAppMenu = appMenu[index];
           return SizedBox(
-            height: 20,
-            width: 20,
+            height: 60,
+            width: 60,
             child: Card(
               elevation: 1,
               child: InkWell(
@@ -244,7 +270,20 @@ class MenuDashboard extends StatelessWidget {
                       arguments: lobarAppMenu['arguments']);
                 },
                 child: Column(
-                  children: <Widget>[Text(lobarAppMenu['app_name'])],
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    SizedBox(
+                      height: 60,
+                      width: 60,
+                      child: Image(image: AssetImage(lobarAppMenu['icon'])),
+                    ),
+                    Text(
+                      lobarAppMenu['app_name'],
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(
+                          fontSize: 12, fontWeight: FontWeight.bold),
+                    ),
+                  ],
                 ),
               ),
             ),
