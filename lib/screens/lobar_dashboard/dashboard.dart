@@ -35,8 +35,7 @@ class DashboardScreen extends StatelessWidget {
             ),
           ),
           Padding(
-            padding:
-                const EdgeInsets.only(top: 20, left: 20, right: 20, bottom: 20),
+            padding: const EdgeInsets.only(top: 20, bottom: 10),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: const [
@@ -58,16 +57,16 @@ class TitleDashboard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: MediaQuery.of(context).size.height * 0.2,
+      height: MediaQuery.of(context).size.height * 0.12,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.end,
         children: [
           Stack(
             children: [
               Text(
                 'Kabupaten Lombok Barat',
-                style: Theme.of(context).textTheme.headline6!.copyWith(
+                style: Theme.of(context).textTheme.headlineMedium!.copyWith(
                     color: Colors.blue.shade900, fontWeight: FontWeight.w900),
               ),
             ],
@@ -151,14 +150,61 @@ class _NewsDashboardState extends State<NewsDashboard> {
     return SafeArea(
       child: Column(
         children: [
+          Text(
+            'Berita Terbaru',
+            style: Theme.of(context)
+                .textTheme
+                .bodyMedium!
+                .copyWith(color: Colors.black, fontWeight: FontWeight.w900),
+          ),
+          const SizedBox(
+            height: 8,
+          ),
           if (isLoading)
-            const Center(
-              child: CircularProgressIndicator(),
+            Column(
+              children: [
+                const SizedBox(
+                  height: 30,
+                ),
+                Container(
+                  height: 110,
+                  width: 125,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(10),
+                    boxShadow: const [
+                      BoxShadow(
+                        color: Colors.grey,
+                        offset: Offset(5, 5),
+                        blurRadius: 10,
+                      ),
+                    ],
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: const [
+                      CircularProgressIndicator(),
+                      SizedBox(height: 10),
+                      Padding(
+                        padding: EdgeInsets.all(5),
+                        child: Text("Loading Data..."),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(
+                  height: 30,
+                ),
+              ],
             ),
           if (isError)
             Center(
               child: Column(
                 children: [
+                  const Text("Something wrong when trying to load the data!"),
+                  const SizedBox(
+                    height: 50,
+                  ),
                   ElevatedButton(
                     child: const Text("Try Again"),
                     onPressed: () {
@@ -169,12 +215,15 @@ class _NewsDashboardState extends State<NewsDashboard> {
                       fetchNews();
                     },
                   ),
+                  const SizedBox(
+                    height: 50,
+                  ),
                 ],
               ),
             ),
           if (!isLoading && !isError)
             SizedBox(
-              height: 300,
+              height: 200,
               child: PageView.builder(
                 controller: _controller,
                 itemCount: articles.length, // number of cards
@@ -197,7 +246,7 @@ class _NewsDashboardState extends State<NewsDashboard> {
                         child: Stack(
                           children: [
                             Container(
-                              height: 300,
+                              height: 200,
                               width: double.infinity,
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(10.0),
@@ -206,7 +255,7 @@ class _NewsDashboardState extends State<NewsDashboard> {
                                       image: NetworkImage(article.urlImage))),
                             ),
                             Container(
-                              height: 300,
+                              height: 200,
                               width: double.infinity,
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(10.0),
@@ -243,6 +292,7 @@ class _NewsDashboardState extends State<NewsDashboard> {
                 },
               ),
             ),
+          const Divider(),
         ],
       ),
     );
