@@ -77,7 +77,10 @@ flutter:
   #   - images/a_dot_ham.jpeg
   assets:
     - assets/images/app_icon/logo-LPSE-3.png
+    - assets/images/app_icon/logo_ppid.png
+    - assets/images/app_icon/logo_elhkpn.png
     - assets/images/kantor_bupati.jpg
+
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

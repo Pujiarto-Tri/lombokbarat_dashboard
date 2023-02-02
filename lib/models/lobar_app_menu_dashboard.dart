@@ -4,7 +4,7 @@ final List<Map<String, dynamic>> appMenu = [
   {
     'app_name': 'PPID',
     'routeName': PpidScreen.routeName,
-    'icon': 'assets/images/app_icon/logo-LPSE-3.png'
+    'icon': 'assets/images/app_icon/logo_ppid.png'
   },
   {
     'app_name': 'LPSE',
@@ -16,7 +16,7 @@ final List<Map<String, dynamic>> appMenu = [
     'app_name': 'LHKPN',
     'routeName': WebViewScreen.routeName,
     'arguments': {'link': 'https://lombokbaratkab.go.id/lhkpn/'},
-    'icon': 'assets/images/app_icon/logo-LPSE-3.png'
+    'icon': 'assets/images/app_icon/logo_elhkpn.png'
   },
   {
     'app_name': 'JDIH',

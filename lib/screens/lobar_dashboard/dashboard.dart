@@ -17,7 +17,7 @@ class DashboardScreen extends StatelessWidget {
         children: [
           Container(
             height: MediaQuery.of(context).size.height * 0.3,
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               image: DecorationImage(
                 image: AssetImage('assets/images/kantor_bupati.jpg'),
                 fit: BoxFit.cover,
@@ -141,7 +141,7 @@ class _NewsDashboardState extends State<NewsDashboard> {
         isLoading = false;
         isError = true;
       });
-      print(e);
+      // print(e);
       return [];
     }
   }
