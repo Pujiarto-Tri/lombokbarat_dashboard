@@ -102,7 +102,7 @@ class OpdTitle extends StatelessWidget {
             'OPD Kabupaten Lombok Barat',
             style: Theme.of(context)
                 .textTheme
-                .headline5!
+                .headlineSmall!
                 .copyWith(color: Colors.black, fontWeight: FontWeight.w900),
           ),
           const SizedBox(

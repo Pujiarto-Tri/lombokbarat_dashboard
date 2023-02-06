@@ -132,6 +132,7 @@ class NavigationControls extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final scaffold = ScaffoldMessenger.of(context);
     return Row(
       children: <Widget>[
         IconButton(
@@ -140,9 +141,8 @@ class NavigationControls extends StatelessWidget {
             if (await webViewController.canGoBack()) {
               await webViewController.goBack();
             } else {
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('No back history item')),
-              );
+              scaffold.showSnackBar(
+                  const SnackBar(content: Text('No Back History')));
               return;
             }
           },
@@ -153,9 +153,8 @@ class NavigationControls extends StatelessWidget {
             if (await webViewController.canGoForward()) {
               await webViewController.goForward();
             } else {
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('No forward history item')),
-              );
+              scaffold.showSnackBar(
+                  const SnackBar(content: Text('No Forward History')));
               return;
             }
           },

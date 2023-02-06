@@ -303,40 +303,43 @@ class MenuDashboard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child: GridView.count(
-        crossAxisCount: 4, // 3 columns
-        children: List.generate(appMenu.length, (index) {
-          final lobarAppMenu = appMenu[index];
-          return SizedBox(
-            height: 60,
-            width: 60,
-            child: Card(
-              elevation: 1,
-              child: InkWell(
-                onTap: () {
-                  Navigator.pushNamed(context, lobarAppMenu['routeName'],
-                      arguments: lobarAppMenu['arguments']);
-                },
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    SizedBox(
-                      height: 60,
-                      width: 60,
-                      child: Image(image: AssetImage(lobarAppMenu['icon'])),
-                    ),
-                    Text(
-                      lobarAppMenu['app_name'],
-                      textAlign: TextAlign.center,
-                      style: const TextStyle(
-                          fontSize: 12, fontWeight: FontWeight.bold),
-                    ),
-                  ],
+      child: Padding(
+        padding: const EdgeInsets.all(10.0),
+        child: GridView.count(
+          crossAxisCount: 4, // 3 columns
+          children: List.generate(appMenu.length, (index) {
+            final lobarAppMenu = appMenu[index];
+            return SizedBox(
+              height: 60,
+              width: 60,
+              child: Card(
+                elevation: 1,
+                child: InkWell(
+                  onTap: () {
+                    Navigator.pushNamed(context, lobarAppMenu['routeName'],
+                        arguments: lobarAppMenu['arguments']);
+                  },
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      SizedBox(
+                        height: 60,
+                        width: 60,
+                        child: Image(image: AssetImage(lobarAppMenu['icon'])),
+                      ),
+                      Text(
+                        lobarAppMenu['app_name'],
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(
+                            fontSize: 12, fontWeight: FontWeight.bold),
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          );
-        }),
+            );
+          }),
+        ),
       ),
     );
   }
