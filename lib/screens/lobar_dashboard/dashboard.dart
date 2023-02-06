@@ -35,16 +35,15 @@ class DashboardScreen extends StatelessWidget {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.only(top: 20, bottom: 10),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: const [
-                TitleDashboard(),
-                NewsDashboard(),
-                MenuDashboard()
-              ],
-            ),
-          ),
+              padding: const EdgeInsets.only(top: 20, bottom: 10),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: const [
+                  TitleDashboard(),
+                  NewsDashboard(),
+                  MenuDashboard()
+                ],
+              ))
         ],
       ),
     );
@@ -292,7 +291,6 @@ class _NewsDashboardState extends State<NewsDashboard> {
                 },
               ),
             ),
-          const Divider(),
         ],
       ),
     );
