@@ -264,10 +264,12 @@ class _NewsDashboardState extends State<NewsDashboard> {
                               height: 200,
                               width: double.infinity,
                               decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10.0),
-                                  image: DecorationImage(
-                                      fit: BoxFit.cover,
-                                      image: NetworkImage(article.urlImage))),
+                                borderRadius: BorderRadius.circular(10.0),
+                                image: DecorationImage(
+                                  fit: BoxFit.cover,
+                                  image: NetworkImage(article.urlImage),
+                                ),
+                              ),
                             ),
                             Container(
                               height: 200,
