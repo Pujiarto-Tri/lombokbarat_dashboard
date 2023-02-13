@@ -13,38 +13,48 @@ class DashboardScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(
-        children: [
-          Container(
-            height: MediaQuery.of(context).size.height * 0.3,
-            decoration: const BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage('assets/images/kantor_bupati.jpg'),
-                fit: BoxFit.cover,
+      body: SingleChildScrollView(
+        child: Stack(
+          children: [
+            Container(
+              height: MediaQuery.of(context).size.height * 0.3,
+              decoration: const BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage('assets/images/kantor_bupati.jpg'),
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
-          ),
-          Container(
-            height: MediaQuery.of(context).size.height * 0.3,
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.bottomCenter,
-                end: Alignment.topCenter,
-                colors: [Colors.blue, Colors.white.withOpacity(0.0)],
+            Container(
+              height: MediaQuery.of(context).size.height * 0.3,
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.bottomCenter,
+                  end: Alignment.topCenter,
+                  colors: [Colors.blue, Colors.white.withOpacity(0.0)],
+                ),
               ),
             ),
-          ),
-          Padding(
+            Container(
+              height: 1000,
               padding: const EdgeInsets.only(top: 20, bottom: 10),
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: const [
-                  TitleDashboard(),
-                  NewsDashboard(),
-                  MenuDashboard()
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Flexible(
+                      fit: FlexFit.loose,
+                      child: Column(
+                        children: const [
+                          TitleDashboard(),
+                          NewsDashboard(),
+                          MenuDashboard()
+                        ],
+                      ))
                 ],
-              ))
-        ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -323,40 +333,56 @@ class MenuDashboard extends StatelessWidget {
     return Expanded(
       child: Padding(
         padding: const EdgeInsets.all(10.0),
-        child: GridView.count(
-          crossAxisCount: 4, // 3 columns
-          children: List.generate(appMenu.length, (index) {
-            final lobarAppMenu = appMenu[index];
-            return SizedBox(
-              height: 60,
-              width: 60,
-              child: Card(
-                elevation: 1,
-                child: InkWell(
-                  onTap: () {
-                    Navigator.pushNamed(context, lobarAppMenu['routeName'],
-                        arguments: lobarAppMenu['arguments']);
-                  },
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      SizedBox(
-                        height: 60,
-                        width: 60,
-                        child: Image(image: AssetImage(lobarAppMenu['icon'])),
-                      ),
-                      Text(
-                        lobarAppMenu['app_name'],
-                        textAlign: TextAlign.center,
-                        style: const TextStyle(
-                            fontSize: 12, fontWeight: FontWeight.bold),
-                      ),
-                    ],
+        child: Column(
+          children: [
+            Text(
+              'Aplikasi Kabupaten Lombok Barat',
+              style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                    color: Colors.black,
+                    fontWeight: FontWeight.w900,
                   ),
-                ),
-              ),
-            );
-          }),
+            ),
+            const SizedBox(
+              height: 8,
+            ),
+            Wrap(
+              spacing: 10.0,
+              runSpacing: 10.0,
+              children: List.generate(appMenu.length, (index) {
+                final lobarAppMenu = appMenu[index];
+                return SizedBox(
+                  height: 90,
+                  width: 90,
+                  child: Card(
+                    elevation: 1,
+                    child: InkWell(
+                      onTap: () {
+                        Navigator.pushNamed(context, lobarAppMenu['routeName'],
+                            arguments: lobarAppMenu['arguments']);
+                      },
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          SizedBox(
+                            height: 60,
+                            width: 60,
+                            child:
+                                Image(image: AssetImage(lobarAppMenu['icon'])),
+                          ),
+                          Text(
+                            lobarAppMenu['app_name'],
+                            textAlign: TextAlign.center,
+                            style: const TextStyle(
+                                fontSize: 12, fontWeight: FontWeight.bold),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                );
+              }),
+            ),
+          ],
         ),
       ),
     );
