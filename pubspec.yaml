@@ -79,6 +79,12 @@ flutter:
     - assets/images/app_icon/logo-LPSE-3.png
     - assets/images/app_icon/logo_ppid.png
     - assets/images/app_icon/logo_elhkpn.png
+    - assets/images/app_icon/logo_jdih.png
+    - assets/images/app_icon/logo_sakip.png
+    - assets/images/app_icon/logo_survey.png
+    - assets/images/app_icon/logo_rpjmd.png
+    - assets/images/app_icon/logo_ekinerja.png
+    - assets/images/app_icon/logo_opd.png
     - assets/images/kantor_bupati.jpg
     - assets/images/header_img.png
 
