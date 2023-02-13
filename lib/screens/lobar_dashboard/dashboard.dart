@@ -30,7 +30,7 @@ class DashboardScreen extends StatelessWidget {
               gradient: LinearGradient(
                 begin: Alignment.bottomCenter,
                 end: Alignment.topCenter,
-                colors: [Colors.white, Colors.white.withOpacity(0.0)],
+                colors: [Colors.blue, Colors.white.withOpacity(0.0)],
               ),
             ),
           ),
@@ -56,19 +56,27 @@ class TitleDashboard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: MediaQuery.of(context).size.height * 0.12,
+      height: MediaQuery.of(context).size.height * 0.35,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
-          Stack(
-            children: [
-              Text(
-                'Kabupaten Lombok Barat',
-                style: Theme.of(context).textTheme.headlineMedium!.copyWith(
-                    color: Colors.blue.shade900, fontWeight: FontWeight.w900),
+          Container(
+            height: MediaQuery.of(context).size.height * 0.14,
+            decoration: const BoxDecoration(
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black38,
+                  offset: Offset(0, 2),
+                  blurRadius: 4,
+                  spreadRadius: 2,
+                )
+              ],
+              image: DecorationImage(
+                image: AssetImage('assets/images/header_img.png'),
+                fit: BoxFit.cover,
               ),
-            ],
+            ),
           )
         ],
       ),
@@ -149,15 +157,23 @@ class _NewsDashboardState extends State<NewsDashboard> {
     return SafeArea(
       child: Column(
         children: [
-          Text(
-            'Berita Terbaru',
-            style: Theme.of(context)
-                .textTheme
-                .bodyMedium!
-                .copyWith(color: Colors.black, fontWeight: FontWeight.w900),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(left: 8.0),
+                child: Text(
+                  'Berita Terbaru',
+                  style: Theme.of(context).textTheme.headlineSmall!.copyWith(
+                        color: Colors.black,
+                        fontWeight: FontWeight.w900,
+                      ),
+                ),
+              ),
+            ],
           ),
           const SizedBox(
-            height: 8,
+            height: 2,
           ),
           if (isLoading)
             Column(
@@ -233,7 +249,7 @@ class _NewsDashboardState extends State<NewsDashboard> {
                   return Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Card(
-                      elevation: 2,
+                      elevation: 5,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10.0),
                       ),

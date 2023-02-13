@@ -80,6 +80,8 @@ flutter:
     - assets/images/app_icon/logo_ppid.png
     - assets/images/app_icon/logo_elhkpn.png
     - assets/images/kantor_bupati.jpg
+    - assets/images/header_img.png
+
 
 
   # An image asset can refer to one or more resolution-specific "variants", see
