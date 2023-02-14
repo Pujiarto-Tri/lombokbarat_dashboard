@@ -12,10 +12,10 @@ class DashboardScreen extends StatefulWidget {
   static const routeName = '/';
 
   @override
-  _DashboardScreenState createState() => _DashboardScreenState();
+  DashboardScreenState createState() => DashboardScreenState();
 }
 
-class _DashboardScreenState extends State<DashboardScreen> {
+class DashboardScreenState extends State<DashboardScreen> {
   double _opacity = 0;
 
   @override
