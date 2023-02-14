@@ -4,56 +4,107 @@ import 'package:ppid_flutter/models/news_model.dart';
 import 'package:ppid_flutter/screens/screen.dart';
 import 'package:html/dom.dart' as dom;
 import 'package:http/http.dart' as http;
+import 'dart:math';
 
-class DashboardScreen extends StatelessWidget {
+class DashboardScreen extends StatefulWidget {
   const DashboardScreen({Key? key}) : super(key: key);
 
   static const routeName = '/';
 
   @override
+  _DashboardScreenState createState() => _DashboardScreenState();
+}
+
+class _DashboardScreenState extends State<DashboardScreen> {
+  double _opacity = 0;
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Stack(
-          children: [
-            Container(
-              height: MediaQuery.of(context).size.height * 0.3,
-              decoration: const BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage('assets/images/kantor_bupati.jpg'),
-                  fit: BoxFit.cover,
+      body: SafeArea(
+        child: MediaQuery.removePadding(
+          context: context,
+          removeTop: true,
+          child: CustomScrollView(
+            slivers: [
+              SliverAppBar(
+                expandedHeight: MediaQuery.of(context).size.height * 0.18,
+                floating: true,
+                pinned: true,
+                flexibleSpace: FlexibleSpaceBar(
+                  centerTitle: true,
+                  title: const Text(
+                    "Kabupaten Lombok Barat",
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 15,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  background: Stack(
+                    children: [
+                      Container(
+                        height: MediaQuery.of(context).size.height * 0.18,
+                        padding: EdgeInsets.zero,
+                        decoration: const BoxDecoration(
+                          image: DecorationImage(
+                            image:
+                                AssetImage('assets/images/kantor_bupati.jpg'),
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      ),
+                      Container(
+                        height: MediaQuery.of(context).size.height * 0.18,
+                        padding: EdgeInsets.zero,
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                            begin: Alignment.bottomCenter,
+                            end: Alignment.topCenter,
+                            colors: [
+                              Colors.blue,
+                              Colors.white.withOpacity(0.0)
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            ),
-            Container(
-              height: MediaQuery.of(context).size.height * 0.3,
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.bottomCenter,
-                  end: Alignment.topCenter,
-                  colors: [Colors.blue, Colors.white.withOpacity(0.0)],
+              NotificationListener<ScrollUpdateNotification>(
+                onNotification: (notification) {
+                  setState(() {
+                    _opacity = max(
+                      0,
+                      min(
+                        1,
+                        (_opacity + notification.scrollDelta!) /
+                            (MediaQuery.of(context).size.height * 0.2),
+                      ),
+                    );
+                  });
+                  return true;
+                },
+                child: SliverList(
+                  delegate: SliverChildListDelegate([
+                    Container(
+                      height: MediaQuery.of(context).size.height * 0.14,
+                      decoration: const BoxDecoration(
+                        color: Colors.white,
+                      ),
+                      child: const TitleDashboard(),
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    const NewsDashboard(),
+                    const MenuDashboard()
+                  ]),
                 ),
               ),
-            ),
-            Container(
-              height: 1000,
-              padding: const EdgeInsets.only(top: 20, bottom: 10),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Flexible(
-                      fit: FlexFit.loose,
-                      child: Column(
-                        children: const [
-                          TitleDashboard(),
-                          NewsDashboard(),
-                          MenuDashboard()
-                        ],
-                      ))
-                ],
-              ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -66,10 +117,10 @@ class TitleDashboard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: MediaQuery.of(context).size.height * 0.35,
+      height: MediaQuery.of(context).size.height * 0.14,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.end,
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Container(
             height: MediaQuery.of(context).size.height * 0.14,
@@ -330,60 +381,57 @@ class MenuDashboard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: Padding(
-        padding: const EdgeInsets.all(10.0),
-        child: Column(
-          children: [
-            Text(
-              'Aplikasi Kabupaten Lombok Barat',
-              style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                    color: Colors.black,
-                    fontWeight: FontWeight.w900,
-                  ),
-            ),
-            const SizedBox(
-              height: 8,
-            ),
-            Wrap(
-              spacing: 10.0,
-              runSpacing: 10.0,
-              children: List.generate(appMenu.length, (index) {
-                final lobarAppMenu = appMenu[index];
-                return SizedBox(
-                  height: 90,
-                  width: 90,
-                  child: Card(
-                    elevation: 1,
-                    child: InkWell(
-                      onTap: () {
-                        Navigator.pushNamed(context, lobarAppMenu['routeName'],
-                            arguments: lobarAppMenu['arguments']);
-                      },
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          SizedBox(
-                            height: 60,
-                            width: 60,
-                            child:
-                                Image(image: AssetImage(lobarAppMenu['icon'])),
-                          ),
-                          Text(
-                            lobarAppMenu['app_name'],
-                            textAlign: TextAlign.center,
-                            style: const TextStyle(
-                                fontSize: 12, fontWeight: FontWeight.bold),
-                          ),
-                        ],
-                      ),
+    return Padding(
+      padding: const EdgeInsets.all(10.0),
+      child: Column(
+        children: [
+          Text(
+            'Aplikasi Kabupaten Lombok Barat',
+            style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                  color: Colors.black,
+                  fontWeight: FontWeight.w900,
+                ),
+          ),
+          const SizedBox(
+            height: 8,
+          ),
+          Wrap(
+            spacing: 10.0,
+            runSpacing: 10.0,
+            children: List.generate(appMenu.length, (index) {
+              final lobarAppMenu = appMenu[index];
+              return SizedBox(
+                height: 90,
+                width: 90,
+                child: Card(
+                  elevation: 1,
+                  child: InkWell(
+                    onTap: () {
+                      Navigator.pushNamed(context, lobarAppMenu['routeName'],
+                          arguments: lobarAppMenu['arguments']);
+                    },
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        SizedBox(
+                          height: 60,
+                          width: 60,
+                          child: Image(image: AssetImage(lobarAppMenu['icon'])),
+                        ),
+                        Text(
+                          lobarAppMenu['app_name'],
+                          textAlign: TextAlign.center,
+                          style: const TextStyle(
+                              fontSize: 12, fontWeight: FontWeight.bold),
+                        ),
+                      ],
                     ),
                   ),
-                );
-              }),
-            ),
-          ],
-        ),
+                ),
+              );
+            }),
+          ),
+        ],
       ),
     );
   }

@@ -53,8 +53,32 @@ final List<Map<String, dynamic>> appMenu = [
     'icon': 'assets/images/app_icon/logo_ekinerja.png'
   },
   {
+    'app_name': 'LAPOR!',
+    'routeName': WebViewScreen.routeName,
+    'arguments': {
+      'link':
+          'https://www.lapor.go.id/instansi/pemerintah-kabupaten-lombok-barat'
+    },
+    'icon': 'assets/images/app_icon/logo_lapor.jpg'
+  },
+  {
     'app_name': 'OPD',
     'routeName': OpdListScreen.routeName,
     'icon': 'assets/images/app_icon/logo_opd.png'
+  },
+  {
+    'app_name': 'Kecamatan',
+    'routeName': OpdListScreen.routeName,
+    'icon': 'assets/images/app_icon/logo_kecamatan.png'
+  },
+  {
+    'app_name': 'Desa',
+    'routeName': OpdListScreen.routeName,
+    'icon': 'assets/images/app_icon/logo_desa.png'
+  },
+  {
+    'app_name': 'Telpon',
+    'routeName': OpdListScreen.routeName,
+    'icon': 'assets/images/app_icon/logo_telpon.png'
   },
 ];

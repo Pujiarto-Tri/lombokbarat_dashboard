@@ -85,6 +85,10 @@ flutter:
     - assets/images/app_icon/logo_rpjmd.png
     - assets/images/app_icon/logo_ekinerja.png
     - assets/images/app_icon/logo_opd.png
+    - assets/images/app_icon/logo_lapor.jpg
+    - assets/images/app_icon/logo_kecamatan.png
+    - assets/images/app_icon/logo_desa.png
+    - assets/images/app_icon/logo_telpon.png
     - assets/images/kantor_bupati.jpg
     - assets/images/header_img.png
 
