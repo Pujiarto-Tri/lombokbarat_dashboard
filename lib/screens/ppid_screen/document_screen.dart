@@ -12,18 +12,20 @@ class DocumentScreen extends StatelessWidget {
         ModalRoute.of(context)?.settings.arguments as ResultData;
     return Container(
       color: Colors.white,
-      child: Scaffold(
-        backgroundColor: Colors.transparent,
-        appBar: AppBar(
-          iconTheme: const IconThemeData(color: Colors.black),
+      child: SafeArea(
+        child: Scaffold(
           backgroundColor: Colors.transparent,
-          elevation: 0,
-        ),
-        extendBodyBehindAppBar: true,
-        body: ListView(
-          children: [
-            _DocumentDetail(resultData: resultData),
-          ],
+          appBar: AppBar(
+            iconTheme: const IconThemeData(color: Colors.black),
+            backgroundColor: Colors.transparent,
+            elevation: 0,
+          ),
+          extendBodyBehindAppBar: true,
+          body: ListView(
+            children: [
+              _DocumentDetail(resultData: resultData),
+            ],
+          ),
         ),
       ),
     );

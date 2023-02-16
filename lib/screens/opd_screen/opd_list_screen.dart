@@ -14,18 +14,20 @@ class OpdListScreen extends StatelessWidget {
         backgroundColor: Colors.transparent,
         elevation: 0,
       ),
-      body: Padding(
-        padding:
-            const EdgeInsets.only(top: 10, left: 20, right: 20, bottom: 20),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: const <Widget>[
-            OpdTitle(),
-            Expanded(
-                child: SingleChildScrollView(
-              child: OpdLinkList(),
-            ))
-          ],
+      body: SafeArea(
+        child: Padding(
+          padding:
+              const EdgeInsets.only(top: 10, left: 20, right: 20, bottom: 20),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: const <Widget>[
+              OpdTitle(),
+              Expanded(
+                  child: SingleChildScrollView(
+                child: OpdLinkList(),
+              ))
+            ],
+          ),
         ),
       ),
     );

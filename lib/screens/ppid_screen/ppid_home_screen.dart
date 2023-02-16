@@ -13,23 +13,24 @@ class PpidScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         iconTheme: const IconThemeData(color: Colors.black),
-        backgroundColor: Colors.transparent,
         elevation: 0,
       ),
       // bottomNavigationBar: const BottomNavBar(index: 0),
-      body: Padding(
-        padding:
-            const EdgeInsets.only(top: 10, left: 20, right: 20, bottom: 20),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: const <Widget>[
-            SearchDocument(),
-            Expanded(
-              child: SingleChildScrollView(
-                child: LatestDocument(),
+      body: SafeArea(
+        child: Padding(
+          padding:
+              const EdgeInsets.only(top: 10, left: 20, right: 20, bottom: 20),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: const <Widget>[
+              SearchDocument(),
+              Expanded(
+                child: SingleChildScrollView(
+                  child: LatestDocument(),
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

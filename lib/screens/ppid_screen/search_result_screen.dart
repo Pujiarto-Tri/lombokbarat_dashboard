@@ -55,129 +55,131 @@ class SearchResultsScreenState extends State<SearchResultsScreen> {
         backgroundColor: Colors.transparent,
         elevation: 0,
       ),
-      body: ListView(
-        padding: const EdgeInsets.all(20.0),
-        children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              ListView.builder(
-                shrinkWrap: true,
-                physics: const ClampingScrollPhysics(),
-                itemCount: ppid.results!.length,
-                itemBuilder: (context, index) {
-                  return Card(
-                    elevation: 1,
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: InkWell(
-                        onTap: () {
-                          Navigator.pushNamed(
-                            context,
-                            DocumentScreen.routeName,
-                            arguments: ResultData(
-                                ppid.results![index].title ??
-                                    "Failed to fetch data",
-                                ppid.results![index].code ??
-                                    "Failed to fetch data",
-                                ppid.results![index].dinas ??
-                                    "Failed to fetch data",
-                                ppid.results![index].type ??
-                                    "Failed to fetch data",
-                                ppid.results![index].slug ??
-                                    "Failed to fetch data",
-                                ppid.results![index].size ??
-                                    "Failed to fetch data"),
-                          );
-                        },
-                        child: Row(
-                          children: [
-                            Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  const SizedBox(
-                                    height: 10,
-                                  ),
-                                  Text(
-                                    ppid.results![index].title ??
-                                        "Failed to fetch data",
-                                    maxLines: 1,
-                                    overflow: TextOverflow.clip,
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .bodyLarge!
-                                        .copyWith(
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                  ),
-                                  const SizedBox(
-                                    height: 3,
-                                  ),
-                                  Text(
-                                    ppid.results![index].dinas ??
-                                        "Failed to fetch data",
-                                    maxLines: 3,
-                                    overflow: TextOverflow.clip,
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .bodySmall!
-                                        .copyWith(
-                                          fontWeight: FontWeight.normal,
-                                        ),
-                                  ),
-                                  const SizedBox(
-                                    height: 3,
-                                  ),
-                                  Text(
-                                    ppid.results![index].type ??
-                                        "Failed to fetch data",
-                                    maxLines: 1,
-                                    overflow: TextOverflow.clip,
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .bodySmall!
-                                        .copyWith(
-                                          fontWeight: FontWeight.normal,
-                                        ),
-                                  ),
-                                  const SizedBox(
-                                    height: 10,
-                                  ),
-                                ],
+      body: SafeArea(
+        child: ListView(
+          padding: const EdgeInsets.all(20.0),
+          children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                ListView.builder(
+                  shrinkWrap: true,
+                  physics: const ClampingScrollPhysics(),
+                  itemCount: ppid.results!.length,
+                  itemBuilder: (context, index) {
+                    return Card(
+                      elevation: 1,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: InkWell(
+                          onTap: () {
+                            Navigator.pushNamed(
+                              context,
+                              DocumentScreen.routeName,
+                              arguments: ResultData(
+                                  ppid.results![index].title ??
+                                      "Failed to fetch data",
+                                  ppid.results![index].code ??
+                                      "Failed to fetch data",
+                                  ppid.results![index].dinas ??
+                                      "Failed to fetch data",
+                                  ppid.results![index].type ??
+                                      "Failed to fetch data",
+                                  ppid.results![index].slug ??
+                                      "Failed to fetch data",
+                                  ppid.results![index].size ??
+                                      "Failed to fetch data"),
+                            );
+                          },
+                          child: Row(
+                            children: [
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    const SizedBox(
+                                      height: 10,
+                                    ),
+                                    Text(
+                                      ppid.results![index].title ??
+                                          "Failed to fetch data",
+                                      maxLines: 1,
+                                      overflow: TextOverflow.clip,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyLarge!
+                                          .copyWith(
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                    ),
+                                    const SizedBox(
+                                      height: 3,
+                                    ),
+                                    Text(
+                                      ppid.results![index].dinas ??
+                                          "Failed to fetch data",
+                                      maxLines: 3,
+                                      overflow: TextOverflow.clip,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodySmall!
+                                          .copyWith(
+                                            fontWeight: FontWeight.normal,
+                                          ),
+                                    ),
+                                    const SizedBox(
+                                      height: 3,
+                                    ),
+                                    Text(
+                                      ppid.results![index].type ??
+                                          "Failed to fetch data",
+                                      maxLines: 1,
+                                      overflow: TextOverflow.clip,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodySmall!
+                                          .copyWith(
+                                            fontWeight: FontWeight.normal,
+                                          ),
+                                    ),
+                                    const SizedBox(
+                                      height: 10,
+                                    ),
+                                  ],
+                                ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
-                    ),
-                  );
-                },
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              const Divider(),
-              const SizedBox(
-                height: 10,
-              ),
-              _isLoading
-                  ? const LinearProgressIndicator()
-                  : SizedBox(
-                      height: 40,
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          foregroundColor: Colors.blue.shade100,
-                          backgroundColor: Colors.blue.shade900,
+                    );
+                  },
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                const Divider(),
+                const SizedBox(
+                  height: 10,
+                ),
+                _isLoading
+                    ? const LinearProgressIndicator()
+                    : SizedBox(
+                        height: 40,
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            foregroundColor: Colors.blue.shade100,
+                            backgroundColor: Colors.blue.shade900,
+                          ),
+                          onPressed: _loadNextPage,
+                          child: const Text("Load more data"),
                         ),
-                        onPressed: _loadNextPage,
-                        child: const Text("Load more data"),
                       ),
-                    ),
-            ],
-          ),
-        ],
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
