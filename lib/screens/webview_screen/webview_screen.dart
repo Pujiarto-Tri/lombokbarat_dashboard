@@ -7,6 +7,7 @@ import 'package:webview_flutter_android/webview_flutter_android.dart';
 // Import for iOS features.
 // ignore: depend_on_referenced_packages
 import 'package:webview_flutter_wkwebview/webview_flutter_wkwebview.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 // #enddocregion platform_imports
 class WebViewScreen extends StatefulWidget {
@@ -71,13 +72,35 @@ Page resource error:
   isForMainFrame: ${error.isForMainFrame}
           ''');
           },
-          onNavigationRequest: (NavigationRequest request) {
-            if (request.url.startsWith('https://www.youtube.com/')) {
-              debugPrint('blocking navigation to ${request.url}');
+          onNavigationRequest: (NavigationRequest request) async {
+            String url = request.url;
+            if (url.endsWith('.pdf') ||
+                url.endsWith('.doc') ||
+                url.endsWith('.docx')) {
+              try {
+                launchUrl(Uri.parse(url), mode: LaunchMode.externalApplication);
+              } catch (e) {
+                debugPrint(e.toString());
+                showDialog(
+                  context: context,
+                  builder: (context) => AlertDialog(
+                    title: const Text('Error'),
+                    content: Text('Failed to launch the URL: $url'),
+                    actions: [
+                      TextButton(
+                        child: const Text('OK'),
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                      ),
+                    ],
+                  ),
+                );
+              }
               return NavigationDecision.prevent;
+            } else {
+              return NavigationDecision.navigate;
             }
-            debugPrint('allowing navigation to ${request.url}');
-            return NavigationDecision.navigate;
           },
         ),
       )
