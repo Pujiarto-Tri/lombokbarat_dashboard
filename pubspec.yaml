@@ -90,6 +90,12 @@ flutter:
     - assets/images/app_icon/logo_kecamatan.png
     - assets/images/app_icon/logo_desa.png
     - assets/images/app_icon/logo_telpon.png
+    #==================================================
+    - assets/images/dashboard_banner/lapor_banner.png
+    - assets/images/dashboard_banner/pajak_banner.jpeg
+    - assets/images/dashboard_banner/g20_banner.jpeg
+    - assets/images/dashboard_banner/disnaker_banner.jpeg
+    #==================================================
     - assets/images/kantor_bupati.jpg
     - assets/images/header_img.png
     - assets/images/logo_lombokbarat.png
