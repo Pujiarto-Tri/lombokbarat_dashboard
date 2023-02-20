@@ -52,18 +52,18 @@ final List<Map<String, dynamic>> appMenu = [
     'icon': 'assets/images/app_icon/logo_ekinerja.png'
   },
   {
-    'app_name': 'LAPOR!',
+    'app_name': 'SRIKANDI',
+    'routeName': SrikandiWebViewScreen.routeName,
+    'arguments': {'link': 'https://srikandi.arsip.go.id/'},
+    'icon': 'assets/images/app_icon/logo_lapor.jpg'
+  },
+  {
+    'app_name': 'Lapor!',
     'routeName': WebViewScreen.routeName,
     'arguments': {
       'link':
           'https://www.lapor.go.id/instansi/pemerintah-kabupaten-lombok-barat'
     },
-    'icon': 'assets/images/app_icon/logo_lapor.jpg'
-  },
-  {
-    'app_name': 'Srokandi!',
-    'routeName': WebViewScreen.routeName,
-    'arguments': {'link': 'https://srikandi.arsip.go.id/'},
     'icon': 'assets/images/app_icon/logo_lapor.jpg'
   },
   {

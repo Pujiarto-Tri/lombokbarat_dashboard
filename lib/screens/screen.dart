@@ -5,4 +5,5 @@ export 'lobar_dashboard/dashboard.dart';
 export 'ppid_screen/permohonan_informasi_screen.dart';
 export 'ppid_screen/search_result_screen.dart';
 export 'webview_screen/webview_screen.dart';
+export 'webview_screen/srikandi_webview_screen.dart';
 export 'opd_screen/opd_list_screen.dart';

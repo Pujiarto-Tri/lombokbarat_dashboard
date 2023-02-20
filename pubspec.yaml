@@ -46,6 +46,7 @@ dependencies:
   web_scraper: ^0.1.4
   html: ^0.15.1
   url_launcher: ^6.1.9
+  pdf: ^3.9.0
   
 
 
