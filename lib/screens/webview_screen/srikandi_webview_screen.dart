@@ -43,13 +43,17 @@ class _SrikandiWebViewScreenState extends State<SrikandiWebViewScreen> {
 
     final WebViewController controller =
         WebViewController.fromPlatformCreationParams(params);
+
+    final width = MediaQuery.of(context).size.width.toInt().toString();
+    final viewport =
+        'width=$width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0';
     // #enddocregion platform_features
 
     controller
       ..setJavaScriptMode(JavaScriptMode.unrestricted)
       ..setBackgroundColor(const Color(0x00000000))
       ..setUserAgent(
-          "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36 Edge/16.16299")
+          "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.82 Safari/537.36")
       ..setNavigationDelegate(
         NavigationDelegate(
           onProgress: (int progress) {
@@ -115,7 +119,14 @@ Page resource error:
           );
         },
       )
-      ..loadRequest(Uri.parse(link));
+      ..loadRequest(Uri.parse(link), headers: {
+        "User-Agent":
+            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.82 Safari/537.36",
+        "Accept":
+            "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
+        "Accept-Encoding": "gzip, deflate, br",
+        "Accept-Language": "en-US,en;q=0.5"
+      });
 
     // #docregion platform_features
     if (controller.platform is AndroidWebViewController) {

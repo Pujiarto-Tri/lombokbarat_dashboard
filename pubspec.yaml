@@ -47,6 +47,7 @@ dependencies:
   html: ^0.15.1
   url_launcher: ^6.1.9
   pdf: ^3.9.0
+  flutter_inappwebview: ^5.7.2+3
   
 
 
