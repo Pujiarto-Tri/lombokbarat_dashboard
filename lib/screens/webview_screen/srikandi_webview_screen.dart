@@ -43,10 +43,6 @@ class _SrikandiWebViewScreenState extends State<SrikandiWebViewScreen> {
 
     final WebViewController controller =
         WebViewController.fromPlatformCreationParams(params);
-
-    final width = MediaQuery.of(context).size.width.toInt().toString();
-    final viewport =
-        'width=$width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0';
     // #enddocregion platform_features
 
     controller
