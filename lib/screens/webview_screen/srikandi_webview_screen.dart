@@ -22,6 +22,7 @@ class _SrikandiWebViewScreenState extends State<SrikandiWebViewScreen> {
   );
   bool pullToRefreshEnabled = true;
   bool _isLoading = true;
+  InAppWebViewSettings iframe = InAppWebViewSettings(iframeAllow: "*");
 
   Future<bool> _goBack() async {
     if (await webViewController?.canGoBack() ?? false) {
@@ -73,7 +74,7 @@ class _SrikandiWebViewScreenState extends State<SrikandiWebViewScreen> {
               child: InAppWebView(
                 initialUrlRequest:
                     URLRequest(url: WebUri("https://srikandi.arsip.go.id/")),
-                initialSettings: settings,
+                initialSettings: iframe,
                 pullToRefreshController: pullToRefreshController,
                 onWebViewCreated: (InAppWebViewController controller) {
                   webViewController = controller;
