@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
-import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 
-// InAppWebViewSettings useHybrid =
-//   //     InAppWebViewSettings(useHybridComposition: true);
 class SrikandiWebViewScreen extends StatefulWidget {
   const SrikandiWebViewScreen({Key? key}) : super(key: key);
 
@@ -25,6 +22,14 @@ class _SrikandiWebViewScreenState extends State<SrikandiWebViewScreen> {
   );
   bool pullToRefreshEnabled = true;
   bool _isLoading = true;
+
+  Future<bool> _goBack() async {
+    if (await webViewController?.canGoBack() ?? false) {
+      webViewController?.goBack();
+      return false;
+    }
+    return true;
+  }
 
   @override
   void initState() {
@@ -50,59 +55,62 @@ class _SrikandiWebViewScreenState extends State<SrikandiWebViewScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Srikandi'),
-      ),
-      body: Column(
-        children: <Widget>[
-          if (_isLoading)
-            LinearProgressIndicator(
-              backgroundColor: Colors.grey[200],
-              valueColor: const AlwaysStoppedAnimation<Color>(Colors.blue),
-            ),
-          Expanded(
-            key: srikandiWebViewKey,
-            child: InAppWebView(
-              initialUrlRequest:
-                  URLRequest(url: WebUri("https://srikandi.arsip.go.id/")),
-              initialSettings: settings,
-              pullToRefreshController: pullToRefreshController,
-              onWebViewCreated: (InAppWebViewController controller) {
-                webViewController = controller;
-              },
-              onLoadStart: (controller, url) {
-                setState(() {
-                  _isLoading = true;
-                });
-              },
-              onLoadStop: (controller, url) {
-                setState(() {
-                  _isLoading = false;
-                });
-                pullToRefreshController?.endRefreshing();
-              },
-              onReceivedError: (controller, request, error) {
-                setState(() {
-                  _isLoading = false;
-                });
-                pullToRefreshController?.endRefreshing();
-              },
-              onProgressChanged: (controller, progress) {
-                if (progress == 100) {
+    return WillPopScope(
+      onWillPop: _goBack,
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text('Srikandi'),
+        ),
+        body: Column(
+          children: <Widget>[
+            if (_isLoading)
+              LinearProgressIndicator(
+                backgroundColor: Colors.grey[200],
+                valueColor: const AlwaysStoppedAnimation<Color>(Colors.blue),
+              ),
+            Expanded(
+              key: srikandiWebViewKey,
+              child: InAppWebView(
+                initialUrlRequest:
+                    URLRequest(url: WebUri("https://srikandi.arsip.go.id/")),
+                initialSettings: settings,
+                pullToRefreshController: pullToRefreshController,
+                onWebViewCreated: (InAppWebViewController controller) {
+                  webViewController = controller;
+                },
+                onLoadStart: (controller, url) {
+                  setState(() {
+                    _isLoading = true;
+                  });
+                },
+                onLoadStop: (controller, url) {
                   setState(() {
                     _isLoading = false;
                   });
                   pullToRefreshController?.endRefreshing();
-                } else {
+                },
+                onReceivedError: (controller, request, error) {
                   setState(() {
-                    _isLoading = true;
+                    _isLoading = false;
                   });
-                }
-              },
+                  pullToRefreshController?.endRefreshing();
+                },
+                onProgressChanged: (controller, progress) {
+                  if (progress == 100) {
+                    setState(() {
+                      _isLoading = false;
+                    });
+                    pullToRefreshController?.endRefreshing();
+                  } else {
+                    setState(() {
+                      _isLoading = true;
+                    });
+                  }
+                },
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
