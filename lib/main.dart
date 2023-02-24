@@ -15,7 +15,7 @@ class MyHttpOverrides extends HttpOverrides {
 }
 //============== END OF WARNING ==============================//
 
-void main() {
+void main() async {
   //================ W A R N I N G=============================//
   HttpOverrides.global = MyHttpOverrides();
   //==========================================================//

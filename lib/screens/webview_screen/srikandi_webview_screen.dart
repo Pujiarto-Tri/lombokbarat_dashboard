@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'dart:collection';
+import 'package:flutter_downloader/flutter_downloader.dart';
+import 'package:path_provider/path_provider.dart';
+import 'dart:io';
 
 class SrikandiWebViewScreen extends StatefulWidget {
   const SrikandiWebViewScreen({Key? key}) : super(key: key);
@@ -33,9 +36,15 @@ class _SrikandiWebViewScreenState extends State<SrikandiWebViewScreen> {
     return true;
   }
 
+  void flutterDownloadder() async {
+    WidgetsFlutterBinding.ensureInitialized();
+    await FlutterDownloader.initialize(debug: true, ignoreSsl: true);
+  }
+
   @override
   void initState() {
     super.initState();
+    flutterDownloadder();
     settings.userAgent =
         'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3';
 
@@ -116,6 +125,14 @@ class _SrikandiWebViewScreenState extends State<SrikandiWebViewScreen> {
                       _isLoading = true;
                     });
                   }
+                },
+                onDownloadStartRequest: (controller, url) async {
+                  final taskId = await FlutterDownloader.enqueue(
+                    url: url.toString(),
+                    savedDir: (await getExternalStorageDirectory())!.path,
+                    showNotification: true,
+                    openFileFromNotification: true,
+                  );
                 },
               ),
             ),
