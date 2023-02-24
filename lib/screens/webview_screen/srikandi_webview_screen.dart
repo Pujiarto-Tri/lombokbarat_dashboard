@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
+import 'dart:collection';
 
 class SrikandiWebViewScreen extends StatefulWidget {
   const SrikandiWebViewScreen({Key? key}) : super(key: key);
@@ -15,14 +16,14 @@ class SrikandiWebViewScreen extends StatefulWidget {
 class _SrikandiWebViewScreenState extends State<SrikandiWebViewScreen> {
   final GlobalKey srikandiWebViewKey = GlobalKey();
   InAppWebViewController? webViewController;
-  InAppWebViewSettings settings = InAppWebViewSettings();
+  InAppWebViewSettings settings =
+      InAppWebViewSettings(enableViewportScale: true);
   PullToRefreshController? pullToRefreshController;
   PullToRefreshSettings pullToRefreshSettings = PullToRefreshSettings(
     color: Colors.blue,
   );
   bool pullToRefreshEnabled = true;
   bool _isLoading = true;
-  InAppWebViewSettings iframe = InAppWebViewSettings(iframeAllow: "*");
 
   Future<bool> _goBack() async {
     if (await webViewController?.canGoBack() ?? false) {
@@ -74,10 +75,26 @@ class _SrikandiWebViewScreenState extends State<SrikandiWebViewScreen> {
               child: InAppWebView(
                 initialUrlRequest:
                     URLRequest(url: WebUri("https://srikandi.arsip.go.id/")),
-                initialSettings: iframe,
+                initialSettings: settings,
+                initialUserScripts: UnmodifiableListView<UserScript>([
+                  UserScript(
+                      source: "var meta = document.createElement('meta');"
+                          "meta.setAttribute('name', 'viewport');"
+                          "meta.setAttribute('content', 'width=1920, height=1080, initial-scale=1.0, maximum-scale=1.0, user-scalable=no');"
+                          "document.getElementsByTagName('head')[0].appendChild(meta);",
+                      injectionTime: UserScriptInjectionTime.AT_DOCUMENT_START),
+                ]),
                 pullToRefreshController: pullToRefreshController,
                 onWebViewCreated: (InAppWebViewController controller) {
                   webViewController = controller;
+                  // await webViewController?.evaluateJavascript(
+                  //   source: '''
+                  //             var meta = document.createElement('meta');
+                  //             meta.setAttribute('name', 'viewport');
+                  //             meta.setAttribute('content', 'width=1920, height=1080, initial-scale=1.0, maximum-scale=1.0,' );
+                  //             document.getElementsByTagName('head')[0].appendChild(meta);
+                  //           ''',
+                  // );
                 },
                 onLoadStart: (controller, url) {
                   setState(() {
@@ -85,25 +102,6 @@ class _SrikandiWebViewScreenState extends State<SrikandiWebViewScreen> {
                   });
                 },
                 onLoadStop: (controller, url) async {
-                  final List<String> iframeIds = List<String>.from(
-                      await controller.evaluateJavascript(
-                          source:
-                              "Array.from(document.getElementsByTagName('iframe')).map((iframe) => iframe.getAttribute('id'))"));
-
-                  for (final iframeId in iframeIds) {
-                    await controller.evaluateJavascript(
-                        source: "const iframe = document.getElementById('$iframeId');" +
-                            "const embed = iframe.contentDocument.getElementsByTagName('embed')[0];" +
-                            "const xhr = new XMLHttpRequest();" +
-                            "xhr.open('GET', embed.getAttribute('src'), true);" +
-                            "xhr.responseType = 'arraybuffer';" +
-                            "xhr.onload = function() {" +
-                            "  const blob = new Blob([this.response], {type: 'application/pdf'});" +
-                            "  const dataUrl = URL.createObjectURL(blob);" +
-                            "  embed.setAttribute('src', dataUrl);" +
-                            "};" +
-                            "xhr.send();");
-                  }
                   setState(() {
                     _isLoading = false;
                   });
