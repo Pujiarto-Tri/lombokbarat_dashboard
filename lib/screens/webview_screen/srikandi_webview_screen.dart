@@ -87,14 +87,6 @@ class _SrikandiWebViewScreenState extends State<SrikandiWebViewScreen> {
                 pullToRefreshController: pullToRefreshController,
                 onWebViewCreated: (InAppWebViewController controller) {
                   webViewController = controller;
-                  // await webViewController?.evaluateJavascript(
-                  //   source: '''
-                  //             var meta = document.createElement('meta');
-                  //             meta.setAttribute('name', 'viewport');
-                  //             meta.setAttribute('content', 'width=1920, height=1080, initial-scale=1.0, maximum-scale=1.0,' );
-                  //             document.getElementsByTagName('head')[0].appendChild(meta);
-                  //           ''',
-                  // );
                 },
                 onLoadStart: (controller, url) {
                   setState(() {
