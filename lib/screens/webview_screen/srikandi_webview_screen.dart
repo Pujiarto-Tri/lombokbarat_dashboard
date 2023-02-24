@@ -84,7 +84,26 @@ class _SrikandiWebViewScreenState extends State<SrikandiWebViewScreen> {
                     _isLoading = true;
                   });
                 },
-                onLoadStop: (controller, url) {
+                onLoadStop: (controller, url) async {
+                  final List<String> iframeIds = List<String>.from(
+                      await controller.evaluateJavascript(
+                          source:
+                              "Array.from(document.getElementsByTagName('iframe')).map((iframe) => iframe.getAttribute('id'))"));
+
+                  for (final iframeId in iframeIds) {
+                    await controller.evaluateJavascript(
+                        source: "const iframe = document.getElementById('$iframeId');" +
+                            "const embed = iframe.contentDocument.getElementsByTagName('embed')[0];" +
+                            "const xhr = new XMLHttpRequest();" +
+                            "xhr.open('GET', embed.getAttribute('src'), true);" +
+                            "xhr.responseType = 'arraybuffer';" +
+                            "xhr.onload = function() {" +
+                            "  const blob = new Blob([this.response], {type: 'application/pdf'});" +
+                            "  const dataUrl = URL.createObjectURL(blob);" +
+                            "  embed.setAttribute('src', dataUrl);" +
+                            "};" +
+                            "xhr.send();");
+                  }
                   setState(() {
                     _isLoading = false;
                   });
