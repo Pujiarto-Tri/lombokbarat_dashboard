@@ -20,7 +20,7 @@ class _SrikandiWebViewScreenState extends State<SrikandiWebViewScreen> {
   final GlobalKey srikandiWebViewKey = GlobalKey();
   InAppWebViewController? webViewController;
   InAppWebViewSettings settings =
-      InAppWebViewSettings(enableViewportScale: true);
+      InAppWebViewSettings(enableViewportScale: true, useOnDownloadStart: true);
   PullToRefreshController? pullToRefreshController;
   PullToRefreshSettings pullToRefreshSettings = PullToRefreshSettings(
     color: Colors.blue,
@@ -44,7 +44,7 @@ class _SrikandiWebViewScreenState extends State<SrikandiWebViewScreen> {
   @override
   void initState() {
     super.initState();
-    flutterDownloadder();
+    // flutterDownloadder();
     settings.userAgent =
         'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3';
 
@@ -103,6 +103,13 @@ class _SrikandiWebViewScreenState extends State<SrikandiWebViewScreen> {
                   });
                 },
                 onLoadStop: (controller, url) async {
+                  // Inject Google PDF Viewer in all PDF iframes
+                  await controller.evaluateJavascript(source: """
+                    document.querySelectorAll("embed[src*='.pdf']").forEach((embed) => {
+                      let pdfUrl = embed.getAttribute("src");
+                      embed.setAttribute("src", "https://drive.google.com/viewerng/viewer?embedded=true&url=" + encodeURIComponent(pdfUrl));
+                    });
+                  """);
                   setState(() {
                     _isLoading = false;
                   });
@@ -126,14 +133,14 @@ class _SrikandiWebViewScreenState extends State<SrikandiWebViewScreen> {
                     });
                   }
                 },
-                onDownloadStartRequest: (controller, url) async {
-                  final taskId = await FlutterDownloader.enqueue(
-                    url: url.toString(),
-                    savedDir: (await getExternalStorageDirectory())!.path,
-                    showNotification: true,
-                    openFileFromNotification: true,
-                  );
-                },
+                // onDownloadStartRequest: (controller, url) async {
+                //   final taskId = await FlutterDownloader.enqueue(
+                //     url: url.toString(),
+                //     savedDir: (await getExternalStorageDirectory())!.path,
+                //     showNotification: true,
+                //     openFileFromNotification: true,
+                //   );
+                // },
               ),
             ),
           ],
@@ -142,3 +149,13 @@ class _SrikandiWebViewScreenState extends State<SrikandiWebViewScreen> {
     );
   }
 }
+
+
+// initialUserScripts: UnmodifiableListView<UserScript>([
+                //   UserScript(
+                //       source: "var meta = document.createElement('meta');"
+                //           "meta.setAttribute('name', 'viewport');"
+                //           "meta.setAttribute('content', 'width=1920, height=1080, initial-scale=1.0, maximum-scale=1.0, user-scalable=no');"
+                //           "document.getElementsByTagName('head')[0].appendChild(meta);",
+                //       injectionTime: UserScriptInjectionTime.AT_DOCUMENT_START),
+                // ]),
