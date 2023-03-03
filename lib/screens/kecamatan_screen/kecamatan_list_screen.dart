@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:ppid_flutter/models/opd_link_data.dart';
+import 'package:ppid_flutter/models/kecamatan_link_data.dart';
 
-class OpdListScreen extends StatelessWidget {
-  const OpdListScreen({super.key});
+class KecamatanListScreen extends StatelessWidget {
+  const KecamatanListScreen({super.key});
 
-  static const routeName = '/opd';
+  static const routeName = '/kecamatan';
 
   @override
   Widget build(BuildContext context) {
@@ -22,10 +22,10 @@ class OpdListScreen extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: const <Widget>[
-                OpdTitle(),
+                KecamatanTitle(),
                 Expanded(
                     child: SingleChildScrollView(
-                  child: OpdLinkList(),
+                  child: KecamatanLinkList(),
                 ))
               ],
             ),
@@ -36,8 +36,8 @@ class OpdListScreen extends StatelessWidget {
   }
 }
 
-class OpdLinkList extends StatelessWidget {
-  const OpdLinkList({super.key});
+class KecamatanLinkList extends StatelessWidget {
+  const KecamatanLinkList({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -48,8 +48,8 @@ class OpdLinkList extends StatelessWidget {
     var contentFont = theme.textTheme.bodyMedium!
         .copyWith(color: theme.colorScheme.onPrimaryContainer);
     return Column(
-      children: List.generate(opdLink.length, (index) {
-        final link = opdLink[index];
+      children: List.generate(kecLink.length, (index) {
+        final link = kecLink[index];
         return Card(
           elevation: 1,
           child: Padding(
@@ -75,7 +75,7 @@ class OpdLinkList extends StatelessWidget {
                           height: 4,
                         ),
                         Text(
-                          link['web_name_short'],
+                          link['kode_pos'],
                           style: contentFont,
                         ),
                       ],
@@ -91,8 +91,8 @@ class OpdLinkList extends StatelessWidget {
   }
 }
 
-class OpdTitle extends StatelessWidget {
-  const OpdTitle({super.key});
+class KecamatanTitle extends StatelessWidget {
+  const KecamatanTitle({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -103,7 +103,7 @@ class OpdTitle extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(
-            'OPD Kabupaten Lombok Barat',
+            'Kecamatan Kabupaten Lombok Barat',
             style: Theme.of(context)
                 .textTheme
                 .headlineSmall!

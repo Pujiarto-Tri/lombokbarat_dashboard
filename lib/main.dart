@@ -45,6 +45,7 @@ class MyApp extends StatelessWidget {
         SrikandiWebViewScreen.routeName: (context) =>
             const SrikandiWebViewScreen(),
         OpdListScreen.routeName: (context) => const OpdListScreen(),
+        KecamatanListScreen.routeName: (context) => const KecamatanListScreen(),
       },
     );
   }

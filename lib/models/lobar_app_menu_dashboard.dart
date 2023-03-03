@@ -73,7 +73,7 @@ final List<Map<String, dynamic>> appMenu = [
   },
   {
     'app_name': 'Kecamatan',
-    'routeName': OpdListScreen.routeName,
+    'routeName': KecamatanListScreen.routeName,
     'icon': 'assets/images/app_icon/logo_kecamatan.png'
   },
   {
