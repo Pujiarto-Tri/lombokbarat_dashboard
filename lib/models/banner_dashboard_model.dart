@@ -17,15 +17,8 @@ final List<Map<String, dynamic>> bannerDashboard = [
     }
   },
   {
-    'banner_title': 'g20',
+    'banner_title': 'Posyandu',
     'routeName': WebViewScreen.routeName,
-    'img': 'assets/images/dashboard_banner/g20_banner.jpeg',
-    'arguments': {'link': 'https://lombokbaratkab.go.id/capaian-kinerja-2022/'}
-  },
-  {
-    'banner_title': 'g20',
-    'routeName': WebViewScreen.routeName,
-    'img': 'assets/images/dashboard_banner/g20_banner.jpeg',
-    'arguments': {'link': 'https://lombokbaratkab.go.id/capaian-kinerja-2022/'}
+    'img': 'assets/images/dashboard_banner/posyandu_banner.jpeg',
   },
 ];

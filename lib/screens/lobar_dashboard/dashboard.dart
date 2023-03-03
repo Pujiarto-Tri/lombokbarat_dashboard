@@ -672,7 +672,7 @@ class BannerDashboard extends StatelessWidget {
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(15.0),
                 ),
-                elevation: 5,
+                elevation: 3,
                 margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                 child: InkWell(
                   onTap: () {

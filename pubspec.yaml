@@ -96,8 +96,7 @@ flutter:
     #==================================================
     - assets/images/dashboard_banner/lapor_banner.png
     - assets/images/dashboard_banner/pajak_banner.jpeg
-    - assets/images/dashboard_banner/g20_banner.jpeg
-    - assets/images/dashboard_banner/disnaker_banner.jpeg
+    - assets/images/dashboard_banner/posyandu_banner.jpeg
     #==================================================
     - assets/images/kantor_bupati.jpg
     - assets/images/header_img.png
