@@ -8,27 +8,25 @@ class OpdListScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        appBar: AppBar(
-          iconTheme: const IconThemeData(color: Colors.black),
-          backgroundColor: Colors.transparent,
-          elevation: 0,
-        ),
-        body: SafeArea(
-          child: Padding(
-            padding:
-                const EdgeInsets.only(top: 10, left: 20, right: 20, bottom: 20),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: const <Widget>[
-                OpdTitle(),
-                Expanded(
-                    child: SingleChildScrollView(
-                  child: OpdLinkList(),
-                ))
-              ],
-            ),
+    return Scaffold(
+      appBar: AppBar(
+        iconTheme: const IconThemeData(color: Colors.black),
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+      ),
+      body: SafeArea(
+        child: Padding(
+          padding:
+              const EdgeInsets.only(top: 10, left: 20, right: 20, bottom: 20),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: const <Widget>[
+              OpdTitle(),
+              Expanded(
+                  child: SingleChildScrollView(
+                child: OpdLinkList(),
+              ))
+            ],
           ),
         ),
       ),

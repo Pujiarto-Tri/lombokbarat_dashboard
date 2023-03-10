@@ -23,7 +23,7 @@ final List<Map<String, dynamic>> kecLink = [
     'web_name': 'Kecamatan Narmada',
     'kode_pos': '00000',
     'routeName': WebViewScreen.routeName,
-    'arguments': {'https://narmada.lombokbaratkab.go.id/'}
+    'arguments': {'link': 'https://narmada.lombokbaratkab.go.id/'}
   },
   {
     'web_name': 'Kecamatan Kediri',

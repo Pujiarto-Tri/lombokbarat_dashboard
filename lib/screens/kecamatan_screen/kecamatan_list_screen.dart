@@ -8,27 +8,25 @@ class KecamatanListScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        appBar: AppBar(
-          iconTheme: const IconThemeData(color: Colors.black),
-          backgroundColor: Colors.transparent,
-          elevation: 0,
-        ),
-        body: SafeArea(
-          child: Padding(
-            padding:
-                const EdgeInsets.only(top: 10, left: 20, right: 20, bottom: 20),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: const <Widget>[
-                KecamatanTitle(),
-                Expanded(
-                    child: SingleChildScrollView(
-                  child: KecamatanLinkList(),
-                ))
-              ],
-            ),
+    return Scaffold(
+      appBar: AppBar(
+        iconTheme: const IconThemeData(color: Colors.black),
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+      ),
+      body: SafeArea(
+        child: Padding(
+          padding:
+              const EdgeInsets.only(top: 10, left: 20, right: 20, bottom: 20),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: const <Widget>[
+              KecamatanTitle(),
+              Expanded(
+                  child: SingleChildScrollView(
+                child: KecamatanLinkList(),
+              ))
+            ],
           ),
         ),
       ),
@@ -74,9 +72,17 @@ class KecamatanLinkList extends StatelessWidget {
                         const SizedBox(
                           height: 4,
                         ),
-                        Text(
-                          link['kode_pos'],
-                          style: contentFont,
+                        Row(
+                          children: [
+                            const Text('Kode Pos : '),
+                            const SizedBox(
+                              width: 8,
+                            ),
+                            Text(
+                              link['kode_pos'],
+                              style: contentFont,
+                            ),
+                          ],
                         ),
                       ],
                     ),

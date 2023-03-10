@@ -219,8 +219,6 @@ class _NewsDashboardState extends State<NewsDashboard> {
           .map((element) => element.attributes['src'])
           .toList();
 
-      // print('Count : ${titles.length}');
-
       setState(() {
         isLoading = false;
         articles = List.generate(
