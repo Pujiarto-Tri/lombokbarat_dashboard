@@ -3,8 +3,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'dart:collection';
 import 'package:flutter_downloader/flutter_downloader.dart';
-import 'package:path_provider/path_provider.dart';
-import 'dart:io';
 
 class SrikandiWebViewScreen extends StatefulWidget {
   const SrikandiWebViewScreen({Key? key}) : super(key: key);
@@ -19,6 +17,7 @@ class SrikandiWebViewScreen extends StatefulWidget {
 class _SrikandiWebViewScreenState extends State<SrikandiWebViewScreen> {
   final GlobalKey srikandiWebViewKey = GlobalKey();
   InAppWebViewController? webViewController;
+
   InAppWebViewSettings settings =
       InAppWebViewSettings(enableViewportScale: true, useOnDownloadStart: true);
   PullToRefreshController? pullToRefreshController;

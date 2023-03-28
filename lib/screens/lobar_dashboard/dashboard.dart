@@ -436,6 +436,7 @@ class MenuDashboard extends StatelessWidget {
                 height: 90,
                 width: 90,
                 child: Card(
+                  color: Colors.transparent,
                   elevation: 0,
                   child: InkWell(
                     onTap: () {
