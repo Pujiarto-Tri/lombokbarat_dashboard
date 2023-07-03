@@ -113,19 +113,19 @@ class DashboardScreenState extends State<DashboardScreen> {
                     const SizedBox(
                       height: 20,
                     ),
+                    const BannerDashboard(),
+                    const SizedBox(
+                      height: 10,
+                    ),
                     const NewsDashboard(),
                     const Padding(
                       padding: EdgeInsets.all(15.0),
                       child: Card(elevation: 3, child: MenuDashboard()),
                     ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    const BannerDashboard(),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    const AgendaBupatiDashboard(),
+                    // const SizedBox(
+                    //   height: 10,
+                    // ),
+                    // const AgendaBupatiDashboard(),
                     const SizedBox(
                       height: 20,
                     ),
@@ -283,9 +283,9 @@ class _NewsDashboardState extends State<NewsDashboard> {
                       ),
                     ],
                   ),
-                  child: Column(
+                  child: const Column(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children: const [
+                    children: [
                       CircularProgressIndicator(),
                       SizedBox(height: 10),
                       Padding(
@@ -568,9 +568,9 @@ class _AgendaBupatiDashboardState extends State<AgendaBupatiDashboard> {
                       ),
                     ],
                   ),
-                  child: Column(
+                  child: const Column(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children: const [
+                    children: [
                       CircularProgressIndicator(),
                       SizedBox(height: 10),
                       Padding(
