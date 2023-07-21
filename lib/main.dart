@@ -42,8 +42,6 @@ class MyApp extends StatelessWidget {
             const LaporanLayananScreen(),
         DashboardScreen.routeName: (context) => const DashboardScreen(),
         WebViewScreen.routeName: (context) => const WebViewScreen(),
-        SrikandiWebViewScreen.routeName: (context) =>
-            const SrikandiWebViewScreen(),
         OpdListScreen.routeName: (context) => const OpdListScreen(),
         KecamatanListScreen.routeName: (context) => const KecamatanListScreen(),
       },

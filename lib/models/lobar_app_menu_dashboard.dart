@@ -53,9 +53,9 @@ final List<Map<String, dynamic>> appMenu = [
   },
   {
     'app_name': 'SRIKANDI',
-    'routeName': SrikandiWebViewScreen.routeName,
+    'routeName': WebViewScreen.routeName,
     'arguments': {'link': 'https://srikandi.arsip.go.id/'},
-    'icon': 'assets/images/app_icon/logo_lapor.jpg'
+    'icon': 'assets/images/app_icon/logo_srikandi.png'
   },
   {
     'app_name': 'Lapor!',

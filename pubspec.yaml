@@ -47,7 +47,7 @@ dependencies:
   html: ^0.15.1
   url_launcher: ^6.1.9
   pdf: ^3.9.0
-  flutter_inappwebview: ^6.0.0-beta.22
+  # flutter_inappwebview: ^6.0.0-beta.22
   flutter_downloader: ^1.10.2
   
 
@@ -93,6 +93,7 @@ flutter:
     - assets/images/app_icon/logo_kecamatan.png
     - assets/images/app_icon/logo_desa.png
     - assets/images/app_icon/logo_telpon.png
+    - assets/images/app_icon/logo_srikandi.png
     #==================================================
     - assets/images/dashboard_banner/lapor_banner.png
     - assets/images/dashboard_banner/pajak_banner.jpeg
