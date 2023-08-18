@@ -16,13 +16,13 @@ class PpidScreen extends StatelessWidget {
         elevation: 0,
       ),
       // bottomNavigationBar: const BottomNavBar(index: 0),
-      body: const SafeArea(
+      body: SafeArea(
         child: Padding(
           padding:
-              EdgeInsets.only(top: 10, left: 20, right: 20, bottom: 20),
+              const EdgeInsets.only(top: 10, left: 20, right: 20, bottom: 20),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: <Widget>[
+            children: const <Widget>[
               SearchDocument(),
               Expanded(
                 child: SingleChildScrollView(
