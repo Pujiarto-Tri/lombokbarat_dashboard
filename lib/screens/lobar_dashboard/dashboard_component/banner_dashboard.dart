@@ -1,8 +1,42 @@
 import 'package:flutter/material.dart';
-import 'package:ppid_flutter/models/banner_dashboard_model.dart';
+import 'package:web_scraper/web_scraper.dart';
 
-class BannerDashboard extends StatelessWidget {
+class BannerDashboard extends StatefulWidget {
   const BannerDashboard({super.key});
+
+  @override
+  // ignore: library_private_types_in_public_api
+  _BannerDashboardState createState() => _BannerDashboardState();
+}
+
+class _BannerDashboardState extends State<BannerDashboard> {
+  List<String> bannerImageUrls = [];
+
+  @override
+  void initState() {
+    super.initState();
+    scrapeImages();
+  }
+
+  Future<void> scrapeImages() async {
+    final webScraper = WebScraper(
+        'https://diskominfo.lombokbaratkab.go.id/'); // Replace with the actual website URL
+    if (await webScraper.loadWebPage('/')) {
+      const baseImageUrl =
+          'https://diskominfo.lombokbaratkab.go.id'; // Replace with the actual base URL
+      final List<Map<String, dynamic>> rawImages = webScraper.getElement(
+        'div.item img', // CSS selector for the images
+        ['src'],
+      );
+
+      setState(() {
+        bannerImageUrls = rawImages
+            .map<String>(
+                (element) => '$baseImageUrl${element['attributes']['src']}')
+            .toList();
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -13,9 +47,9 @@ class BannerDashboard extends StatelessWidget {
           child: ListView.builder(
             shrinkWrap: true,
             scrollDirection: Axis.horizontal,
-            itemCount: bannerDashboard.length,
+            itemCount: bannerImageUrls.length,
             itemBuilder: (context, index) {
-              final banner = bannerDashboard[index];
+              final imageUrl = bannerImageUrls[index];
               return Card(
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(15.0),
@@ -24,8 +58,7 @@ class BannerDashboard extends StatelessWidget {
                 margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                 child: InkWell(
                   onTap: () {
-                    Navigator.pushNamed(context, banner['routeName'],
-                        arguments: banner['arguments']);
+                    // Handle the tap action
                   },
                   child: Container(
                     height: 120,
@@ -33,7 +66,7 @@ class BannerDashboard extends StatelessWidget {
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
                       image: DecorationImage(
-                        image: AssetImage(banner['img']),
+                        image: NetworkImage(imageUrl),
                         fit: BoxFit.fill,
                       ),
                     ),
