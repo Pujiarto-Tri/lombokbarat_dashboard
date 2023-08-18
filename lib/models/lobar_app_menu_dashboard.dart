@@ -3,7 +3,9 @@ import 'package:ppid_flutter/screens/screen.dart';
 final List<Map<String, dynamic>> appMenu = [
   {
     'app_name': 'PPID',
-    'routeName': PpidScreen.routeName,
+    // 'routeName': PpidScreen.routeName,
+    'routeName': WebViewScreen.routeName,
+    'arguments': {'link': 'https://ppid.lombokbaratkab.go.id/'},
     'icon': 'assets/images/app_icon/logo_ppid.png'
   },
   {
