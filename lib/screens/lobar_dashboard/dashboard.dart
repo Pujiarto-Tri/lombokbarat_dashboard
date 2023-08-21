@@ -13,6 +13,16 @@ class DashboardScreen extends StatefulWidget {
 
 class DashboardScreenState extends State<DashboardScreen> {
   double _opacity = 0;
+  final GlobalKey<RefreshIndicatorState> _refreshKey =
+      GlobalKey<RefreshIndicatorState>();
+
+  Future<void> _refresh() async {
+    await Future.delayed(const Duration(seconds: 2));
+
+    setState(() {
+      _opacity = 0;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -95,35 +105,39 @@ class DashboardScreenState extends State<DashboardScreen> {
                   });
                   return true;
                 },
-                child: SliverList(
-                  delegate: SliverChildListDelegate([
-                    Container(
-                      height: MediaQuery.of(context).size.height * 0.14,
-                      decoration: const BoxDecoration(
-                        color: Colors.white,
+                child: RefreshIndicator(
+                  key: _refreshKey,
+                  onRefresh: _refresh,
+                  child: SliverList(
+                    delegate: SliverChildListDelegate([
+                      Container(
+                        height: MediaQuery.of(context).size.height * 0.14,
+                        decoration: const BoxDecoration(
+                          color: Colors.white,
+                        ),
+                        child: const TitleDashboard(),
                       ),
-                      child: const TitleDashboard(),
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    const BannerDashboard(),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    const NewsDashboard(),
-                    const Padding(
-                      padding: EdgeInsets.all(15.0),
-                      child: MenuDashboard(),
-                    ),
-                    // const SizedBox(
-                    //   height: 10,
-                    // ),
-                    // const AgendaBupatiDashboard(),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                  ]),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      const BannerDashboard(),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      const NewsDashboard(),
+                      const Padding(
+                        padding: EdgeInsets.all(15.0),
+                        child: MenuDashboard(),
+                      ),
+                      // const SizedBox(
+                      //   height: 10,
+                      // ),
+                      // const AgendaBupatiDashboard(),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                    ]),
+                  ),
                 ),
               ),
             ],

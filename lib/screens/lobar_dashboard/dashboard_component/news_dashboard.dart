@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ppid_flutter/models/news_model.dart';
 import 'package:ppid_flutter/screens/screen.dart';
+import 'package:ppid_flutter/widgets/widgets.dart';
 import 'package:html/dom.dart' as dom;
 import 'package:http/http.dart' as http;
 
@@ -93,43 +94,7 @@ class _NewsDashboardState extends State<NewsDashboard> {
           const SizedBox(
             height: 2,
           ),
-          if (isLoading)
-            Column(
-              children: [
-                const SizedBox(
-                  height: 30,
-                ),
-                Container(
-                  height: 110,
-                  width: 125,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(10),
-                    boxShadow: const [
-                      BoxShadow(
-                        color: Colors.grey,
-                        offset: Offset(5, 5),
-                        blurRadius: 10,
-                      ),
-                    ],
-                  ),
-                  child: const Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      CircularProgressIndicator(),
-                      SizedBox(height: 10),
-                      Padding(
-                        padding: EdgeInsets.all(5),
-                        child: Text("Loading Data..."),
-                      ),
-                    ],
-                  ),
-                ),
-                const SizedBox(
-                  height: 30,
-                ),
-              ],
-            ),
+          if (isLoading) const IsLoading(),
           if (isError)
             Center(
               child: Column(
