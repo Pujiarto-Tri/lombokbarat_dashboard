@@ -14,13 +14,13 @@ class KecamatanListScreen extends StatelessWidget {
         backgroundColor: Colors.transparent,
         elevation: 0,
       ),
-      body: const SafeArea(
+      body: SafeArea(
         child: Padding(
           padding:
-              EdgeInsets.only(top: 10, left: 20, right: 20, bottom: 20),
+              const EdgeInsets.only(top: 10, left: 20, right: 20, bottom: 20),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: <Widget>[
+            children: const <Widget>[
               KecamatanTitle(),
               Expanded(
                   child: SingleChildScrollView(
