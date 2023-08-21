@@ -5,31 +5,41 @@ class IsLoading extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: MediaQuery.of(context).size.height * 0.14,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          Container(
-            height: MediaQuery.of(context).size.height * 0.14,
-            decoration: const BoxDecoration(
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black38,
-                  offset: Offset(0, 2),
-                  blurRadius: 4,
-                  spreadRadius: 2,
-                )
-              ],
-              image: DecorationImage(
-                image: AssetImage('assets/images/header_img.png'),
-                fit: BoxFit.cover,
+    return Column(
+      children: [
+        const SizedBox(
+          height: 30,
+        ),
+        Container(
+          height: 110,
+          width: 125,
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(10),
+            boxShadow: const [
+              BoxShadow(
+                color: Colors.grey,
+                offset: Offset(5, 5),
+                blurRadius: 10,
               ),
-            ),
-          )
-        ],
-      ),
+            ],
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: const [
+              CircularProgressIndicator(),
+              SizedBox(height: 10),
+              Padding(
+                padding: EdgeInsets.all(5),
+                child: Text("Loading Data..."),
+              ),
+            ],
+          ),
+        ),
+        const SizedBox(
+          height: 30,
+        ),
+      ],
     );
   }
 }

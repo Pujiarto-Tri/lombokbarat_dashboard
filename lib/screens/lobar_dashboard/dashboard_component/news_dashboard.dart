@@ -149,7 +149,7 @@ class _NewsDashboardState extends State<NewsDashboard> {
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(10.0),
                                 image: DecorationImage(
-                                  fit: BoxFit.cover,
+                                  fit: BoxFit.fill,
                                   image: NetworkImage(article.urlImage),
                                 ),
                               ),
