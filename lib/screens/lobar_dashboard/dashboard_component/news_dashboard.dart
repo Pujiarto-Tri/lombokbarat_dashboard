@@ -77,7 +77,7 @@ class _NewsDashboardState extends State<NewsDashboard> {
       child: Column(
         children: [
           Row(
-            mainAxisAlignment: MainAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Padding(
                 padding: const EdgeInsets.only(left: 8.0),
@@ -85,7 +85,8 @@ class _NewsDashboardState extends State<NewsDashboard> {
                   'Berita Terbaru',
                   style: Theme.of(context).textTheme.headlineSmall!.copyWith(
                         color: Colors.black,
-                        fontWeight: FontWeight.w900,
+                        fontWeight: FontWeight.w500,
+                        fontSize: 20,
                       ),
                 ),
               ),

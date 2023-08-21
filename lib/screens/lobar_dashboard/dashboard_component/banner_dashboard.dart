@@ -104,15 +104,4 @@ class _BannerDashboardState extends State<BannerDashboard> {
       ],
     );
   }
-
-  Widget _buildCardContainer(Widget content) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-      child: SizedBox(
-        width: 350,
-        height: 120,
-        child: content,
-      ),
-    );
-  }
 }

@@ -13,16 +13,6 @@ class DashboardScreen extends StatefulWidget {
 
 class DashboardScreenState extends State<DashboardScreen> {
   double _opacity = 0;
-  final GlobalKey<RefreshIndicatorState> _refreshKey =
-      GlobalKey<RefreshIndicatorState>();
-
-  Future<void> _refresh() async {
-    await Future.delayed(const Duration(seconds: 2));
-
-    setState(() {
-      _opacity = 0;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
