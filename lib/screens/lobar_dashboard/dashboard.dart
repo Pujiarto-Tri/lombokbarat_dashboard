@@ -71,7 +71,7 @@ class DashboardScreenState extends State<DashboardScreen> {
                             begin: Alignment.bottomCenter,
                             end: Alignment.topCenter,
                             colors: [
-                              Colors.blue,
+                              Colors.white,
                               Colors.white.withOpacity(0.0)
                             ],
                           ),
