@@ -107,13 +107,13 @@ class DashboardScreenState extends State<DashboardScreen> {
                 },
                 child: SliverList(
                   delegate: SliverChildListDelegate([
-                    Container(
-                      height: MediaQuery.of(context).size.height * 0.14,
-                      decoration: const BoxDecoration(
-                        color: Colors.white,
-                      ),
-                      child: const TitleDashboard(),
-                    ),
+                    // Container(
+                    //   height: MediaQuery.of(context).size.height * 0.14,
+                    //   decoration: const BoxDecoration(
+                    //     color: Colors.white,
+                    //   ),
+                    //   child: const TitleDashboard(),
+                    // ),
                     const SizedBox(
                       height: 20,
                     ),

@@ -57,11 +57,8 @@ class _BannerDashboardState extends State<BannerDashboard> {
         SizedBox(
           height: 100,
           child: isLoading
-              ? ListView.builder(
-                  itemBuilder: (context, index) {
-                    return _buildCardContainer(
-                        const FlashingLoadingAnimation());
-                  },
+              ? const Center(
+                  child: CircularProgressIndicator(),
                 )
               : PageView.builder(
                   controller: _pageController,
@@ -115,63 +112,6 @@ class _BannerDashboardState extends State<BannerDashboard> {
         width: 350,
         height: 120,
         child: content,
-      ),
-    );
-  }
-}
-
-class FlashingLoadingAnimation extends StatefulWidget {
-  const FlashingLoadingAnimation({super.key});
-
-  @override
-  // ignore: library_private_types_in_public_api
-  _FlashingLoadingAnimationState createState() =>
-      _FlashingLoadingAnimationState();
-}
-
-class _FlashingLoadingAnimationState extends State<FlashingLoadingAnimation> {
-  bool _showCard = false;
-
-  @override
-  void initState() {
-    super.initState();
-    _startAnimation();
-  }
-
-  void _startAnimation() {
-    Future.delayed(const Duration(milliseconds: 300), () {
-      if (mounted) {
-        setState(() {
-          _showCard = !_showCard;
-        });
-        _startAnimation();
-      }
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final gradientColors = [
-      Colors.grey[300]!,
-      Colors.grey[100]!,
-      Colors.grey[300]!
-    ];
-
-    return AnimatedOpacity(
-      opacity: _showCard ? 1.0 : 0.3,
-      duration: const Duration(milliseconds: 300),
-      child: Container(
-        width: 200,
-        height: 80,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
-          gradient: LinearGradient(
-            colors: gradientColors,
-            stops: const [0.1, 0.5, 0.9],
-            begin: const Alignment(-1.0, 0.0),
-            end: const Alignment(1.0, 0.0),
-          ),
-        ),
       ),
     );
   }
