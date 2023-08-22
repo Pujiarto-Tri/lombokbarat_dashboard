@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
+import 'package:ppid_flutter/widgets/widgets.dart';
 // #docregion platform_imports
 // Import for Android features.
 // ignore: depend_on_referenced_packages
@@ -128,23 +129,23 @@ Page resource error:
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(
-        title: const Text(''),
-        // Navigation
-        actions: <Widget>[
-          NavigationControls(webViewController: _controller),
-        ],
-      ),
-      body: Column(
-        children: <Widget>[
-          LinearProgressIndicator(value: _progress),
-          Expanded(
-            child: WebViewWidget(controller: _controller),
-          ),
-        ],
-      ),
-    );
+        backgroundColor: Colors.white,
+        appBar: AppBar(
+          title: const Text(''),
+          // Navigation
+          actions: <Widget>[
+            NavigationControls(webViewController: _controller),
+          ],
+        ),
+        body: Column(
+          children: <Widget>[
+            LinearProgressIndicator(value: _progress),
+            Expanded(
+              child: WebViewWidget(controller: _controller),
+            ),
+          ],
+        ),
+        bottomNavigationBar: const BottomNavBar(index: 2));
   }
 }
 

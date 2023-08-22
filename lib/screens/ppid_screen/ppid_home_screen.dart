@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ppid_flutter/models/ppid_api_model.dart';
-// import '../widgets/bottom_nav_bar.dart';
+import 'package:ppid_flutter/widgets/widgets.dart';
 import 'package:ppid_flutter/screens/screen.dart';
 
 class PpidScreen extends StatelessWidget {
@@ -11,29 +11,28 @@ class PpidScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        iconTheme: const IconThemeData(color: Colors.black),
-        elevation: 0,
-      ),
-      // bottomNavigationBar: const BottomNavBar(index: 0),
-      body: SafeArea(
-        child: Padding(
-          padding:
-              const EdgeInsets.only(top: 10, left: 20, right: 20, bottom: 20),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: const <Widget>[
-              SearchDocument(),
-              Expanded(
-                child: SingleChildScrollView(
-                  child: LatestDocument(),
+        appBar: AppBar(
+          iconTheme: const IconThemeData(color: Colors.black),
+          elevation: 0,
+        ),
+        // bottomNavigationBar: const BottomNavBar(index: 0),
+        body: const SafeArea(
+          child: Padding(
+            padding: EdgeInsets.only(top: 10, left: 20, right: 20, bottom: 20),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: <Widget>[
+                SearchDocument(),
+                Expanded(
+                  child: SingleChildScrollView(
+                    child: LatestDocument(),
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
-      ),
-    );
+        bottomNavigationBar: const BottomNavBar(index: 9));
   }
 }
 

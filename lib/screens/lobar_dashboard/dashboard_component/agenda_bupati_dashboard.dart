@@ -101,9 +101,9 @@ class _AgendaBupatiDashboardState extends State<AgendaBupatiDashboard> {
                       ),
                     ],
                   ),
-                  child: Column(
+                  child: const Column(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children: const [
+                    children: [
                       CircularProgressIndicator(),
                       SizedBox(height: 10),
                       Padding(

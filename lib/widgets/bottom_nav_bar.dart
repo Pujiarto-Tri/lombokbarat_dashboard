@@ -22,7 +22,7 @@ class BottomNavBar extends StatelessWidget {
         BottomNavigationBarItem(
           icon: IconButton(
               onPressed: () {
-                Navigator.pushNamed(context, PpidScreen.routeName);
+                Navigator.pushNamed(context, DashboardScreen.routeName);
               },
               icon: const Icon(Icons.home)),
           label: 'Home',
