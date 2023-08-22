@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:ppid_flutter/models/news_model.dart';
 import 'package:ppid_flutter/screens/screen.dart';
 import 'package:ppid_flutter/widgets/widgets.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:html/dom.dart' as dom;
 import 'package:http/http.dart' as http;
 
@@ -151,7 +152,8 @@ class _NewsDashboardState extends State<NewsDashboard> {
                                 borderRadius: BorderRadius.circular(10.0),
                                 image: DecorationImage(
                                   fit: BoxFit.fill,
-                                  image: NetworkImage(article.urlImage),
+                                  image: CachedNetworkImageProvider(
+                                      article.urlImage),
                                 ),
                               ),
                             ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ppid_flutter/screens/screen.dart';
 import 'package:web_scraper/web_scraper.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 class BannerDashboard extends StatefulWidget {
   const BannerDashboard({super.key});
@@ -14,7 +15,10 @@ class _BannerDashboardState extends State<BannerDashboard> {
   List<String> bannerImageUrls = [];
   List<String> bannerLinks = [];
   bool isLoading = true;
-  final PageController _pageController = PageController(viewportFraction: 0.75);
+  final PageController _pageController = PageController(
+    initialPage: 0,
+    viewportFraction: 0.85,
+  );
 
   @override
   void initState() {
@@ -89,7 +93,7 @@ class _BannerDashboardState extends State<BannerDashboard> {
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10),
                               image: DecorationImage(
-                                image: NetworkImage(imageUrl),
+                                image: CachedNetworkImageProvider(imageUrl),
                                 fit: BoxFit.fill,
                               ),
                             ),
