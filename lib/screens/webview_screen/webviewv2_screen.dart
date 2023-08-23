@@ -54,7 +54,6 @@ class _WebViewV2ScreenState extends State<WebViewV2Screen> {
 
   @override
   Widget build(BuildContext context) {
-    _handleRefresh();
     return WillPopScope(
       onWillPop: handleBackNavigation,
       child: Scaffold(
