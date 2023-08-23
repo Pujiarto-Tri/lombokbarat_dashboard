@@ -20,8 +20,6 @@ class _WebViewV2ScreenState extends State<WebViewV2Screen> {
   InAppWebViewController? webView;
   late String link;
   // Declare the link property
-  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
-      GlobalKey<RefreshIndicatorState>();
 
   InAppWebViewController? webViewController;
   InAppWebViewSettings settings = InAppWebViewSettings();
