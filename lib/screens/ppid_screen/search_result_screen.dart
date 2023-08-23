@@ -32,11 +32,9 @@ class SearchResultsScreenState extends State<SearchResultsScreen> {
         ppid.next = load.next;
       });
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text("Error loading next page: ini adalah data terakhir"),
-          duration: Duration(seconds: 3),
-        ),
+      const SnackBar(
+        content: Text("Error loading next page: ini adalah data terakhir"),
+        duration: Duration(seconds: 3),
       );
       // Display an error message to the user
     } finally {
