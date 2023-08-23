@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
-import 'package:ppid_flutter/widgets/widgets.dart';
+import 'package:ppid_flutter/screens/lobar_dashboard/dashboard.dart';
 // #docregion platform_imports
 // Import for Android features.
 // ignore: depend_on_referenced_packages
@@ -79,7 +79,9 @@ Page resource error:
                 url.endsWith('.doc') ||
                 url.endsWith('.docx')) {
               try {
-                launchUrl(Uri.parse(url), mode: LaunchMode.externalApplication);
+                Uri fileUri = Uri.parse(url);
+                await launchUrl(fileUri);
+                return NavigationDecision.prevent;
               } catch (e) {
                 debugPrint(e.toString());
                 showDialog(
@@ -126,15 +128,30 @@ Page resource error:
     _controller = controller;
   }
 
+  void navigateToDashboard() {
+    Navigator.pushNamed(context, DashboardScreen.routeName);
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return WillPopScope(
+      onWillPop: () async {
+        if (await _controller.canGoBack()) {
+          _controller.goBack();
+          return false;
+        }
+        return true;
+      },
+      child: Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
           title: const Text(''),
           // Navigation
           actions: <Widget>[
-            NavigationControls(webViewController: _controller),
+            NavigationControls(
+              webViewController: _controller,
+              onNavigateToDashboard: navigateToDashboard,
+            ),
           ],
         ),
         body: Column(
@@ -145,20 +162,31 @@ Page resource error:
             ),
           ],
         ),
-        bottomNavigationBar: const BottomNavBar(index: 2));
+        // bottomNavigationBar: const BottomNavBar(index: 2),
+      ),
+    );
   }
 }
 
 class NavigationControls extends StatelessWidget {
-  const NavigationControls({super.key, required this.webViewController});
+  const NavigationControls({
+    super.key,
+    required this.webViewController,
+    required this.onNavigateToDashboard,
+  });
 
   final WebViewController webViewController;
+  final VoidCallback onNavigateToDashboard;
 
   @override
   Widget build(BuildContext context) {
     final scaffold = ScaffoldMessenger.of(context);
     return Row(
       children: <Widget>[
+        IconButton(
+          icon: const Icon(Icons.home), // Replace with your dashboard icon
+          onPressed: onNavigateToDashboard, // Use the callback here
+        ),
         IconButton(
           icon: const Icon(Icons.arrow_back_ios),
           onPressed: () async {

@@ -38,8 +38,11 @@ class MenuDashboard extends StatelessWidget {
                   elevation: 0,
                   child: InkWell(
                     onTap: () {
-                      Navigator.pushNamed(context, lobarAppMenu['routeName'],
-                          arguments: lobarAppMenu['arguments']);
+                      Navigator.pushNamed(
+                        context,
+                        lobarAppMenu['routeName'],
+                        arguments: lobarAppMenu['arguments'],
+                      );
                     },
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
