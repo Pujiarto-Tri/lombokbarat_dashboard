@@ -84,6 +84,7 @@ Page resource error:
                 return NavigationDecision.prevent;
               } catch (e) {
                 debugPrint(e.toString());
+                // ignore: use_build_context_synchronously
                 showDialog(
                   context: context,
                   builder: (context) => AlertDialog(
