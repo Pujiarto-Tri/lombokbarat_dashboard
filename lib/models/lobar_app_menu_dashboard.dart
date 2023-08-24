@@ -54,7 +54,7 @@ final List<Map<String, dynamic>> appMenu = [
   },
   {
     'app_name': 'SRIKANDI',
-    'routeName': WebViewScreen.routeName,
+    'routeName': WebViewV2Screen.routeName,
     'arguments': {'link': 'https://srikandi.arsip.go.id/'},
     'icon': 'assets/images/app_icon/logo_srikandi.png'
   },
