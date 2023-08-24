@@ -3,6 +3,9 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'screens/screen.dart';
 
+import 'package:permission_handler/permission_handler.dart';
+import 'package:flutter_downloader/flutter_downloader.dart';
+
 //================== W A R N I N G ===========================//
 //  THIS CLASS FOR TESTING PURPOSES ONLY //
 class MyHttpOverrides extends HttpOverrides {
@@ -19,7 +22,20 @@ void main() async {
   //================ W A R N I N G=============================//
   HttpOverrides.global = MyHttpOverrides();
   //==========================================================//
+  requestStoragePermission();
   runApp(const MyApp());
+}
+
+void requestStoragePermission() async {
+  var status = await Permission.storage.request();
+
+  if (status.isGranted) {
+    // Permission granted, you can perform actions that require storage access
+  } else if (status.isDenied) {
+    // Permission denied, show a message or dialog to the user explaining why permission is needed
+  } else if (status.isPermanentlyDenied) {
+    // Permission permanently denied, show a dialog to the user with instructions on how to enable the permission from settings
+  }
 }
 
 class MyApp extends StatelessWidget {

@@ -8,7 +8,6 @@ import 'package:webview_flutter_android/webview_flutter_android.dart';
 // Import for iOS features.
 // ignore: depend_on_referenced_packages
 import 'package:webview_flutter_wkwebview/webview_flutter_wkwebview.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 // #enddocregion platform_imports
 class WebViewScreen extends StatefulWidget {
@@ -72,39 +71,6 @@ Page resource error:
   errorType: ${error.errorType}
   isForMainFrame: ${error.isForMainFrame}
           ''');
-          },
-          onNavigationRequest: (NavigationRequest request) async {
-            String url = request.url;
-            if (url.endsWith('.pdf') ||
-                url.endsWith('.doc') ||
-                url.endsWith('.docx')) {
-              try {
-                Uri fileUri = Uri.parse(url);
-                await launchUrl(fileUri);
-                return NavigationDecision.prevent;
-              } catch (e) {
-                debugPrint(e.toString());
-                // ignore: use_build_context_synchronously
-                showDialog(
-                  context: context,
-                  builder: (context) => AlertDialog(
-                    title: const Text('Error'),
-                    content: Text('Failed to launch the URL: $url'),
-                    actions: [
-                      TextButton(
-                        child: const Text('OK'),
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                        },
-                      ),
-                    ],
-                  ),
-                );
-              }
-              return NavigationDecision.prevent;
-            } else {
-              return NavigationDecision.navigate;
-            }
           },
         ),
       )

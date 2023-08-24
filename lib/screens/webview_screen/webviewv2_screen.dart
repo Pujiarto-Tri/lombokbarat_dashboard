@@ -5,6 +5,11 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
+import 'dart:async';
+import 'package:flutter/foundation.dart';
+import 'package:ppid_flutter/screens/screen.dart';
+import 'package:flutter_downloader/flutter_downloader.dart';
+import 'package:path_provider/path_provider.dart';
 
 class WebViewV2Screen extends StatefulWidget {
   static const routeName = '/webview_v2';
@@ -18,8 +23,11 @@ class WebViewV2Screen extends StatefulWidget {
 
 class _WebViewV2ScreenState extends State<WebViewV2Screen> {
   InAppWebViewController? webView;
+  final GlobalKey webViewKey = GlobalKey();
+
   late String link;
-  // Declare the link property
+  double progress = 0;
+  bool showProgressBar = true;
 
   InAppWebViewController? webViewController;
   InAppWebViewSettings settings = InAppWebViewSettings();
@@ -43,11 +51,19 @@ class _WebViewV2ScreenState extends State<WebViewV2Screen> {
     pullToRefreshController = PullToRefreshController(
       settings: pullToRefreshSettings,
       onRefresh: () async {
-        if (webViewController != null) {
-          await webViewController!.reload();
+        if (defaultTargetPlatform == TargetPlatform.android) {
+          webViewController?.reload();
+        } else if (defaultTargetPlatform == TargetPlatform.iOS) {
+          webViewController?.loadUrl(
+              urlRequest: URLRequest(url: await webViewController?.getUrl()));
         }
       },
     );
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 
   @override
@@ -57,8 +73,36 @@ class _WebViewV2ScreenState extends State<WebViewV2Screen> {
       child: Scaffold(
         appBar: AppBar(
           title: const Text(""),
+          actions: [
+            IconButton(
+              icon: const Icon(Icons.refresh),
+              onPressed: () async {
+                if (webView != null) {
+                  await webView!.reload();
+                }
+              },
+            ),
+            IconButton(
+              icon: const Icon(Icons.home),
+              onPressed: () {
+                Navigator.of(context).pushNamed(DashboardScreen.routeName);
+              },
+            ),
+          ],
+          bottom: showProgressBar
+              ? PreferredSize(
+                  preferredSize: const Size.fromHeight(3),
+                  child: LinearProgressIndicator(
+                    value: progress / 100,
+                    backgroundColor: Colors.grey[300],
+                    valueColor:
+                        const AlwaysStoppedAnimation<Color>(Colors.blue),
+                  ),
+                )
+              : null,
         ),
         body: InAppWebView(
+          key: webViewKey,
           initialUrlRequest: URLRequest(
             url: WebUri(link), // Use the link property
           ),
@@ -68,15 +112,35 @@ class _WebViewV2ScreenState extends State<WebViewV2Screen> {
             webView = controller;
           },
           onLoadStop: (controller, url) {
+            showProgressBar = false;
             pullToRefreshController?.endRefreshing();
           },
           onReceivedError: (controller, request, error) {
+            showProgressBar = false;
             pullToRefreshController?.endRefreshing();
           },
           onProgressChanged: (controller, progress) {
+            setState(() {
+              this.progress = progress.toDouble();
+            });
             if (progress == 100) {
+              showProgressBar = false;
               pullToRefreshController?.endRefreshing();
+            } else {
+              setState(() {
+                showProgressBar = true;
+              });
             }
+          },
+          onDownloadStartRequest: (controller, downloadRequest) async {
+            await FlutterDownloader.enqueue(
+              url: downloadRequest.url.toString(),
+              savedDir: (await getExternalStorageDirectory())!.path,
+              showNotification:
+                  true, // show download progress in status bar (for Android)
+              openFileFromNotification:
+                  true, // click on notification to open downloaded file (for Android)
+            );
           },
         ),
       ),
