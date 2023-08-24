@@ -7,3 +7,4 @@ export 'ppid_screen/search_result_screen.dart';
 export 'webview_screen/webview_screen.dart';
 export 'opd_screen/opd_list_screen.dart';
 export 'kecamatan_screen/kecamatan_list_screen.dart';
+export 'webview_screen/webviewv2_screen.dart';

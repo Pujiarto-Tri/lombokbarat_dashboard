@@ -51,7 +51,7 @@ dependencies:
   flutter_downloader: ^1.10.2
   unicons: ^2.1.1
   cached_network_image: ^3.2.3
-  flutter_inappwebview: ^5.7.2+3
+  flutter_inappwebview: ^6.0.0-beta.24+1
 
   
 
