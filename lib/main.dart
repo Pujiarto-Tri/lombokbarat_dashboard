@@ -22,7 +22,17 @@ void main() async {
   //================ W A R N I N G=============================//
   HttpOverrides.global = MyHttpOverrides();
   //==========================================================//
+  WidgetsFlutterBinding.ensureInitialized();
+  await FlutterDownloader.initialize(
+      debug: true // optional: set false to disable printing logs to console
+      );
+  await Permission.notification.isDenied.then((value) {
+    if (value) {
+      Permission.notification.request();
+    }
+  });
   requestStoragePermission();
+
   runApp(const MyApp());
 }
 

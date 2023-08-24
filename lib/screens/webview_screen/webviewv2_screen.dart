@@ -1,8 +1,3 @@
-//================================================
-//DO NOT USE THIS
-//STILL IN DEVELOPMENT
-//=============================================
-
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'dart:async';
@@ -30,7 +25,8 @@ class _WebViewV2ScreenState extends State<WebViewV2Screen> {
   bool showProgressBar = true;
 
   InAppWebViewController? webViewController;
-  InAppWebViewSettings settings = InAppWebViewSettings();
+  InAppWebViewSettings settings =
+      InAppWebViewSettings(useOnDownloadStart: true);
   PullToRefreshController? pullToRefreshController;
   PullToRefreshSettings pullToRefreshSettings = PullToRefreshSettings(
     color: Colors.blue,
@@ -133,9 +129,16 @@ class _WebViewV2ScreenState extends State<WebViewV2Screen> {
             }
           },
           onDownloadStartRequest: (controller, downloadRequest) async {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                content: Text('Downloading file...'),
+                duration: Duration(seconds: 3), // Adjust the duration as needed
+              ),
+            );
             await FlutterDownloader.enqueue(
               url: downloadRequest.url.toString(),
               savedDir: (await getExternalStorageDirectory())!.path,
+              saveInPublicStorage: true,
               showNotification:
                   true, // show download progress in status bar (for Android)
               openFileFromNotification:
