@@ -128,7 +128,7 @@ class DashboardScreenState extends State<DashboardScreen> {
           ),
         ),
       ),
-      bottomNavigationBar: const BottomNavBar(index: 0),
+      // bottomNavigationBar: const BottomNavBar(index: 0),
     );
   }
 }
