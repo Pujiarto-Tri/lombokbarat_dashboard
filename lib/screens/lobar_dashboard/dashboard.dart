@@ -1,77 +1,133 @@
 import 'package:flutter/material.dart';
-import 'package:ppid_flutter/screens/home_screen.dart';
-import 'package:ppid_flutter/screens/screen.dart';
+import 'dart:math';
+import 'dashboard_component.dart';
 
-class DashboardScreen extends StatelessWidget {
+class DashboardScreen extends StatefulWidget {
   const DashboardScreen({Key? key}) : super(key: key);
 
   static const routeName = '/';
 
   @override
+  DashboardScreenState createState() => DashboardScreenState();
+}
+
+class DashboardScreenState extends State<DashboardScreen> {
+  double _opacity = 0;
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // bottomNavigationBar: const BottomNavBar(index: 0),
-      body: Padding(
-        padding:
-            const EdgeInsets.only(top: 45, left: 20, right: 20, bottom: 20),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: const [TitleDashboard(), MenuDashboard()],
+      body: SafeArea(
+        child: MediaQuery.removePadding(
+          context: context,
+          removeTop: true,
+          child: CustomScrollView(
+            slivers: [
+              SliverAppBar(
+                expandedHeight: MediaQuery.of(context).size.height * 0.18,
+                floating: true,
+                pinned: true,
+                flexibleSpace: FlexibleSpaceBar(
+                  centerTitle: true,
+                  title: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Image.asset(
+                        'assets/images/logo_lombokbarat.png',
+                        width: 24,
+                        height: 24,
+                      ),
+                      const SizedBox(
+                        width: 5,
+                      ),
+                      const Text(
+                        "Kabupaten Lombok Barat",
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                  ),
+                  background: Stack(
+                    children: [
+                      Container(
+                        height: MediaQuery.of(context).size.height * 0.18,
+                        padding: EdgeInsets.zero,
+                        decoration: const BoxDecoration(
+                          image: DecorationImage(
+                            image:
+                                AssetImage('assets/images/kantor_bupati.jpg'),
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      ),
+                      Container(
+                        height: MediaQuery.of(context).size.height * 0.18,
+                        padding: EdgeInsets.zero,
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                            begin: Alignment.bottomCenter,
+                            end: Alignment.topCenter,
+                            colors: [
+                              Colors.white,
+                              Colors.white.withOpacity(0.0)
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              NotificationListener<ScrollUpdateNotification>(
+                onNotification: (notification) {
+                  setState(() {
+                    _opacity = max(
+                      0,
+                      min(
+                        1,
+                        (_opacity + notification.scrollDelta!) /
+                            (MediaQuery.of(context).size.height * 0.2),
+                      ),
+                    );
+                  });
+                  return true;
+                },
+                child: SliverList(
+                  delegate: SliverChildListDelegate([
+                    // Container(
+                    //   height: MediaQuery.of(context).size.height * 0.14,
+                    //   decoration: const BoxDecoration(
+                    //     color: Colors.white,
+                    //   ),
+                    //   child: const TitleDashboard(),
+                    // ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    const BannerDashboard(),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    const NewsDashboard(),
+                    const Padding(
+                      padding: EdgeInsets.all(15.0),
+                      child: MenuDashboard(),
+                    ),
+                    // const SizedBox(
+                    //   height: 10,
+                    // ),
+                    // const AgendaBupatiDashboard(),
+                  ]),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
-    );
-  }
-}
-
-class TitleDashboard extends StatelessWidget {
-  const TitleDashboard({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      height: MediaQuery.of(context).size.height * 0.2,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(
-            'PPID Kabupaten Lombok Barat',
-            style: Theme.of(context)
-                .textTheme
-                .headline5!
-                .copyWith(color: Colors.black, fontWeight: FontWeight.w900),
-          ),
-          const SizedBox(
-            height: 7,
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class MenuDashboard extends StatelessWidget {
-  const MenuDashboard({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Expanded(
-      child: GridView.count(
-        crossAxisCount: 3, // 3 columns
-        children: List.generate(6, (index) {
-          return Card(
-            elevation: 1,
-            child: InkWell(
-              onTap: () {
-                Navigator.pushNamed(context, HomeScreen.routeName);
-              },
-              child: Column(
-                children: const <Widget>[Text("Test")],
-              ),
-            ),
-          );
-        }),
-      ),
+      // bottomNavigationBar: const BottomNavBar(index: 0),
     );
   }
 }

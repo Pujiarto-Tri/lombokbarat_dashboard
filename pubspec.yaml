@@ -30,7 +30,7 @@ environment:
 # versions available, run `flutter pub outdated`.
 dependencies:
   equatable: ^2.0.0
-  http: ^0.13.5
+  http: ^0.13.6
   flutter:
     sdk: flutter
     
@@ -41,6 +41,19 @@ dependencies:
   cupertino_icons: ^1.0.2
   json_serializable: ^6.5.4
   json_annotation: ^4.7.0
+  webview_flutter: ^4.0.1
+  path_provider: ^2.1.0
+  web_scraper: ^0.1.4
+  html: ^0.15.1
+  url_launcher: ^6.1.12
+  pdf: ^3.9.0
+  # flutter_inappwebview: ^6.0.0-beta.22
+  flutter_downloader: ^1.11.1
+  unicons: ^2.1.1
+  cached_network_image: ^3.2.3
+  flutter_inappwebview: 6.0.0-beta.24+1
+  permission_handler: ^10.4.3
+
   
 
 
@@ -71,6 +84,27 @@ flutter:
   # assets:
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
+  assets:
+    - assets/images/app_icon/logo-LPSE-3.png
+    - assets/images/app_icon/logo_ppid.png
+    - assets/images/app_icon/logo_elhkpn.png
+    - assets/images/app_icon/logo_jdih.png
+    - assets/images/app_icon/logo_sakip.png
+    - assets/images/app_icon/logo_survey.png
+    - assets/images/app_icon/logo_rpjmd.png
+    - assets/images/app_icon/logo_ekinerja.png
+    - assets/images/app_icon/logo_opd.png
+    - assets/images/app_icon/logo_lapor.jpg
+    - assets/images/app_icon/logo_kecamatan.png
+    - assets/images/app_icon/logo_desa.png
+    - assets/images/app_icon/logo_telpon.png
+    - assets/images/app_icon/logo_srikandi.png
+    #==================================================
+    - assets/images/kantor_bupati.jpg
+    - assets/images/header_img.png
+    - assets/images/logo_lombokbarat.png
+
+
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

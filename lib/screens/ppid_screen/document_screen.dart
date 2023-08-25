@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'home_screen.dart';
+import 'package:ppid_flutter/screens/screen.dart';
 
 class DocumentScreen extends StatelessWidget {
   const DocumentScreen({Key? key}) : super(key: key);
@@ -12,18 +12,20 @@ class DocumentScreen extends StatelessWidget {
         ModalRoute.of(context)?.settings.arguments as ResultData;
     return Container(
       color: Colors.white,
-      child: Scaffold(
-        backgroundColor: Colors.transparent,
-        appBar: AppBar(
-          iconTheme: const IconThemeData(color: Colors.black),
+      child: SafeArea(
+        child: Scaffold(
           backgroundColor: Colors.transparent,
-          elevation: 0,
-        ),
-        extendBodyBehindAppBar: true,
-        body: ListView(
-          children: [
-            _DocumentDetail(resultData: resultData),
-          ],
+          appBar: AppBar(
+            iconTheme: const IconThemeData(color: Colors.black),
+            backgroundColor: Colors.transparent,
+            elevation: 0,
+          ),
+          extendBodyBehindAppBar: true,
+          body: ListView(
+            children: [
+              _DocumentDetail(resultData: resultData),
+            ],
+          ),
         ),
       ),
     );
@@ -112,10 +114,12 @@ class _DocumentDetail extends StatelessWidget {
             height: 10,
           ),
           ElevatedButton(
-            style: ElevatedButton.styleFrom(
-                    foregroundColor: Colors.blue.shade100,
-                    backgroundColor: Colors.blue.shade900,
-                  ),onPressed: () {}, child: const Text("Download")),
+              style: ElevatedButton.styleFrom(
+                foregroundColor: Colors.blue.shade100,
+                backgroundColor: Colors.blue.shade900,
+              ),
+              onPressed: () {},
+              child: const Text("Download")),
         ],
       ),
     );

@@ -1,37 +1,38 @@
 import 'package:flutter/material.dart';
-import 'package:ppid_flutter/screens/search_result_screen.dart';
-import '../models/ppid_api_model.dart';
-// import '../widgets/bottom_nav_bar.dart';
-import 'screen.dart';
+import 'package:ppid_flutter/models/ppid_api_model.dart';
+import 'package:ppid_flutter/widgets/widgets.dart';
+import 'package:ppid_flutter/screens/screen.dart';
 
-class HomeScreen extends StatelessWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+class PpidScreen extends StatelessWidget {
+  const PpidScreen({Key? key}) : super(key: key);
 
   static const routeName = '/ppid';
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        iconTheme: const IconThemeData(color: Colors.black),
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-      ),
-      // bottomNavigationBar: const BottomNavBar(index: 0),
-      body: Padding(
-        padding:
-            const EdgeInsets.only(top: 10, left: 20, right: 20, bottom: 20),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: const <Widget>[
-            SearchDocument(),
-            Expanded(
-              child: SingleChildScrollView(child: LatestDocument()),
-            ),
-          ],
+        appBar: AppBar(
+          iconTheme: const IconThemeData(color: Colors.black),
+          elevation: 0,
         ),
-      ),
-    );
+        // bottomNavigationBar: const BottomNavBar(index: 0),
+        body: const SafeArea(
+          child: Padding(
+            padding: EdgeInsets.only(top: 10, left: 20, right: 20, bottom: 20),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: <Widget>[
+                SearchDocument(),
+                Expanded(
+                  child: SingleChildScrollView(
+                    child: LatestDocument(),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+        bottomNavigationBar: const BottomNavBar(index: 9));
   }
 }
 
@@ -60,11 +61,9 @@ class LatestDocumentState extends State<LatestDocument> {
         ppid.next = load.next;
       });
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text("Error loading next page: Ini adalah data terakhir"),
-          duration: Duration(seconds: 3),
-        ),
+      const SnackBar(
+        content: Text("Error loading next page: Ini adalah data terakhir"),
+        duration: Duration(seconds: 3),
       );
       // Display an error message to the user
     } finally {
@@ -230,7 +229,7 @@ class SearchDocumentState extends State<SearchDocument> {
             'PPID Kabupaten Lombok Barat',
             style: Theme.of(context)
                 .textTheme
-                .headline5!
+                .headlineSmall!
                 .copyWith(color: Colors.black, fontWeight: FontWeight.w900),
           ),
           const SizedBox(

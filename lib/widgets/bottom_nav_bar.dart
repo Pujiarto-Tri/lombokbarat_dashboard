@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../screens/screen.dart';
+import 'package:ppid_flutter/screens/screen.dart';
 
 class BottomNavBar extends StatelessWidget {
   const BottomNavBar({
@@ -22,7 +22,7 @@ class BottomNavBar extends StatelessWidget {
         BottomNavigationBarItem(
           icon: IconButton(
               onPressed: () {
-                Navigator.pushNamed(context, HomeScreen.routeName);
+                Navigator.pushNamed(context, DashboardScreen.routeName);
               },
               icon: const Icon(Icons.home)),
           label: 'Home',
