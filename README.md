@@ -1,6 +1,6 @@
-# ppid_flutter
+# Lombok Barat Dashboard
 
-A new Flutter project.
+a single App to access all Lombok Barat Apps, Build using Flutter
 
 ## Getting Started
 
