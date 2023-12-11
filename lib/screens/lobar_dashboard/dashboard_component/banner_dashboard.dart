@@ -83,7 +83,7 @@ class _BannerDashboardState extends State<BannerDashboard> {
                           onTap: () {
                             Navigator.pushNamed(
                               context,
-                              WebViewScreen.routeName,
+                              WebViewV2Screen.routeName,
                               arguments: {'link': link},
                             );
                           },

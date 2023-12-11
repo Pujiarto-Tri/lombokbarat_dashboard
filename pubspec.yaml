@@ -99,6 +99,7 @@ flutter:
     - assets/images/app_icon/logo_desa.png
     - assets/images/app_icon/logo_telpon.png
     - assets/images/app_icon/logo_srikandi.png
+    - assets/images/app_icon/logo_info.png
     #==================================================
     - assets/images/kantor_bupati.jpg
     - assets/images/header_img.png
