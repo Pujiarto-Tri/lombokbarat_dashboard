@@ -26,12 +26,12 @@ class MenuDashboard extends StatelessWidget {
             height: 8,
           ),
           Wrap(
-            spacing: 10.0,
-            runSpacing: 10.0,
+            spacing: 15.0,
+            runSpacing: 15.0,
             children: List.generate(appMenu.length, (index) {
               final lobarAppMenu = appMenu[index];
               return SizedBox(
-                height: 75,
+                height: 90,
                 width: 75,
                 child: Card(
                   color: Colors.transparent,
@@ -48,15 +48,15 @@ class MenuDashboard extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
                         SizedBox(
-                          height: 40,
-                          width: 40,
+                          height: 45,
+                          width: 45,
                           child: Image(image: AssetImage(lobarAppMenu['icon'])),
                         ),
                         Text(
                           lobarAppMenu['app_name'],
                           textAlign: TextAlign.center,
                           style: const TextStyle(
-                              fontSize: 11, fontWeight: FontWeight.bold),
+                              fontSize: 10, fontWeight: FontWeight.bold),
                         ),
                       ],
                     ),

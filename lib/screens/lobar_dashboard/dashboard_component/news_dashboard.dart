@@ -140,8 +140,7 @@ class _NewsDashboardState extends State<NewsDashboard> {
                       ),
                       child: InkWell(
                         onTap: () {
-                          Navigator.pushNamed(
-                              context, WebViewV2Screen.routeName,
+                          Navigator.pushNamed(context, WebViewScreen.routeName,
                               arguments: {'link': article.url});
                         },
                         child: Stack(

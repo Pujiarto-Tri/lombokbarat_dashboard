@@ -1,188 +1,160 @@
 import 'package:flutter/material.dart';
-import 'package:webview_flutter/webview_flutter.dart';
-import 'package:ppid_flutter/screens/lobar_dashboard/dashboard.dart';
-// #docregion platform_imports
-// Import for Android features.
-// ignore: depend_on_referenced_packages
-import 'package:webview_flutter_android/webview_flutter_android.dart';
-// Import for iOS features.
-// ignore: depend_on_referenced_packages
-import 'package:webview_flutter_wkwebview/webview_flutter_wkwebview.dart';
+import 'package:flutter_inappwebview/flutter_inappwebview.dart';
+import 'dart:async';
+import 'package:flutter/foundation.dart';
+import 'package:ppid_flutter/screens/screen.dart';
+import 'package:flutter_downloader/flutter_downloader.dart';
+import 'package:path_provider/path_provider.dart';
 
-// #enddocregion platform_imports
 class WebViewScreen extends StatefulWidget {
+  static const routeName = '/webview_v2';
+
   const WebViewScreen({super.key});
 
-  static const routeName = '/webview';
   @override
-  State<WebViewScreen> createState() => _WebViewScreenState();
+  // ignore: library_private_types_in_public_api
+  _WebViewScreenState createState() => _WebViewScreenState();
 }
 
 class _WebViewScreenState extends State<WebViewScreen> {
-  late final WebViewController _controller;
-  String link = "https://flutter.dev";
-  double _progress = 0;
+  InAppWebViewController? webView;
+  final GlobalKey webViewKey = GlobalKey();
+
+  late String link;
+  double progress = 0;
+  bool showProgressBar = true;
+
+  InAppWebViewController? webViewController;
+  InAppWebViewSettings settings =
+      InAppWebViewSettings(useOnDownloadStart: true);
+  PullToRefreshController? pullToRefreshController;
+  PullToRefreshSettings pullToRefreshSettings = PullToRefreshSettings(
+    color: Colors.blue,
+  );
+  bool pullToRefreshEnabled = true;
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
     final args =
         ModalRoute.of(context)!.settings.arguments as Map<String, String>;
-    link = args['link']!;
-    // #docregion platform_features
-    late final PlatformWebViewControllerCreationParams params;
-    if (WebViewPlatform.instance is WebKitWebViewPlatform) {
-      params = WebKitWebViewControllerCreationParams(
-        allowsInlineMediaPlayback: true,
-        mediaTypesRequiringUserAction: const <PlaybackMediaTypes>{},
-      );
-    } else {
-      params = const PlatformWebViewControllerCreationParams();
-    }
-
-    final WebViewController controller =
-        WebViewController.fromPlatformCreationParams(params);
-    // #enddocregion platform_features
-
-    controller
-      ..setJavaScriptMode(JavaScriptMode.unrestricted)
-      ..setBackgroundColor(const Color(0x00000000))
-      ..setNavigationDelegate(
-        NavigationDelegate(
-          onProgress: (int progress) {
-            setState(() {
-              _progress = progress / 100;
-            });
-          },
-          onPageStarted: (String url) {
-            debugPrint('Page started loading: $url');
-          },
-          onPageFinished: (String url) {
-            setState(() {
-              _progress = 0;
-            });
-            debugPrint('Page finished loading: $url');
-          },
-          onWebResourceError: (WebResourceError error) {
-            debugPrint('''
-Page resource error:
-  code: ${error.errorCode}
-  description: ${error.description}
-  errorType: ${error.errorType}
-  isForMainFrame: ${error.isForMainFrame}
-          ''');
-          },
-        ),
-      )
-      ..addJavaScriptChannel(
-        'Toaster',
-        onMessageReceived: (JavaScriptMessage message) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(message.message)),
-          );
-        },
-      )
-      ..loadRequest(Uri.parse(link));
-
-    // #docregion platform_features
-    if (controller.platform is AndroidWebViewController) {
-      AndroidWebViewController.enableDebugging(true);
-      (controller.platform as AndroidWebViewController)
-          .setMediaPlaybackRequiresUserGesture(false);
-    }
-    // #enddocregion platform_features
-
-    _controller = controller;
+    link = args['link']!; // Set the link property
   }
 
-  void navigateToDashboard() {
-    Navigator.pushNamed(context, DashboardScreen.routeName);
+  @override
+  void initState() {
+    super.initState();
+    pullToRefreshController = PullToRefreshController(
+      settings: pullToRefreshSettings,
+      onRefresh: () async {
+        if (defaultTargetPlatform == TargetPlatform.android) {
+          webViewController?.reload();
+        } else if (defaultTargetPlatform == TargetPlatform.iOS) {
+          webViewController?.loadUrl(
+              urlRequest: URLRequest(url: await webViewController?.getUrl()));
+        }
+      },
+    );
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-      onWillPop: () async {
-        if (await _controller.canGoBack()) {
-          _controller.goBack();
-          return false;
-        }
-        return true;
-      },
+      onWillPop: handleBackNavigation,
       child: Scaffold(
-        backgroundColor: Colors.white,
         appBar: AppBar(
-          title: const Text(''),
-          // Navigation
-          actions: <Widget>[
-            NavigationControls(
-              webViewController: _controller,
-              onNavigateToDashboard: navigateToDashboard,
+          title: const Text(""),
+          actions: [
+            IconButton(
+              icon: const Icon(Icons.refresh),
+              onPressed: () async {
+                if (webView != null) {
+                  await webView!.reload();
+                }
+              },
+            ),
+            IconButton(
+              icon: const Icon(Icons.home),
+              onPressed: () {
+                Navigator.of(context).pushNamed(DashboardScreen.routeName);
+              },
             ),
           ],
+          bottom: showProgressBar
+              ? PreferredSize(
+                  preferredSize: const Size.fromHeight(3),
+                  child: LinearProgressIndicator(
+                    value: progress / 100,
+                    backgroundColor: Colors.grey[300],
+                    valueColor:
+                        const AlwaysStoppedAnimation<Color>(Colors.blue),
+                  ),
+                )
+              : null,
         ),
-        body: Column(
-          children: <Widget>[
-            LinearProgressIndicator(value: _progress),
-            Expanded(
-              child: WebViewWidget(controller: _controller),
-            ),
-          ],
+        body: InAppWebView(
+          key: webViewKey,
+          initialUrlRequest: URLRequest(
+            url: WebUri(link), // Use the link property
+          ),
+          initialSettings: settings,
+          pullToRefreshController: pullToRefreshController,
+          onWebViewCreated: (controller) {
+            webView = controller;
+          },
+          onLoadStop: (controller, url) {
+            showProgressBar = false;
+            pullToRefreshController?.endRefreshing();
+          },
+          onReceivedError: (controller, request, error) {
+            showProgressBar = false;
+            pullToRefreshController?.endRefreshing();
+          },
+          onProgressChanged: (controller, progress) {
+            setState(() {
+              this.progress = progress.toDouble();
+            });
+            if (progress == 100) {
+              showProgressBar = false;
+              pullToRefreshController?.endRefreshing();
+            } else {
+              setState(() {
+                showProgressBar = true;
+              });
+            }
+          },
+          onDownloadStartRequest: (controller, downloadRequest) async {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                content: Text('Downloading file...'),
+                duration: Duration(seconds: 3), // Adjust the duration as needed
+              ),
+            );
+            await FlutterDownloader.enqueue(
+              url: downloadRequest.url.toString(),
+              savedDir: (await getExternalStorageDirectory())!.path,
+              saveInPublicStorage: true,
+              showNotification:
+                  true, // show download progress in status bar (for Android)
+              openFileFromNotification:
+                  true, // click on notification to open downloaded file (for Android)
+            );
+          },
         ),
-        // bottomNavigationBar: const BottomNavBar(index: 2),
       ),
     );
   }
-}
 
-class NavigationControls extends StatelessWidget {
-  const NavigationControls({
-    super.key,
-    required this.webViewController,
-    required this.onNavigateToDashboard,
-  });
-
-  final WebViewController webViewController;
-  final VoidCallback onNavigateToDashboard;
-
-  @override
-  Widget build(BuildContext context) {
-    final scaffold = ScaffoldMessenger.of(context);
-    return Row(
-      children: <Widget>[
-        IconButton(
-          icon: const Icon(Icons.home), // Replace with your dashboard icon
-          onPressed: onNavigateToDashboard, // Use the callback here
-        ),
-        IconButton(
-          icon: const Icon(Icons.arrow_back_ios),
-          onPressed: () async {
-            if (await webViewController.canGoBack()) {
-              await webViewController.goBack();
-            } else {
-              scaffold.showSnackBar(
-                  const SnackBar(content: Text('No Back History')));
-              return;
-            }
-          },
-        ),
-        IconButton(
-          icon: const Icon(Icons.arrow_forward_ios),
-          onPressed: () async {
-            if (await webViewController.canGoForward()) {
-              await webViewController.goForward();
-            } else {
-              scaffold.showSnackBar(
-                  const SnackBar(content: Text('No Forward History')));
-              return;
-            }
-          },
-        ),
-        IconButton(
-          icon: const Icon(Icons.replay),
-          onPressed: () => webViewController.reload(),
-        ),
-      ],
-    );
+  Future<bool> handleBackNavigation() async {
+    if (webView != null && await webView!.canGoBack()) {
+      webView!.goBack();
+      return false; // Prevent default system back navigation
+    }
+    return true; // Allow default system back navigation
   }
 }
