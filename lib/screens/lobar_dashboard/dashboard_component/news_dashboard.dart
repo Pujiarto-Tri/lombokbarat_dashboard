@@ -213,10 +213,9 @@ class _NewsDashboardState extends State<NewsDashboard> {
                 children: List.generate(articles.length, (index) {
                   return Container(
                     margin: const EdgeInsets.symmetric(horizontal: 4.0),
-                    width: 8.0,
-                    height: 8.0,
+                    width: 20.0,
+                    height: 2.0,
                     decoration: BoxDecoration(
-                        shape: BoxShape.circle,
                         color:
                             _currentPage == index ? Colors.blue : Colors.grey),
                   );
