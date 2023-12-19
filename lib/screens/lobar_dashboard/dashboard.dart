@@ -107,7 +107,8 @@ class DashboardScreenState extends State<DashboardScreen> {
                     const SizedBox(
                       height: 20,
                     ),
-                    const BannerDashboard(),
+                    // const BannerDashboard(),
+                    const StaticBannerDashboard(),
                     const SizedBox(
                       height: 10,
                     ),

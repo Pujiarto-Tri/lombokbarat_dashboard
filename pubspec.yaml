@@ -104,6 +104,9 @@ flutter:
     - assets/images/kantor_bupati.jpg
     - assets/images/header_img.png
     - assets/images/logo_lombokbarat.png
+    #=================================================
+    - assets/images/dashboard_banner/lapor_banner.png
+    - assets/images/dashboard_banner/inovasi_banner.jpeg
 
 
 

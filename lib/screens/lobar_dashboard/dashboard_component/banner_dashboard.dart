@@ -27,17 +27,15 @@ class _BannerDashboardState extends State<BannerDashboard> {
   }
 
   Future<void> scrapeImages() async {
-    final webScraper = WebScraper(
-        'https://diskominfo.lombokbaratkab.go.id/'); // Replace with the actual website URL
+    final webScraper = WebScraper('https://diskominfo.lombokbaratkab.go.id/');
     if (await webScraper.loadWebPage('/')) {
-      const baseImageUrl =
-          'https://diskominfo.lombokbaratkab.go.id'; // Replace with the actual base URL
+      const baseImageUrl = 'https://diskominfo.lombokbaratkab.go.id';
       final List<Map<String, dynamic>> rawImages = webScraper.getElement(
-        'div.item img', // CSS selector for the images
+        'div.item img',
         ['src'],
       );
       final List<Map<String, dynamic>> rawLinks = webScraper.getElement(
-        'div.item a', // CSS selector for the anchor tags
+        'div.item a',
         ['href'],
       );
 

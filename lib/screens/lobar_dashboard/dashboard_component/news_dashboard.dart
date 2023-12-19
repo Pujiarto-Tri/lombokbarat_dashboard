@@ -17,6 +17,7 @@ class NewsDashboard extends StatefulWidget {
 class _NewsDashboardState extends State<NewsDashboard> {
   PageController _controller =
       PageController(initialPage: 0, viewportFraction: 0.8);
+  int _currentPage = 0;
 
   List<Articles> articles = [];
   bool isLoading = true;
@@ -129,6 +130,11 @@ class _NewsDashboardState extends State<NewsDashboard> {
                 itemCount: articles.length, // number of cards
                 scrollDirection: Axis.horizontal,
                 physics: const PageScrollPhysics(),
+                onPageChanged: (int page) {
+                  setState(() {
+                    _currentPage = page;
+                  });
+                },
                 itemBuilder: (context, index) {
                   final article = articles[index];
                   return Padding(
@@ -195,6 +201,27 @@ class _NewsDashboardState extends State<NewsDashboard> {
                 },
               ),
             ),
+          const SizedBox(
+            height: 8.0,
+          ),
+          Positioned(
+              bottom: 10.0,
+              left: 0,
+              right: 0,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: List.generate(articles.length, (index) {
+                  return Container(
+                    margin: const EdgeInsets.symmetric(horizontal: 4.0),
+                    width: 8.0,
+                    height: 8.0,
+                    decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color:
+                            _currentPage == index ? Colors.blue : Colors.grey),
+                  );
+                }),
+              ))
         ],
       ),
     );
