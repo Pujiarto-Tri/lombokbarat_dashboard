@@ -71,8 +71,7 @@ class _StaticBannerDashboardState extends State<StaticBannerDashboard> {
         const SizedBox(
           height: 5.0,
         ),
-        Positioned(
-          bottom: 10.0,
+        SizedBox(
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: List.generate(staticBanner.length, (index) {

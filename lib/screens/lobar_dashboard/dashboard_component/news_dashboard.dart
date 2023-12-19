@@ -34,7 +34,14 @@ class _NewsDashboardState extends State<NewsDashboard> {
     try {
       final url = Uri.parse(
           'https://lombokbaratkab.go.id/category/berita-terbaru/amp/');
-      final response = await http.get(url);
+      final response = await http.get(
+        url,
+        headers: {
+          'User-Agent':
+              'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
+          'Cache-Control': 'no-store'
+        },
+      );
       dom.Document html = dom.Document.html(response.body);
 
       final titles = html
@@ -204,23 +211,20 @@ class _NewsDashboardState extends State<NewsDashboard> {
           const SizedBox(
             height: 8.0,
           ),
-          Positioned(
-              bottom: 10.0,
-              left: 0,
-              right: 0,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: List.generate(articles.length, (index) {
-                  return Container(
-                    margin: const EdgeInsets.symmetric(horizontal: 4.0),
-                    width: 20.0,
-                    height: 2.0,
-                    decoration: BoxDecoration(
-                        color:
-                            _currentPage == index ? Colors.blue : Colors.grey),
-                  );
-                }),
-              ))
+          SizedBox(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: List.generate(articles.length, (index) {
+                return Container(
+                  margin: const EdgeInsets.symmetric(horizontal: 4.0),
+                  width: 20.0,
+                  height: 2.0,
+                  decoration: BoxDecoration(
+                      color: _currentPage == index ? Colors.blue : Colors.grey),
+                );
+              }),
+            ),
+          ),
         ],
       ),
     );
