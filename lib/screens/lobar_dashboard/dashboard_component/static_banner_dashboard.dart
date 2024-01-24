@@ -18,7 +18,7 @@ class _StaticBannerDashboardState extends State<StaticBannerDashboard> {
     return Column(
       children: [
         SizedBox(
-          height: 100,
+          height: 110,
           child: Stack(
             alignment: AlignmentDirectional.bottomCenter,
             children: [
@@ -34,7 +34,7 @@ class _StaticBannerDashboardState extends State<StaticBannerDashboard> {
                   final banner = staticBanner[index];
                   return Center(
                     child: Card(
-                      elevation: 2,
+                      elevation: 0,
                       margin: const EdgeInsets.symmetric(
                           horizontal: 10, vertical: 5),
                       shape: RoundedRectangleBorder(
@@ -49,8 +49,8 @@ class _StaticBannerDashboardState extends State<StaticBannerDashboard> {
                           );
                         },
                         child: Container(
-                          height: 120,
-                          width: 350,
+                          height: 110,
+                          width: 400,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
                             image: DecorationImage(

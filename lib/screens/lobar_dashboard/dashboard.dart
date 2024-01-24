@@ -112,11 +112,8 @@ class DashboardScreenState extends State<DashboardScreen> {
                     const SizedBox(
                       height: 10,
                     ),
+                    const MenuDashboard(),
                     const NewsDashboard(),
-                    const Padding(
-                      padding: EdgeInsets.all(15.0),
-                      child: MenuDashboard(),
-                    ),
                     // const SizedBox(
                     //   height: 10,
                     // ),

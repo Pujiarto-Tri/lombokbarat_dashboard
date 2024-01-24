@@ -86,18 +86,34 @@ class _NewsDashboardState extends State<NewsDashboard> {
       child: Column(
         children: [
           Row(
-            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Padding(
-                padding: const EdgeInsets.only(left: 8.0),
-                child: Text(
-                  'Berita Terbaru',
-                  style: Theme.of(context).textTheme.headlineSmall!.copyWith(
-                        color: Colors.black,
-                        fontWeight: FontWeight.w500,
-                        fontSize: 20,
-                      ),
-                ),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(left: 15.0),
+                    child: Text(
+                      'Berita Lombok Barat',
+                      style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                          color: Colors.black, fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                ],
+              ),
+              const Spacer(),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(right: 15.0),
+                    child: Text(
+                      'View All',
+                      style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                            color: Colors.grey,
+                          ),
+                    ),
+                  ),
+                ],
               ),
             ],
           ),
@@ -131,10 +147,12 @@ class _NewsDashboardState extends State<NewsDashboard> {
             ),
           if (!isLoading && !isError)
             SizedBox(
-              height: 200,
+              height: 220,
               child: PageView.builder(
                 controller: _controller,
-                itemCount: articles.length, // number of cards
+                itemCount: articles.length > 4
+                    ? 4
+                    : articles.length, // number of cards
                 scrollDirection: Axis.horizontal,
                 physics: const PageScrollPhysics(),
                 onPageChanged: (int page) {
@@ -147,7 +165,7 @@ class _NewsDashboardState extends State<NewsDashboard> {
                   return Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Card(
-                      elevation: 5,
+                      elevation: 0,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10.0),
                       ),
@@ -159,8 +177,8 @@ class _NewsDashboardState extends State<NewsDashboard> {
                         child: Stack(
                           children: [
                             Container(
-                              height: 200,
-                              width: double.infinity,
+                              height: 220,
+                              width: 400,
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(10.0),
                                 image: DecorationImage(
@@ -171,8 +189,8 @@ class _NewsDashboardState extends State<NewsDashboard> {
                               ),
                             ),
                             Container(
-                              height: 200,
-                              width: double.infinity,
+                              height: 220,
+                              width: 400,
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(10.0),
                                 gradient: LinearGradient(
@@ -191,7 +209,7 @@ class _NewsDashboardState extends State<NewsDashboard> {
                                 alignment: Alignment.bottomLeft,
                                 child: Text(
                                   article.title,
-                                  maxLines: 2,
+                                  maxLines: 3,
                                   overflow: TextOverflow.ellipsis,
                                   style: const TextStyle(
                                       color: Colors.white,
@@ -214,7 +232,8 @@ class _NewsDashboardState extends State<NewsDashboard> {
           SizedBox(
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: List.generate(articles.length, (index) {
+              children: List.generate(articles.length > 4 ? 4 : articles.length,
+                  (index) {
                 return Container(
                   margin: const EdgeInsets.symmetric(horizontal: 4.0),
                   width: 20.0,

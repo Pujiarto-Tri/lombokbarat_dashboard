@@ -7,63 +7,101 @@ class MenuDashboard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(10.0),
+      padding: const EdgeInsets.all(5.0),
       child: Column(
         children: [
           Row(
-            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text(
-                'Aplikasi Kabupaten Lombok Barat',
-                style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                      color: Colors.black,
-                      fontWeight: FontWeight.w900,
+              Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(left: 10),
+                    child: Text(
+                      'Apps',
+                      style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                            color: Colors.black,
+                            fontWeight: FontWeight.w900,
+                          ),
                     ),
+                  ),
+                ],
+              ),
+              const Spacer(),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(right: 10),
+                    child: Text(
+                      'View All',
+                      style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                            color: Colors.grey,
+                          ),
+                    ),
+                  ),
+                ],
               ),
             ],
           ),
-          const SizedBox(
-            height: 8,
-          ),
-          Wrap(
-            spacing: 15.0,
-            runSpacing: 15.0,
-            children: List.generate(appMenu.length, (index) {
-              final lobarAppMenu = appMenu[index];
-              return SizedBox(
-                height: 90,
-                width: 75,
-                child: Card(
-                  color: Colors.transparent,
-                  elevation: 0,
-                  child: InkWell(
-                    onTap: () {
-                      Navigator.pushNamed(
-                        context,
-                        lobarAppMenu['routeName'],
-                        arguments: lobarAppMenu['arguments'],
-                      );
-                    },
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        SizedBox(
-                          height: 45,
-                          width: 45,
-                          child: Image(image: AssetImage(lobarAppMenu['icon'])),
+          Padding(
+            padding: const EdgeInsets.only(top: 8, bottom: 8),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: List.generate(
+                // Limit the number of items to four
+                appMenu.length > 4 ? 4 : appMenu.length,
+                (index) {
+                  final lobarAppMenu = appMenu[index];
+                  return SizedBox(
+                    height: 100,
+                    width: 90,
+                    child: Card(
+                      color: const Color.fromARGB(99, 93, 163, 255),
+                      elevation: 0,
+                      child: InkWell(
+                        onTap: () {
+                          Navigator.pushNamed(
+                            context,
+                            lobarAppMenu['routeName'],
+                            arguments: lobarAppMenu['arguments'],
+                          );
+                        },
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            SizedBox(
+                              height: 45,
+                              width: 45,
+                              child: ClipOval(
+                                child: Container(
+                                  padding: const EdgeInsets.all(5),
+                                  color: Colors.white,
+                                  child: Image(
+                                    image: AssetImage(lobarAppMenu['icon']),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 5,
+                            ),
+                            Text(
+                              lobarAppMenu['app_name'],
+                              textAlign: TextAlign.center,
+                              style: const TextStyle(
+                                fontSize: 10,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
                         ),
-                        Text(
-                          lobarAppMenu['app_name'],
-                          textAlign: TextAlign.center,
-                          style: const TextStyle(
-                              fontSize: 10, fontWeight: FontWeight.bold),
-                        ),
-                      ],
+                      ),
                     ),
-                  ),
-                ),
-              );
-            }),
+                  );
+                },
+              ),
+            ),
           ),
         ],
       ),
