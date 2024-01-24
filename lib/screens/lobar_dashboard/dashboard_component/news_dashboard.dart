@@ -15,10 +15,6 @@ class NewsDashboard extends StatefulWidget {
 }
 
 class _NewsDashboardState extends State<NewsDashboard> {
-  PageController _controller =
-      PageController(initialPage: 0, viewportFraction: 0.8);
-  int _currentPage = 0;
-
   List<Articles> articles = [];
   bool isLoading = true;
   bool isError = false;
@@ -27,7 +23,6 @@ class _NewsDashboardState extends State<NewsDashboard> {
   void initState() {
     super.initState();
     fetchNews();
-    _controller = PageController(initialPage: 0, viewportFraction: 0.8);
   }
 
   Future fetchNews() async {
@@ -84,6 +79,7 @@ class _NewsDashboardState extends State<NewsDashboard> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Row(
             children: [
@@ -95,7 +91,9 @@ class _NewsDashboardState extends State<NewsDashboard> {
                     child: Text(
                       'Berita Lombok Barat',
                       style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                          color: Colors.black, fontWeight: FontWeight.bold),
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                          ),
                     ),
                   ),
                 ],
@@ -120,8 +118,9 @@ class _NewsDashboardState extends State<NewsDashboard> {
           const SizedBox(
             height: 2,
           ),
-          if (isLoading) const IsLoading(),
-          if (isError)
+          if (isLoading) ...[
+            const IsLoading(),
+          ] else if (isError) ...[
             Center(
               child: Column(
                 children: [
@@ -145,105 +144,123 @@ class _NewsDashboardState extends State<NewsDashboard> {
                 ],
               ),
             ),
-          if (!isLoading && !isError)
-            SizedBox(
-              height: 220,
-              child: PageView.builder(
-                controller: _controller,
-                itemCount: articles.length > 4
-                    ? 4
-                    : articles.length, // number of cards
-                scrollDirection: Axis.horizontal,
-                physics: const PageScrollPhysics(),
-                onPageChanged: (int page) {
-                  setState(() {
-                    _currentPage = page;
-                  });
-                },
-                itemBuilder: (context, index) {
-                  final article = articles[index];
-                  return Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Card(
-                      elevation: 0,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10.0),
-                      ),
-                      child: InkWell(
-                        onTap: () {
-                          Navigator.pushNamed(context, WebViewScreen.routeName,
-                              arguments: {'link': article.url});
-                        },
-                        child: Stack(
-                          children: [
-                            Container(
-                              height: 220,
-                              width: 400,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10.0),
-                                image: DecorationImage(
-                                  fit: BoxFit.fill,
-                                  image: CachedNetworkImageProvider(
-                                      article.urlImage),
-                                ),
-                              ),
-                            ),
-                            Container(
-                              height: 220,
-                              width: 400,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10.0),
-                                gradient: LinearGradient(
-                                  begin: Alignment.bottomCenter,
-                                  end: Alignment.topCenter,
-                                  colors: [
-                                    Colors.black.withOpacity(0.6),
-                                    Colors.transparent,
-                                  ],
-                                ),
-                              ),
-                            ),
-                            Padding(
+          ] else ...[
+            Row(
+              children: [
+                Expanded(
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(left: 8),
+                        child: Card(
+                          color: const Color.fromARGB(25, 200, 200, 200),
+                          elevation: 0,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                          ),
+                          child: InkWell(
+                            onTap: () {
+                              Navigator.pushNamed(
+                                context,
+                                WebViewScreen.routeName,
+                                arguments: {'link': articles[0].url},
+                              );
+                            },
+                            child: Padding(
                               padding: const EdgeInsets.all(8.0),
-                              child: Align(
-                                alignment: Alignment.bottomLeft,
-                                child: Text(
-                                  article.title,
-                                  maxLines: 3,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: const TextStyle(
-                                      color: Colors.white,
+                              child: Column(
+                                children: [
+                                  Container(
+                                    height: 130,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10.0),
+                                      image: DecorationImage(
+                                        fit: BoxFit.cover,
+                                        image: CachedNetworkImageProvider(
+                                          articles[0].urlImage,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    height: 5,
+                                  ),
+                                  Text(
+                                    articles[0].title,
+                                    maxLines: 3,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: const TextStyle(
+                                      color: Colors.black,
                                       fontSize: 15,
-                                      fontWeight: FontWeight.bold),
-                                ),
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
-                          ],
+                          ),
                         ),
                       ),
-                    ),
-                  );
-                },
-              ),
+                    ],
+                  ),
+                ),
+                Expanded(
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(right: 8),
+                        child: Card(
+                          color: const Color.fromARGB(25, 200, 200, 200),
+                          elevation: 0,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                          ),
+                          child: InkWell(
+                            onTap: () {
+                              Navigator.pushNamed(
+                                context,
+                                WebViewScreen.routeName,
+                                arguments: {'link': articles[1].url},
+                              );
+                            },
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Column(
+                                children: [
+                                  Container(
+                                    height: 130,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10.0),
+                                      image: DecorationImage(
+                                        fit: BoxFit.cover,
+                                        image: CachedNetworkImageProvider(
+                                          articles[1].urlImage,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  Text(
+                                    articles[1].title,
+                                    maxLines: 3,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: const TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
             ),
-          const SizedBox(
-            height: 8.0,
-          ),
-          SizedBox(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: List.generate(articles.length > 4 ? 4 : articles.length,
-                  (index) {
-                return Container(
-                  margin: const EdgeInsets.symmetric(horizontal: 4.0),
-                  width: 20.0,
-                  height: 2.0,
-                  decoration: BoxDecoration(
-                      color: _currentPage == index ? Colors.blue : Colors.grey),
-                );
-              }),
-            ),
-          ),
+          ],
         ],
       ),
     );
