@@ -91,6 +91,7 @@ class _NewsDashboardState extends State<NewsDashboard> {
                     child: Text(
                       'Berita Lombok Barat',
                       style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                            fontSize: 18,
                             color: Colors.black,
                             fontWeight: FontWeight.bold,
                           ),
@@ -183,7 +184,7 @@ class _NewsDashboardState extends State<NewsDashboard> {
                                     ),
                                   ),
                                   const SizedBox(
-                                    height: 5,
+                                    height: 8,
                                   ),
                                   Text(
                                     articles[0].title,
@@ -191,7 +192,7 @@ class _NewsDashboardState extends State<NewsDashboard> {
                                     overflow: TextOverflow.ellipsis,
                                     style: const TextStyle(
                                       color: Colors.black,
-                                      fontSize: 15,
+                                      fontSize: 13,
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
@@ -239,13 +240,16 @@ class _NewsDashboardState extends State<NewsDashboard> {
                                       ),
                                     ),
                                   ),
+                                  const SizedBox(
+                                    height: 8,
+                                  ),
                                   Text(
                                     articles[1].title,
                                     maxLines: 3,
                                     overflow: TextOverflow.ellipsis,
                                     style: const TextStyle(
                                       color: Colors.black,
-                                      fontSize: 15,
+                                      fontSize: 13,
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),

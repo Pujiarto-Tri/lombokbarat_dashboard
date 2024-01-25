@@ -21,7 +21,8 @@ class MenuDashboard extends StatelessWidget {
                       'Apps',
                       style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                             color: Colors.black,
-                            fontWeight: FontWeight.w900,
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
                           ),
                     ),
                   ),
