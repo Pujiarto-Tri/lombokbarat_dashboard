@@ -41,18 +41,19 @@ dependencies:
   cupertino_icons: ^1.0.2
   json_serializable: ^6.5.4
   json_annotation: ^4.7.0
-  webview_flutter: ^4.0.1
+  webview_flutter: ^4.8.0
   path_provider: ^2.1.0
   web_scraper: ^0.1.4
   html: ^0.15.1
   url_launcher: ^6.1.12
   pdf: ^3.9.0
   # flutter_inappwebview: ^6.0.0-beta.22
-  flutter_downloader: ^1.11.1
+  flutter_downloader: ^1.11.8
   unicons: ^2.1.1
   cached_network_image: ^3.2.3
-  flutter_inappwebview: 6.0.0-beta.24+1
-  permission_handler: ^10.4.3
+  # flutter_inappwebview: ^6.0.0
+  permission_handler: ^11.3.1
+  
 
   
 
@@ -66,7 +67,7 @@ dev_dependencies:
   # activated in the `analysis_options.yaml` file located at the root of your
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
-  flutter_lints: ^2.0.0
+  flutter_lints: ^4.0.0
   build_runner: ^2.3.2
 
 # For information on the generic Dart part of this file, see the

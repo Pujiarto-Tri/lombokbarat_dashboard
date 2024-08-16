@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_inappwebview/flutter_inappwebview.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 import 'dart:async';
-import 'package:flutter/foundation.dart';
-import 'package:ppid_flutter/screens/screen.dart';
 import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:ppid_flutter/screens/screen.dart';
 
 class WebViewScreen extends StatefulWidget {
   static const routeName = '/webview_v2';
@@ -12,26 +11,15 @@ class WebViewScreen extends StatefulWidget {
   const WebViewScreen({super.key});
 
   @override
-  // ignore: library_private_types_in_public_api
   _WebViewScreenState createState() => _WebViewScreenState();
 }
 
 class _WebViewScreenState extends State<WebViewScreen> {
-  InAppWebViewController? webView;
-  final GlobalKey webViewKey = GlobalKey();
-
+  late WebViewController _controller;
   late String link;
   double progress = 0;
   bool showProgressBar = true;
-
-  InAppWebViewController? webViewController;
-  InAppWebViewSettings settings =
-      InAppWebViewSettings(useOnDownloadStart: true);
-  PullToRefreshController? pullToRefreshController;
-  PullToRefreshSettings pullToRefreshSettings = PullToRefreshSettings(
-    color: Colors.blue,
-  );
-  bool pullToRefreshEnabled = true;
+  Timer? _progressUpdateTimer;
 
   @override
   void didChangeDependencies() {
@@ -39,122 +27,134 @@ class _WebViewScreenState extends State<WebViewScreen> {
     final args =
         ModalRoute.of(context)!.settings.arguments as Map<String, String>;
     link = args['link']!; // Set the link property
+
+    _controller = WebViewController()
+      ..setJavaScriptMode(JavaScriptMode.unrestricted)
+      ..setBackgroundColor(const Color(0x00000000))
+      ..setNavigationDelegate(
+        NavigationDelegate(
+          onProgress: (int progress) {
+            setState(() {
+              this.progress = progress.toDouble();
+              showProgressBar = progress < 100;
+            });
+          },
+          onPageStarted: (String url) {
+            setState(() {
+              showProgressBar = true;
+            });
+          },
+          onPageFinished: (String url) {
+            setState(() {
+              showProgressBar = false;
+            });
+          },
+          onHttpError: (HttpResponseError error) {
+            setState(() {
+              showProgressBar = false;
+            });
+          },
+          onWebResourceError: (WebResourceError error) {
+            setState(() {
+              showProgressBar = false;
+            });
+          },
+          onNavigationRequest: (NavigationRequest request) {
+            if (request.url.startsWith('https://www.youtube.com/')) {
+              return NavigationDecision.prevent;
+            }
+            // Handle specific file downloads here
+            if (request.url.endsWith('.pdf') || request.url.endsWith('.zip')) {
+              _downloadFile(request.url);
+              return NavigationDecision.prevent;
+            }
+            return NavigationDecision.navigate;
+          },
+        ),
+      )
+      ..loadRequest(Uri.parse(link));
   }
 
-  @override
-  void initState() {
-    super.initState();
-    pullToRefreshController = PullToRefreshController(
-      settings: pullToRefreshSettings,
-      onRefresh: () async {
-        if (defaultTargetPlatform == TargetPlatform.android) {
-          webViewController?.reload();
-        } else if (defaultTargetPlatform == TargetPlatform.iOS) {
-          webViewController?.loadUrl(
-              urlRequest: URLRequest(url: await webViewController?.getUrl()));
+  void _downloadFile(String url) async {
+    final directory = await getExternalStorageDirectory();
+    final savedDir = directory!.path;
+
+    // Throttle progress updates
+    if (_progressUpdateTimer != null && _progressUpdateTimer!.isActive) {
+      _progressUpdateTimer!.cancel();
+    }
+    _progressUpdateTimer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      FlutterDownloader.loadTasks().then((tasks) {
+        // Handle the tasks safely
+        final task = tasks?.firstWhere(
+          (t) => t.url == url,
+          orElse: () => DownloadTask(
+              taskId: '',
+              url: url,
+              filename: '',
+              savedDir: savedDir,
+              status: DownloadTaskStatus.undefined,
+              progress: 0,
+              timeCreated: 1,
+              allowCellular: true),
+        );
+
+        if (task != null && task.taskId != '1') {
+          setState(() {
+            progress = task.progress.toDouble();
+            showProgressBar = task.status == DownloadTaskStatus.running;
+          });
+        } else {
+          // Handle the case where the task is not found or is empty
+          setState(() {
+            showProgressBar = false;
+          });
         }
-      },
-    );
-  }
+      });
+    });
 
-  @override
-  void dispose() {
-    super.dispose();
+    await FlutterDownloader.enqueue(
+      url: url,
+      savedDir: savedDir,
+      fileName: url.split('/').last,
+      showNotification:
+          true, // show download progress in status bar (for Android)
+      openFileFromNotification:
+          true, // click on notification to open downloaded file (for Android)
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: handleBackNavigation,
-      child: Scaffold(
-        appBar: AppBar(
-          title: const Text(""),
-          actions: [
-            IconButton(
-              icon: const Icon(Icons.refresh),
-              onPressed: () async {
-                if (webView != null) {
-                  await webView!.reload();
-                }
-              },
-            ),
-            IconButton(
-              icon: const Icon(Icons.home),
-              onPressed: () {
-                Navigator.of(context).pushNamed(DashboardScreen.routeName);
-              },
-            ),
-          ],
-          bottom: showProgressBar
-              ? PreferredSize(
-                  preferredSize: const Size.fromHeight(3),
-                  child: LinearProgressIndicator(
-                    value: progress / 100,
-                    backgroundColor: Colors.grey[300],
-                    valueColor:
-                        const AlwaysStoppedAnimation<Color>(Colors.blue),
-                  ),
-                )
-              : null,
-        ),
-        body: InAppWebView(
-          key: webViewKey,
-          initialUrlRequest: URLRequest(
-            url: WebUri(link), // Use the link property
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("WebView"),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.refresh),
+            onPressed: () async {
+              await _controller.reload();
+            },
           ),
-          initialSettings: settings,
-          pullToRefreshController: pullToRefreshController,
-          onWebViewCreated: (controller) {
-            webView = controller;
-          },
-          onLoadStop: (controller, url) {
-            showProgressBar = false;
-            pullToRefreshController?.endRefreshing();
-          },
-          onReceivedError: (controller, request, error) {
-            showProgressBar = false;
-            pullToRefreshController?.endRefreshing();
-          },
-          onProgressChanged: (controller, progress) {
-            setState(() {
-              this.progress = progress.toDouble();
-            });
-            if (progress == 100) {
-              showProgressBar = false;
-              pullToRefreshController?.endRefreshing();
-            } else {
-              setState(() {
-                showProgressBar = true;
-              });
-            }
-          },
-          onDownloadStartRequest: (controller, downloadRequest) async {
-            ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(
-                content: Text('Downloading file...'),
-                duration: Duration(seconds: 3), // Adjust the duration as needed
-              ),
-            );
-            await FlutterDownloader.enqueue(
-              url: downloadRequest.url.toString(),
-              savedDir: (await getExternalStorageDirectory())!.path,
-              saveInPublicStorage: true,
-              showNotification:
-                  true, // show download progress in status bar (for Android)
-              openFileFromNotification:
-                  true, // click on notification to open downloaded file (for Android)
-            );
-          },
-        ),
+          IconButton(
+            icon: const Icon(Icons.home),
+            onPressed: () {
+              Navigator.of(context).pushNamed(DashboardScreen.routeName);
+            },
+          ),
+        ],
+        bottom: showProgressBar
+            ? PreferredSize(
+                preferredSize: const Size.fromHeight(3),
+                child: LinearProgressIndicator(
+                  value: progress / 100,
+                  backgroundColor: Colors.grey[300],
+                  valueColor: const AlwaysStoppedAnimation<Color>(Colors.blue),
+                ),
+              )
+            : null,
       ),
+      body: WebViewWidget(controller: _controller),
     );
-  }
-
-  Future<bool> handleBackNavigation() async {
-    if (webView != null && await webView!.canGoBack()) {
-      webView!.goBack();
-      return false; // Prevent default system back navigation
-    }
-    return true; // Allow default system back navigation
   }
 }

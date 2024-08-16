@@ -56,7 +56,7 @@ class MenuDashboard extends StatelessWidget {
                   final lobarAppMenu = appMenu[index];
                   return SizedBox(
                     height: 100,
-                    width: 90,
+                    width: 95,
                     child: Card(
                       color: const Color.fromARGB(99, 93, 163, 255),
                       elevation: 0,
